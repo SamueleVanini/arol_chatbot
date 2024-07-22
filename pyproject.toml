@@ -1,0 +1,16 @@
+[project]
+name = "arol_chat_bot"
+version = "0.0.1"
+authors = [
+    { name = "Samuele Vanini", email = "samuele.vanini@studenti.polito.it" },
+    { name = "Greta Tumiatti" },
+    { name = "Amirali" },
+]
+[tool.pyright]
+include = ["src"]
+exclude = ["**/__pycache__"]
+typeCheckingMode = "standard"
+reportMissingImports = true
+reportMissingTypeStubs = false
+venvPath = "."
+venv = "venv"
