@@ -1,11 +1,17 @@
 [project]
-name = "arol_chat_bot"
+name = "arol_chatbot"
 version = "0.0.1"
 authors = [
     { name = "Samuele Vanini", email = "samuele.vanini@studenti.polito.it" },
     { name = "Greta Tumiatti" },
     { name = "Amirali" },
 ]
+dependencies = ["pymupdf==1.24.9", "python-statemachine==2.3.4"]
+requires-python = ">=3.12"
+
+[project.scripts]
+arol-preprocessing = "preprocessing.cli:main_preprocessing_cli"
+
 [tool.pyright]
 include = ["src"]
 exclude = ["**/__pycache__"]
