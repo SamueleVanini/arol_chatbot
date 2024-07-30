@@ -1,10 +1,9 @@
 import unittest
-import json
 from preprocessing.machine import PdfData
 import pymupdf
 
 from pathlib import Path
-from src.preprocessing.pdf_extraction_refactoring import PdfPreprocessing
+from src.preprocessing.pdf_extraction import PdfPreprocessing
 
 
 class TestPdfExtraction(unittest.TestCase):
