@@ -8,6 +8,9 @@ from src.preprocessing.pdf_extraction import PdfPreprocessing
 
 class TestPdfExtraction(unittest.TestCase):
 
+    # used to not truncate the difference output when tests fails
+    # unittest.TestCase.maxDiff = None
+
     @classmethod
     def setUpClass(cls) -> None:
         cls.pages_dict = []
@@ -120,7 +123,7 @@ class TestPdfExtraction(unittest.TestCase):
         options = {
             "on caps chute": [
                 "overturned caps automatic ejector (a.e.d.)",
-                "n2 injection device",
+                "n 2 injection device",
                 "caps washing",
                 "ionizer/dust extraction",
                 "uv lamp",

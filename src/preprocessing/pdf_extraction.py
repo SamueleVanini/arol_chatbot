@@ -71,7 +71,7 @@ class PdfPreprocessing(StateMachine):
         self.current_machine.name = name
 
     @add_info.on
-    def extract_feature(self, block):
+    def extract_feature(self, block, target):
         for line in block["lines"]:
             for span in line["spans"]:
                 match self.current_state.id:
@@ -122,6 +122,8 @@ class PdfPreprocessing(StateMachine):
                                 self.current_machine.versions[self.mutable_state.last_seen_key_value].append(version)
                             self.mutable_state.last_seen_type = "value"
                     case "options":
+                        if target.id == "dirty" or target.id == "application_field":
+                            return
                         if "bold" in span["font"].lower():
                             self.mutable_state.last_seen_type = "key"
                             self.mutable_state.last_seen_key_value = span["text"].lower().strip()
