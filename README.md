@@ -14,3 +14,6 @@
   ```
   python src/preprocessing/pdf_extraction.py
   ```
+
+### Testing
+To run all the test go to the project's root directory and run ```python -m unittest discover```.

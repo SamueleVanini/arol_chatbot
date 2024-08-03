@@ -11,6 +11,8 @@ utf8_dot = "\xe2\x80\xa2"
 unicode_dot = "\u2022"
 
 # TODO: Finish to write unit test for the code
+# TODO: fix bug, now when on dirty state we perfome the transaction on add_info event and
+# when we move to application field we insert the next (wrong) block instead of the correct value
 
 
 @dataclass(eq=False)
@@ -31,8 +33,8 @@ class PdfPreprocessing(StateMachine):
     final_state = State(final=True)
 
     # add_application = (application_field.to(machine) | application_field.to(application_field))
-    add_application = application_field.to(machine_name)
-    add_name = machine_name.to(main_feature)
+    add_application = application_field.to(machine_name) | application_field.to(dirty, cond="is_dirty")
+    add_name = machine_name.to(main_feature) | machine_name.to(dirty, cond="is_dirty")
     # add_image = application_field.to(machine)
     add_info = (
         main_feature.to(versions, cond="is_features_finished")
@@ -43,6 +45,7 @@ class PdfPreprocessing(StateMachine):
         | options.to(dirty, cond="is_dirty")
         | options.to.itself(internal=True, unless=["is_options_finished", "is_dirty"])
         | dirty.to(application_field, cond="is_application_field_title")
+        | dirty.to.itself(internal=True)
     )
     go_to_final_state = options.to(final_state) | dirty.to(final_state)
 
@@ -57,17 +60,22 @@ class PdfPreprocessing(StateMachine):
 
     @add_application.before
     def create_machine_add_app_field(self, block):
-        self.current_machine = Machine()
         text = ""
         for line_dict in block["lines"]:
             for span_dict in line_dict["spans"]:
                 text += span_dict["text"].lower() + " "
         application_field = text.strip()
+        self.current_machine = Machine()
         self.current_machine.application_field = application_field
 
     @add_name.before
     def add_machine_name(self, block):
         name = block["lines"][0]["spans"][0]["text"].lower()
+        machines_for_application_field = self.machines.get(self.current_machine.application_field)
+        if machines_for_application_field is not None:
+            for machine in machines_for_application_field:
+                if machine.name == name:
+                    return
         self.current_machine.name = name
 
     @add_info.on

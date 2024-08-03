@@ -1,5 +1,5 @@
 import unittest
-from preprocessing.machine import PdfData
+from preprocessing.machine import Machine, PdfData
 import pymupdf
 
 from pathlib import Path
@@ -17,7 +17,7 @@ class TestPdfExtraction(unittest.TestCase):
         pdf_path = Path("data/AROL_GENERAL_CATALOGUE_11.0_EN_20230215.pdf")
         doc = pymupdf.open(pdf_path)
         # IMPORTANT, PAGE STARTS AT 0 NOT 1
-        pages_iterator: Iterable[Page] = doc.pages(start=5, stop=8)  # type: ignore (pages() -> Unknown, pyrigth is mad about it)\
+        pages_iterator: Iterable[Page] = doc.pages(start=5, stop=9)  # type: ignore (pages() -> Unknown, pyrigth is mad about it)\
         for page in pages_iterator:
             cls.pages_dict.append(page.get_text(option="dict", sort=True))
 
@@ -58,7 +58,7 @@ class TestPdfExtraction(unittest.TestCase):
                     should_stop = self.state_machine.current_state.id == state_id
         raise Exception("We should not reach this point, something went wrong")
 
-    def _skip_bad_block(self, start_page_idx: int, start_block_idx: int):
+    def _skip_bad_block(self, start_page_idx: int, start_block_idx: int, return_good_block=False):
         for cur_page_idx, page in enumerate(self.pages_dict[start_page_idx:], start=start_page_idx):
             block_idx = 0 if cur_page_idx > start_page_idx else start_block_idx
             for cur_block_idx, block in enumerate(page["blocks"][block_idx:], start=block_idx):
@@ -154,6 +154,27 @@ class TestPdfExtraction(unittest.TestCase):
         self.assertDictEqual(self.state_machine.current_machine.other_info, options)
         # we can move to a bunch of different state, understand how test it
         # self.assertEqual(self.state_machine.current_state.id, "options")
+
+    def test_finish_machine_info_page(self):
+        mock_machine = Machine()
+        mock_machine.application_field = "pre-threaded plastic caps capper"
+        mock_machine.name = "euro pk"
+        page_idx, block_idx = self._move_to_desired_state("options")
+        self.assertEqual(self.state_machine.current_state.id, "options")
+        cur_page_idx, cur_block_idx = self._skip_bad_block(page_idx, block_idx)
+        for idx, page in enumerate(self.pages_dict[cur_page_idx:], start=cur_page_idx):
+            cur_block_idx = 0 if idx > cur_page_idx else cur_block_idx
+            for block in page["blocks"][cur_block_idx:]:
+                # for block in page["blocks"]:
+                if block["type"] != 0:
+                    continue
+                if self.state_machine.current_state.id == "application_field":
+                    self.state_machine.add_application(block)
+                elif self.state_machine.current_state.id == "options" or self.state_machine.current_state.id == "dirty":
+                    self.state_machine.add_info(block)
+                elif self.state_machine.current_state.id == "machine_name":
+                    self.state_machine.add_name(block)
+        self.assertEqual(self.state_machine.current_machine, mock_machine)
 
 
 if __name__ == "__main__":
