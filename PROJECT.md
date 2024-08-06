@@ -7,3 +7,4 @@
 ## Libraries
 - [pymupdf](https://pymupdf.readthedocs.io/en/latest/index.html)
 - [statemachine](https://python-statemachine.readthedocs.io/en/latest/index.html)
+- [tqdm](https://tqdm.github.io/)
