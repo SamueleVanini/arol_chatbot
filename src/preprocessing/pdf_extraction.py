@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 
 from collections import defaultdict
 from copy import copy
+from typing import Any, List
 from statemachine import StateMachine, State
 
 # from src.preprocessing.machine import Machine, PdfData
@@ -10,9 +11,7 @@ from .machine import Machine, PdfData
 utf8_dot = "\xe2\x80\xa2"
 unicode_dot = "\u2022"
 
-# TODO: Finish to write unit test for the code
-# TODO: fix bug, now when on dirty state we perfome the transaction on add_info event and
-# when we move to application field we insert the next (wrong) block instead of the correct value
+# TODO: "" are parsed wrong in (STANDARD FOR “FREE STANDING” VERSION)
 
 
 @dataclass(eq=False)
@@ -23,8 +22,8 @@ class MutableStateValue:
 
 class PdfPreprocessing(StateMachine):
 
-    # possible state states
-    application_field = State(initial=True)
+    initial_state = State(initial=True)
+    application_field = State()
     machine_name = State()
     main_feature = State()
     versions = State()
@@ -32,43 +31,53 @@ class PdfPreprocessing(StateMachine):
     dirty = State()
     final_state = State(final=True)
 
-    # add_application = (application_field.to(machine) | application_field.to(application_field))
-    add_application = application_field.to(machine_name) | application_field.to(dirty, cond="is_dirty")
-    add_name = machine_name.to(main_feature) | machine_name.to(dirty, cond="is_dirty")
-    # add_image = application_field.to(machine)
-    add_info = (
-        main_feature.to(versions, cond="is_features_finished")
-        | main_feature.to.itself(internal=True, unless="is_features_finished")
-        | versions.to(options, cond="is_versions_finished")
-        | versions.to.itself(internal=True, unless="is_versions_finished")
-        | options.to(application_field, cond="is_options_finished")
+    parse_block = (
+        initial_state.to(application_field, cond="is_application_field_section")
+        | application_field.to(machine_name, cond="is_machine_name_section")
+        | application_field.to(dirty, unless="is_machine_name_section")
+        | machine_name.to(main_feature, cond="is_main_features_section")
+        | machine_name.to(dirty, unless="is_main_features_section")
+        | main_feature.to(versions, cond="is_versions_section")
+        | main_feature.to(main_feature, unless="is_versions_section")
+        | versions.to(options, cond="is_options_section")
+        | versions.to(versions, unless="is_options_section")
+        | options.to(application_field, cond="is_application_field_section")
         | options.to(dirty, cond="is_dirty")
-        | options.to.itself(internal=True, unless=["is_options_finished", "is_dirty"])
-        | dirty.to(application_field, cond="is_application_field_title")
-        | dirty.to.itself(internal=True)
+        | options.to(options, unless=["is_application_field_section", "is_dirty"])
+        | dirty.to(application_field, cond="is_application_field_section")
+        | dirty.to(machine_name, cond="is_machine_name_section")
+        | dirty.to(dirty, unless=["is_application_field_section", "is_machine_name_section"])
     )
+
     go_to_final_state = options.to(final_state) | dirty.to(final_state)
 
-    def __init__(self):
+    def __init__(
+        self,
+        model: Any = None,
+        state_field: str = "state",
+        start_value: Any = None,
+        rtc: bool = True,
+        allow_event_without_transition: bool = False,
+        listeners: List[object] | None = None,
+    ):
         self.machines: dict[str, list[Machine]] = defaultdict(list)
-        # self.machines: list[Machine] = []
-        self.mutable_state = MutableStateValue()
-        self.main_feature_finished = False
-        self.versions_finished = False
-        self.options_finished = False
-        super(PdfPreprocessing, self).__init__()
+        self.current_machine = None
+        super().__init__(model, state_field, start_value, rtc, allow_event_without_transition, listeners)
 
-    @add_application.before
+    @application_field.enter
     def create_machine_add_app_field(self, block):
         text = ""
         for line_dict in block["lines"]:
             for span_dict in line_dict["spans"]:
                 text += span_dict["text"].lower() + " "
         application_field = text.strip()
+        # check if we already have created a complete machine and we need to save it
+        if self.current_machine is not None and self.current_machine.other_info is not None:
+            self.machines[self.current_machine.application_field].append(copy(self.current_machine))
         self.current_machine = Machine()
         self.current_machine.application_field = application_field
 
-    @add_name.before
+    @machine_name.enter
     def add_machine_name(self, block):
         name = block["lines"][0]["spans"][0]["text"].lower()
         machines_for_application_field = self.machines.get(self.current_machine.application_field)
@@ -78,113 +87,63 @@ class PdfPreprocessing(StateMachine):
                     return
         self.current_machine.name = name
 
-    @add_info.on
-    def extract_feature(self, block, target):
-        for line in block["lines"]:
-            for span in line["spans"]:
-                match self.current_state.id:
-                    case "main_feature":
-                        if "Bold" in span["font"]:
-                            text_value = span["text"].lower().strip()
-                            if text_value == "main features":
-                                return
-                            if self.mutable_state.last_seen_type == "key":
-                                self.mutable_state.last_seen_key_value += " " + text_value
-                            else:
-                                self.mutable_state.last_seen_type = "key"
-                                self.mutable_state.last_seen_key_value = text_value
-                        else:
-                            features = span["text"].lower()
-                            for feature in features.split(unicode_dot):
-                                if self.mutable_state.last_seen_type != "key":
-                                    last_feature_seen = self.current_machine.main_features[
-                                        self.mutable_state.last_seen_key_value
-                                    ][-1]
-                                    last_feature_seen += " " + feature.strip()
-                                    self.current_machine.main_features[self.mutable_state.last_seen_key_value][
-                                        -1
-                                    ] = last_feature_seen
-                                    self.mutable_state.last_seen_type = "value"
-                                else:
-                                    self.current_machine.main_features[self.mutable_state.last_seen_key_value].append(
-                                        feature.strip()
-                                    )
-                            self.mutable_state.last_seen_type = "value"
-                    case "versions":
-                        if "Bold" in span["font"]:
-                            text_value = span["text"].lower().strip()
-                            if text_value == "versions":
-                                return
-                            if self.mutable_state.last_seen_type == "key":
-                                self.mutable_state.last_seen_key_value += " " + text_value
-                            else:
-                                self.mutable_state.last_seen_type = "key"
-                                self.mutable_state.last_seen_key_value = text_value
-                        else:
-                            version = span["text"].lower().strip()
-                            if self.mutable_state.last_seen_type != "key":
-                                self.current_machine.versions[self.mutable_state.last_seen_key_value][-1] += (
-                                    " " + version
-                                )
-                            else:
-                                self.current_machine.versions[self.mutable_state.last_seen_key_value].append(version)
-                            self.mutable_state.last_seen_type = "value"
-                    case "options":
-                        if target.id == "dirty" or target.id == "application_field":
-                            return
-                        if "bold" in span["font"].lower():
-                            self.mutable_state.last_seen_type = "key"
-                            self.mutable_state.last_seen_key_value = span["text"].lower().strip()
-                        else:
-                            full_span = span["text"].lower().strip()
-                            if self.mutable_state.last_seen_type != "key":
-                                last_option_seen = self.current_machine.other_info[
-                                    self.mutable_state.last_seen_key_value
-                                ].pop()
-                                full_span = f"{last_option_seen} {full_span.strip()}"
-                            for option in full_span.split(unicode_dot):
-                                self.current_machine.other_info[self.mutable_state.last_seen_key_value].append(
-                                    option.strip()
-                                )
-                            self.mutable_state.last_seen_type = "value"
-
     @main_feature.enter
     @versions.enter
     @options.enter
-    def clear_mutable_state_value(self):
-        self.mutable_state.last_seen_type = ""
-        self.mutable_state.last_seen_key_value = ""
+    def add_machine_info(self, block):
+        if self.current_state.id == "main_feature":
+            info_dict = self.current_machine.main_features
+        elif self.current_state.id == "versions":
+            info_dict = self.current_machine.versions
+        elif self.current_state.id == "options":
+            info_dict = self.current_machine.other_info
+        else:
+            raise Exception("Can't trace where store information with the current state")
 
-    @options.exit
-    def machine_finished(self):
-        self.machines[self.current_machine.application_field].append(copy(self.current_machine))
+        last_span_seen_is_key = False
+        key = None
 
-    def is_features_finished(self, block):
+        for line in block["lines"]:
+            for span in line["spans"]:
+                if self._is_key(span):
+                    if key is not None:
+                        key = f"{key} {span["text"].lower().strip()}"
+                    else:
+                        key = span["text"].lower().strip()
+                    last_span_seen_is_key = True
+                else:
+                    full_span = span["text"].lower().strip()
+                    last_features_added = info_dict.get(key)
+                    if last_features_added is not None and last_span_seen_is_key == False:
+                        last_feature_added = last_features_added.pop()
+                        full_span = f"{last_feature_added} {full_span}"
+                    for info in full_span.split(unicode_dot):
+                        info_dict[key].append(info.strip())
+                    last_span_seen_is_key = False
+
+    def is_application_field_section(self, block):
+        span = block["lines"][0]["spans"][0]
+        return "Bold" in span["font"] and span["size"] == 23.0
+
+    def is_machine_name_section(self, block):
+        span = block["lines"][0]["spans"][0]
+        return "Bold" in span["font"] and span["size"] == 33.0
+
+    def is_main_features_section(self, block):
+        span = block["lines"][0]["spans"][0]
+        return span["text"] == "MAIN FEATURES"
+
+    def is_versions_section(self, block):
         span = block["lines"][0]["spans"][0]
         return span["text"] == "VERSIONS"
 
-    def is_versions_finished(self, block):
+    def is_options_section(self, block):
         span = block["lines"][0]["spans"][0]
         return span["text"] == "OPTIONS"
 
-    def is_options_finished(self, block):
-        span = block["lines"][0]["spans"][0]
-        return "Bold" in span["font"] and span["size"] > 20
-
     def is_dirty(self, block):
         span = block["lines"][0]["spans"][0]
-        condition: bool = (
-            self.mutable_state.last_seen_type == "value" and "light" in span["font"].lower() and span["size"] < 10
-        )
-        return condition
+        return "Bold" not in span["font"] and span["size"] == 7.0 and span["flags"] != 20
 
-    def is_application_field_title(self, block):
-        return self.is_options_finished(block)
-
-
-class PdfPreprocessingException(Exception):
-
-    def __init__(self, current_state: str, block, message: str = "Unexpected block found") -> None:
-        super().__init__(message)
-        self.error_block = block
-        self.current_state = current_state
+    def _is_key(self, span) -> bool:
+        return "Bold" in span["font"]

@@ -46,15 +46,7 @@ class TestPdfExtraction(unittest.TestCase):
                 if should_stop:
                     return page_idx, block_idx
                 if block["type"] == 0:
-                    match self.state_machine.current_state.id:
-                        case "application_field":
-                            self.state_machine.add_application(block)
-                        case "machine_name":
-                            self.state_machine.add_name(block)
-                        case "main_feature" | "versions" | "options" | "dirty":
-                            self.state_machine.add_info(block)
-                        case _:
-                            raise Exception(f"Found state not expected: {self.state_machine.current_state.id}")
+                    self.state_machine.parse_block(block)
                     should_stop = self.state_machine.current_state.id == state_id
         raise Exception("We should not reach this point, something went wrong")
 
@@ -70,7 +62,8 @@ class TestPdfExtraction(unittest.TestCase):
     def test_machine_application_field(self):
         page_idx, block_idx = self._move_to_desired_state("application_field")
         self.assertEqual(self.state_machine.current_state.id, "application_field")
-        self.state_machine.add_application(self.pages_dict[page_idx]["blocks"][block_idx])
+        cur_page_idx, cur_block_idx = self._skip_bad_block(page_idx, block_idx)
+        self.state_machine.parse_block(self.pages_dict[cur_page_idx]["blocks"][cur_block_idx])
         self.assertEqual(self.state_machine.current_machine.application_field, "pre-threaded plastic caps capper")
         self.assertEqual(self.state_machine.current_state.id, "machine_name")
 
@@ -78,7 +71,7 @@ class TestPdfExtraction(unittest.TestCase):
         page_idx, block_idx = self._move_to_desired_state("machine_name")
         self.assertEqual(self.state_machine.current_state.id, "machine_name")
         cur_page_idx, cur_block_idx = self._skip_bad_block(page_idx, block_idx)
-        self.state_machine.add_name(self.pages_dict[cur_page_idx]["blocks"][cur_block_idx])
+        self.state_machine.parse_block(self.pages_dict[cur_page_idx]["blocks"][cur_block_idx])
         self.assertEqual(self.state_machine.current_machine.name, "euro pk")
         self.assertEqual(self.state_machine.current_state.id, "main_feature")
 
@@ -95,7 +88,7 @@ class TestPdfExtraction(unittest.TestCase):
         for block in self.pages_dict[cur_page_idx]["blocks"][cur_block_idx:]:
             if self.state_machine.current_state.id != "main_feature":
                 break
-            self.state_machine.add_info(block)
+            self.state_machine.parse_block(block)
         self.assertDictEqual(self.state_machine.current_machine.main_features, main_features)
         self.assertEqual(self.state_machine.current_state.id, "versions")
 
@@ -115,7 +108,7 @@ class TestPdfExtraction(unittest.TestCase):
         for block in self.pages_dict[cur_page_idx]["blocks"][cur_block_idx:]:
             if self.state_machine.current_state.id != "versions":
                 break
-            self.state_machine.add_info(block)
+            self.state_machine.parse_block(block)
         self.assertDictEqual(self.state_machine.current_machine.versions, versions)
         self.assertEqual(self.state_machine.current_state.id, "options")
 
@@ -150,7 +143,7 @@ class TestPdfExtraction(unittest.TestCase):
         for block in self.pages_dict[cur_page_idx]["blocks"][cur_block_idx:]:
             if self.state_machine.current_state.id != "options":
                 break
-            self.state_machine.add_info(block)
+            self.state_machine.parse_block(block)
         self.assertDictEqual(self.state_machine.current_machine.other_info, options)
         # we can move to a bunch of different state, understand how test it
         # self.assertEqual(self.state_machine.current_state.id, "options")
@@ -158,22 +151,17 @@ class TestPdfExtraction(unittest.TestCase):
     def test_finish_machine_info_page(self):
         mock_machine = Machine()
         mock_machine.application_field = "pre-threaded plastic caps capper"
-        mock_machine.name = "euro pk"
+        # mock_machine.name = "euro pk"
         page_idx, block_idx = self._move_to_desired_state("options")
         self.assertEqual(self.state_machine.current_state.id, "options")
         cur_page_idx, cur_block_idx = self._skip_bad_block(page_idx, block_idx)
         for idx, page in enumerate(self.pages_dict[cur_page_idx:], start=cur_page_idx):
             cur_block_idx = 0 if idx > cur_page_idx else cur_block_idx
             for block in page["blocks"][cur_block_idx:]:
-                # for block in page["blocks"]:
                 if block["type"] != 0:
                     continue
-                if self.state_machine.current_state.id == "application_field":
-                    self.state_machine.add_application(block)
-                elif self.state_machine.current_state.id == "options" or self.state_machine.current_state.id == "dirty":
-                    self.state_machine.add_info(block)
-                elif self.state_machine.current_state.id == "machine_name":
-                    self.state_machine.add_name(block)
+                self.state_machine.parse_block(block)
+
         self.assertEqual(self.state_machine.current_machine, mock_machine)
 
 
