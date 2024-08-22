@@ -1,24 +1,18 @@
-from dataclasses import dataclass, field
-
 from collections import defaultdict
 from copy import copy
 from typing import Any, List
 from statemachine import StateMachine, State
 
-# from src.preprocessing.machine import Machine, PdfData
-from .machine import Machine, PdfData
+from .machine import Machine
 
 utf8_dot = "\xe2\x80\xa2"
 unicode_dot = "\u2022"
+open_quote = "\u201c"
+close_quote = "\u201d"
+unicode_diameter = "\u00f8"
+unicode_less_or_equal = "\uf0a3"
 
 # TODO: "" are parsed wrong in (STANDARD FOR “FREE STANDING” VERSION)
-
-
-@dataclass(eq=False)
-class MutableStateValue:
-    last_seen_type: str = field(default="")
-    last_seen_key_value: str = field(default="")
-
 
 class PdfPreprocessing(StateMachine):
 
@@ -71,14 +65,19 @@ class PdfPreprocessing(StateMachine):
         for line_dict in block["lines"]:
             for span_dict in line_dict["spans"]:
                 text += span_dict["text"].lower() + " "
-        application_field = text.strip()
+        application_field = self._sanitize_text(text.strip())
         self.save_current_machine_if_needed()
         self.current_machine = Machine()
         self.current_machine.application_field = application_field
 
     @machine_name.enter
     def add_machine_name(self, block):
-        name = block["lines"][0]["spans"][0]["text"].lower()
+        name = ""
+        for line in block["lines"]:
+            for span in line["spans"]:
+                name = f"{name} {span["text"].lower()}".strip()
+        name = self._sanitize_text(name)
+        # name = self._sanitize_text(block["lines"][0]["spans"][0]["text"].lower())
         machines_for_application_field = self.machines.get(self.current_machine.application_field)
         if machines_for_application_field is not None:
             for machine in machines_for_application_field:
@@ -111,7 +110,7 @@ class PdfPreprocessing(StateMachine):
                         key = span["text"].lower().strip()
                     last_span_seen_is_key = True
                 else:
-                    full_span = span["text"].lower().strip()
+                    full_span = self._sanitize_text(span["text"].lower().strip())
                     last_features_added = info_dict.get(key)
                     if last_features_added is not None and last_span_seen_is_key == False:
                         last_feature_added = last_features_added.pop()
@@ -154,3 +153,10 @@ class PdfPreprocessing(StateMachine):
 
     def _is_key(self, span) -> bool:
         return "Bold" in span["font"]
+    
+    def _sanitize_text(self, value: str) -> str:
+        return value.replace(open_quote, "'")\
+                    .replace(close_quote, "'")\
+                    .replace(unicode_diameter, "diameter")\
+                    .replace(unicode_less_or_equal, "less or equal")
+
