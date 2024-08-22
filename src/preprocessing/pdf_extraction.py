@@ -38,6 +38,7 @@ class PdfPreprocessing(StateMachine):
         | machine_name.to(main_feature, cond="is_main_features_section")
         | machine_name.to(dirty, unless="is_main_features_section")
         | main_feature.to(versions, cond="is_versions_section")
+        | main_feature.to(dirty, cond="is_dirty")
         | main_feature.to(main_feature, unless="is_versions_section")
         | versions.to(options, cond="is_options_section")
         | versions.to(versions, unless="is_options_section")
@@ -71,9 +72,7 @@ class PdfPreprocessing(StateMachine):
             for span_dict in line_dict["spans"]:
                 text += span_dict["text"].lower() + " "
         application_field = text.strip()
-        # check if we already have created a complete machine and we need to save it
-        if self.current_machine is not None and self.current_machine.other_info is not None:
-            self.machines[self.current_machine.application_field].append(copy(self.current_machine))
+        self.save_current_machine_if_needed()
         self.current_machine = Machine()
         self.current_machine.application_field = application_field
 
@@ -120,6 +119,14 @@ class PdfPreprocessing(StateMachine):
                     for info in full_span.split(unicode_dot):
                         info_dict[key].append(info.strip())
                     last_span_seen_is_key = False
+
+    @go_to_final_state.on
+    def save_current_machine_if_needed(self) -> bool:
+        if self.current_machine is not None and self.current_machine.name != "":
+            self.machines[self.current_machine.application_field].append(copy(self.current_machine))
+            return True
+        return False
+
 
     def is_application_field_section(self, block):
         span = block["lines"][0]["spans"][0]

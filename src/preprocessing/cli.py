@@ -1,6 +1,7 @@
 import json
 import pymupdf
 
+from typing import Generator
 from pathlib import Path
 from argparse import ArgumentParser
 from tqdm import tqdm
@@ -50,9 +51,9 @@ def main_preprocessing_cli():
     doc = pymupdf.open(pdf_path)
     state_machine = PdfPreprocessing()
     # doc.pages() follow the same convension of bult-in range() function => stop is excluded
-    pages_iterator: Iterable[Page] = doc.pages(start=args.start_page - 1, stop=args.end_page)  # type: ignore (pages() -> Unknown, pyrigth is mad about it)\
+    pages_gen: Generator[Page] = doc.pages(start=args.start_page - 1, stop=args.end_page)  # type: ignore (pages() -> Unknown, pyrigth is mad about it)\
     total_page_parsed = (args.end_page - args.start_page) + 1
-    for page in tqdm(pages_iterator, total=total_page_parsed):
+    for page in tqdm(pages_gen, total=total_page_parsed):
         page_structure = page.get_text(option="dict", sort=True)
         for block in page_structure["blocks"]:
             if block["type"] == 0:
@@ -61,6 +62,8 @@ def main_preprocessing_cli():
 
     output_path = Path(args.file_out_path)
     with open(output_path, mode="w") as out_f:
-        for k, v in state_machine.machines.items():
-            json.dump({k: v}, out_f, cls=MachineEncoder)
+        machines = []
+        for machine_list in state_machine.machines.values():
+            machines.extend(machine_list)
+        json.dump(machines, out_f, cls=MachineEncoder)
     print(f"{total_page_parsed} pages has been processed")
