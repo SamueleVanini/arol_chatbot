@@ -4,7 +4,7 @@ from typing import Optional
 
 from pydantic import BaseModel, Field
 
-type PdfData = dict[str, list[str]]
+PdfData = dict[str, list[str]]
 
 
 class Machine:

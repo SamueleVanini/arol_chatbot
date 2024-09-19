@@ -75,7 +75,7 @@ class PdfPreprocessing(StateMachine):
         name = ""
         for line in block["lines"]:
             for span in line["spans"]:
-                name = f"{name} {span["text"].lower()}".strip()
+                name = f'{name} {span["text"].lower()}'.strip()
         name = self._sanitize_text(name)
         # name = self._sanitize_text(block["lines"][0]["spans"][0]["text"].lower())
         machines_for_application_field = self.machines.get(self.current_machine.application_field)
@@ -105,7 +105,7 @@ class PdfPreprocessing(StateMachine):
             for span in line["spans"]:
                 if self._is_key(span):
                     if key is not None:
-                        key = f"{key} {span["text"].lower().strip()}"
+                        key = f'{key} {span["text"].lower().strip()}'
                     else:
                         key = span["text"].lower().strip()
                     last_span_seen_is_key = True

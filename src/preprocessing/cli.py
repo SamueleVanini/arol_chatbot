@@ -51,7 +51,7 @@ def main_preprocessing_cli():
     doc = pymupdf.open(pdf_path)
     state_machine = PdfPreprocessing()
     # doc.pages() follow the same convension of bult-in range() function => stop is excluded
-    pages_gen: Generator[Page] = doc.pages(start=args.start_page - 1, stop=args.end_page)  # type: ignore (pages() -> Unknown, pyrigth is mad about it)\
+    pages_gen: Generator[pymupdf.Page] = doc.pages(start=args.start_page - 1, stop=args.end_page)  # type: ignore (pages() -> Unknown, pyrigth is mad about it)\
     total_page_parsed = (args.end_page - args.start_page) + 1
     for page in tqdm(pages_gen, total=total_page_parsed):
         page_structure = page.get_text(option="dict", sort=True)
