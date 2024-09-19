@@ -1,7 +1,7 @@
 from collections import defaultdict
 import json
 
-type PdfData = dict[str, list[str]]
+PdfData = dict[str, list[str]]
 
 
 class Machine:

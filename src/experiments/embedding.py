@@ -54,8 +54,8 @@ def print_documents_tokens_statistics(docs: list[str], model_name, apply_padding
 if __name__ == "__main__":
     loader = JSONLoader(file_path="./data/processed_catalog.json", jq_schema=".[]", text_content=False)
     documents = loader.load()
-    print(f"EMBEDDING: {EMBEDDING_NAMES["ALL-MINILM"]}")
-    print(f"TOKENIZER: {TOKENIZER_NAMES['ALL-MINILM']}")
+    print(f'EMBEDDING: {EMBEDDING_NAMES["ALL-MINILM"]}')
+    print(f'TOKENIZER: {TOKENIZER_NAMES["ALL-MINILM"]}')
     embedding_function = get_embedding_function(EMBEDDING_NAMES["ALL-MINILM"])
     docs_content = [doc.page_content for doc in documents]
     print_documents_len_statistics(docs_content)
