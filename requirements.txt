@@ -1,0 +1,15 @@
+pymupdf==1.24.9
+python-statemachine==2.3.4
+tqdm~=4.66.5
+langchain_chroma
+sentence-transformers
+langchain_community
+langsmith
+langchain_experimental
+jq
+langchain-groq
+fastapi[standard]
+uvicorn
+langchain
+pydantic
+langchain_redis
