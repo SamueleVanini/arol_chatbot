@@ -128,6 +128,22 @@ header {
   border-radius: 5px;
 }
 
+.incoming {
+  background-color: blue;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 5px 0;
+}
+
+.outgoing {
+  background-color: grey;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 5px 0;
+}
+
 button {
   padding: 10px 20px;
   border: none;

@@ -18,7 +18,7 @@ function Chat() {
     const sessionId = uuidv4(); // Genera un ID univoco per la sessione
 
     try {
-      const result = await axios.post('http://127.0.0.1:8000/query', {
+      const result = await axios.post('http://127.0.0.1:80/query', {
         session_id: sessionId,
         input: input
       });

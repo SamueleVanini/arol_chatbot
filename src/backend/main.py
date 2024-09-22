@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from src.service.chatbot_service import ArolChatBot
 from pydantic import BaseModel
 
@@ -6,6 +7,19 @@ from pydantic import BaseModel
 app = FastAPI()
 
 chat_bot = None
+
+origins = [
+    "http://localhost:3000",
+    # Aggiungi altri domini se necessario
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # Define your data models
@@ -22,6 +36,10 @@ class Response(BaseModel):
 async def startup_event():
     global chat_bot
     chat_bot = await ArolChatBot().initialize_chat_bot()
+
+@app.options("/query")
+async def options_query():
+    return {"Allow": "POST, OPTIONS"}
 
 
 @app.post("/query", response_model=Response)
