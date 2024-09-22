@@ -1,7 +1,33 @@
 import React from 'react';
 import './Chat.css';
+import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 
 function Chat() {
+
+  const [data, setData] = useState(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const requestId = uuidv4(); // Genera un ID univoco per la richiesta
+        console.log(`Request ID: ${requestId}`); // Stampa l'ID della richiesta per il debug
+
+        const response = await axios.get('http://127.0.0.1:5000/api/chat', {
+          headers: {
+            'X-Request-ID': requestId // Invia l'ID univoco come intestazione
+          }
+        });
+        setData(response.data);
+      } catch (error) {
+        console.error('There was an error fetching the data!', error);
+      }
+    };
+
+    fetchData();
+  }, [location.pathname]);
+
   return (
     <div className="chat-container">
       <div className="list-container">

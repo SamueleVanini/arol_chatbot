@@ -8,19 +8,7 @@ import axios from 'axios';
 
 
 function App() {
-
-  const [data, setData] = useState(null);
-
-
-  useEffect(() => {
-    axios.get('http://127.0.0.1:5000/api/data')
-      .then(response => {
-        setData(response.data);
-      })
-      .catch(error => {
-        console.error('There was an error fetching the data!', error);
-      });
-  }, []);
+  
 
   return (
     <Routes>

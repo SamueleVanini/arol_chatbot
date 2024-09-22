@@ -24,3 +24,8 @@ To run all the available tests, navigate to the project's root directory and run
 
 ## Libraries used and useful guides
 Refer to [PROJECT.md](PROJECT.md) for a list of all libraries, documentation and guides used to set-up and develop the project.
+
+fastapi dev main.py
+docker build -t myarolimage .
+docker run -d --name arolcontainer -p 80:80 myimage
+*myarolimage
