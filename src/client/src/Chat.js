@@ -1,71 +1,80 @@
-import React from 'react';
+import React, { useState } from 'react'; 
 import './Chat.css';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
 function Chat() {
+  const [input, setInput] = useState('');
+  const [response, setResponse] = useState(null);
+  const [chatHistory, setChatHistory] = useState([
+    { type: 'incoming', message: 'dogs' }, 
+    { type: 'incoming', message: 'cats' }, 
+  ]);
+  const [currentChat, setCurrentChat] = useState([
+    { type: 'incoming', message: 'Hi, how can I help you today?' }
+  ]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const sessionId = uuidv4(); // Genera un ID univoco per la sessione
 
-  const [data, setData] = useState(null);
-  const location = useLocation();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const requestId = uuidv4(); // Genera un ID univoco per la richiesta
-        console.log(`Request ID: ${requestId}`); // Stampa l'ID della richiesta per il debug
-
-        const response = await axios.get('http://127.0.0.1:5000/api/chat', {
-          headers: {
-            'X-Request-ID': requestId // Invia l'ID univoco come intestazione
-          }
-        });
-        setData(response.data);
-      } catch (error) {
-        console.error('There was an error fetching the data!', error);
-      }
-    };
-
-    fetchData();
-  }, [location.pathname]);
+    try {
+      const result = await axios.post('http://127.0.0.1:8000/query', {
+        session_id: sessionId,
+        input: input
+      });
+      const newMessage = { type: 'outgoing', message: input };
+      const newResponse = { type: 'incoming', message: result.data.answer };
+      setCurrentChat([...currentChat, newMessage, newResponse]);
+      setResponse(result.data.answer);
+      setInput(''); // Resetta il campo di input
+    } catch (error) {
+      console.error('There was an error!', error);
+    }
+  };
 
   return (
     <div className="chat-container">
       <div className="list-container">
         <h2 className='history'>HISTORY</h2>
         <ul>
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
+          {chatHistory.map((chat, index) => (
+            <li key={index} className={`chat-${chat.type}`}>
+              <p>{chat.message}</p>
+            </li>
+          ))}
         </ul>
       </div> 
       <div className="image-container">
-          <img src="th.jpeg" alt="AROL" className="image2" />
-        </div>
-        
-    <div className="chat">
-      
-      <div className="border-chat"> 
-        
-        <div className="chatBot">
-          
-          <ul className="chatbox">
-            <li className="chat-incoming chat">
-              <p>Hey! How can I assist you today?</p>
-            </li>
-            <li className="chat-incoming chat">
-              <p>Hi, talk about cats</p>
-            </li>
-            <li className="chat-incoming chat">
-              <p>The cat (Felis catus), also referred to as domestic cat or house cat, is a small domesticated carnivorous mammal. It is the only domesticated species of the family Felidae. Advances in archaeology and genetics have shown that the domestication of the cat occurred in the Near East around 7500 BC. It is commonly kept as a house pet and farm cat, but also ranges freely as a feral cat avoiding human contact. Valued by humans for companionship and its ability to kill vermin, the cat's retractable claws are adapted to killing small prey like mice and rats. It has a strong, flexible body, quick reflexes, and sharp teeth, and its night vision and sense of smell are well developed. It is a social species, but a solitary hunter and a crepuscular predator. Cat communication includes vocalizations like meowing, purring, trilling, hissing, growling, and grunting as well as cat body language. It can hear sounds too faint or too high in frequency for human ears, such as those made by small mammals. It secretes and perceives pheromones.</p>
-            </li>
-          </ul>
-          <div className="chat-input">
-            <textarea className="text" rows="0" cols="17" placeholder="Enter a message..."></textarea>
-            <button id="sendBTN">Send</button>
+        <img src="th.jpeg" alt="AROL" className="image2" />
+      </div>
+
+      <div className="chat">
+        <div className="border-chat"> 
+          <div className="chatBot">
+            <ul className="chatbox">
+              {currentChat.map((chat, index) => (
+                <li key={index} className={`chat-${chat.type} chat`}>
+                  <p>{chat.message}</p>
+                </li>
+              ))}
+            </ul>
+            <div className="chat-input">
+              <form onSubmit={handleSubmit}>
+                <textarea
+                  className="text"
+                  rows="1"
+                  cols="17"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Enter a message..."
+                ></textarea>
+                <button type="submit" id="sendBTN">Send</button>
+              </form>
+              {response && <p>Response: {response}</p>}
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }
