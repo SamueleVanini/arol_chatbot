@@ -7,8 +7,8 @@ function Chat() {
   const [input, setInput] = useState('');
   const [response, setResponse] = useState(null);
   const [chatHistory, setChatHistory] = useState([
-    { type: 'incoming', message: 'dogs' }, 
-    { type: 'incoming', message: 'cats' }, 
+    { type: 'past', message: 'dogs' }, 
+    { type: 'past', message: 'cats' }, 
   ]);
   const [currentChat, setCurrentChat] = useState([
     { type: 'incoming', message: 'Hi, how can I help you today?' }
@@ -19,12 +19,13 @@ function Chat() {
 
     try {
       const result = await axios.post('http://127.0.0.1:80/query', {
-        session_id: sessionId,
-        input: input
-      });
+         session_id: sessionId,
+         input: input
+       });
       const newMessage = { type: 'outgoing', message: input };
       const newResponse = { type: 'incoming', message: result.data.answer };
-      setCurrentChat([...currentChat, newMessage, newResponse]);
+      setCurrentChat([...currentChat, newMessage]);
+      setCurrentChat([...currentChat, newResponse]);
       setResponse(result.data.answer);
       setInput(''); // Resetta il campo di input
     } catch (error) {
@@ -51,10 +52,12 @@ function Chat() {
       <div className="chat">
         <div className="border-chat"> 
           <div className="chatBot">
-            <ul className="chatbox">
+          <ul className="chatbox">
               {currentChat.map((chat, index) => (
                 <li key={index} className={`chat-${chat.type} chat`}>
-                  <p>{chat.message}</p>
+                  <div className="chat-bubble">
+                    <p>{chat.message}</p>
+                  </div>
                 </li>
               ))}
             </ul>
