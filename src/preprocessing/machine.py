@@ -27,10 +27,10 @@ class Machine:
 
 
 class MachineModel(BaseModel):
-    """Search over a database of customised capping machines for any closure need."""
+    """Search over a database of industial machines about capping."""
 
     content_search: str = Field(
-        ..., description="Similarity search query applied to the machine objects expressed in json format"
+        ..., description="Similarity search query applied to the machines object expressed in json format"
     )
     name: Optional[str] = Field(
         ..., description="Complete or partial name of the machine. Only use if explicitly specified."
@@ -48,11 +48,11 @@ class MachineModel(BaseModel):
         None,
         description="Machine versions dictionary. The key is the name of the version while the value gives more infomation about the machine version. Only use if explicitly specified.",
     )
-    options: Optional[dict[str, list[str]]] = Field(
-        # default=defaultdict(list[str]),
-        None,
-        description="Machine options dictionary. The key is the type of option while the value gives more infomation about the configuration of the option. Only use if explicitly specified.",
-    )
+    # options: Optional[dict[str, list[str]]] = Field(
+    #     # default=defaultdict(list[str]),
+    #     None,
+    #     description="Machine options dictionary. The key is the type of option while the value gives more infomation about the configuration of the option. Only use if explicitly specified.",
+    # )
 
     def pretty_print(self) -> None:
         for field in self.model_fields:
