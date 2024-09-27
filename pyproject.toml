@@ -6,7 +6,7 @@ authors = [
     { name = "Greta Tumiatti" },
     { name = "Amirali" },
 ]
-dependencies = ["pymupdf==1.24.9", "python-statemachine==2.3.4", "tqdm"]
+dependencies = ["pymupdf==1.24.9", "python-statemachine==2.3.4", "tqdm", "pydantic"]
 requires-python = ">=3.12"
 
 [project.scripts]

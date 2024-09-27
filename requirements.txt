@@ -8,6 +8,7 @@ langchain_redis
 langchain_experimental
 langchain-groq
 langsmith
+lark
 llama-cpp-python==0.2.89
 jq==1.8.0                           
 python-dotenv
