@@ -15,7 +15,7 @@ class ArolChatBot:
         retriever = create_vectorstore_retriever(indexing)
         history_aware_retriever = get_history_aware_retriever(llm=llm, retriever=retriever)
         # Initialize the builder with desired options
-        chain_builder = LangChainBuilder(chain_type=ChainType.CHAT, memory_type=MemoryType.REDIS)
+        chain_builder = LangChainBuilder(chain_type=ChainType.CHAT, memory_type=MemoryType.REDIS) #ChainType: An enumeration of the types of chains
 
         # Build the chain
         final_chain = chain_builder.build_chain(llm, history_aware_retriever)
