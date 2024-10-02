@@ -1,26 +1,62 @@
+import multiprocessing
+import os
 from os.path import expanduser
-from langchain_community.llms.llamacpp import LlamaCpp
+from pathlib import Path
+from langchain_community.chat_models import ChatLlamaCpp
+from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_groq import ChatGroq
 
 
-def create_llm_model(is_local=False, local_path: str | None = None): #based on groq
-    def create_local_llm(model_path: str):
-        model_path = expanduser(model_path) #expanduser: Expand the path to the user's home directory
+class LlmFactory:
 
-        llm = LlamaCpp(
-            model_path=model_path,
-            n_ctx=4096, #n_ctx: The number of tokens in the context window
-            max_tokens=1024, #max_tokens: The maximum number of tokens to generate
-            temperature=0.65, #temperature: The temperature of the sampling distribution
-            verbose=True #verbose: Whether to print debug information
+    def __init__(self) -> None:
+        raise EnvironmentError(
+            "Llm is designed to be instantiated using the `LlmFactory.get_model(pretrained_model_name_or_path)` method."
         )
-        return llm #llama cpp 
 
-    def create_groq_llm(model="llama3-8b-8192"):
-        llm = ChatGroq(model=model)
-        return llm
+    @classmethod
+    def get_model(cls, model_path_or_name: str | Path, **kwargs):
+        if isinstance(model_path_or_name, Path):
+            model_path = expanduser(model_path_or_name)
+            return LlamaCppFactory(model_path, **kwargs).get_model()
+        else:
+            return GroqFactory(model_path_or_name, **kwargs).get_model()
 
-    if is_local:
-        return create_local_llm(local_path)
-    else:
-        return create_groq_llm()
+
+class LlamaCppFactory:
+
+    def __init__(self, model_path: str, *inputs, **kwargs) -> None:
+        path = Path(model_path)
+        if not path.exists() or not path.is_file():
+            raise ValueError(f"The model path {path} does not exist")
+        self.model_path = model_path
+        self.verbose = kwargs.pop("verbose", False)
+        self.streaming = kwargs.pop("streaming", False)
+        self.temperature = kwargs.pop("temperature", 0)
+        self.inputs = inputs
+        self.kwargs = kwargs
+
+    def get_model(self) -> BaseChatModel:
+        return ChatLlamaCpp(
+            model_path=self.model_path,
+            verbose=self.verbose,
+            streaming=self.streaming,
+            temperature=self.temperature,
+            n_threads=multiprocessing.cpu_count() - 1,
+            **self.kwargs,
+        )
+
+
+class GroqFactory:
+
+    def __init__(self, model_name: str, *inputs, **kwargs) -> None:
+        self.model_name = model_name
+        self.inputs = inputs
+        self.kwargs = kwargs
+        if "GROQ_API_KEY" not in os.environ:
+            raise EnvironmentError(
+                "Missing GROQ_API_KEY in environment variables, please specify it in the .env file or in the operating system to use the Groq provider"
+            )
+
+    def get_model(self) -> BaseChatModel:
+        return ChatGroq(model=self.model_name, *self.inputs, **self.kwargs)

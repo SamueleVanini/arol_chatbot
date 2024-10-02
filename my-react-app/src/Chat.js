@@ -15,6 +15,8 @@ function Chat() {
   ]);
   const handleSubmit = async (e) => {
     e.preventDefault();
+    //TODO generate the session id with simpler things the uuidv4 is apparently too complicated for the redis
+    //TODO Also since this a react project you should keep the sessionId as a state. unless it changes everytime a state changes
     const sessionId = uuidv4(); // Genera un ID univoco per la sessione
 
     try {

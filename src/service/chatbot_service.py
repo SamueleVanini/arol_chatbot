@@ -2,14 +2,14 @@ from core.config import configure_system
 from .file_loader_service import file_loader
 from .indexing_serivce import create_embeddings
 from .langchain_builder_service import LangChainBuilder, ChainType, MemoryType
-from .llm_service import create_llm_model
+from .llm_service import LlmFactory
 from .retriever_service import create_vectorstore_retriever, get_history_aware_retriever
 
 
 class ArolChatBot:
     async def initialize_chat_bot(self):
         configure_system()
-        llm = create_llm_model()
+        llm = LlmFactory.get_model("llama3-8b-8192", temperature=0)
         docs = file_loader(file_path="src/backend/processed_catalog.json", loader_model="json")
         indexing = create_embeddings(docs=docs)
         retriever = create_vectorstore_retriever(indexing)
