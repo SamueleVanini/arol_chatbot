@@ -1,37 +1,60 @@
-import React, { useState } from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 import './Chat.css';
-import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
 
 function Chat() {
   const [input, setInput] = useState('');
-  const [response, setResponse] = useState(null);
-  const [chatHistory, setChatHistory] = useState([
-    { type: 'past', message: 'dogs' }, 
-    { type: 'past', message: 'cats' }, 
-  ]);
+  const [response, setResponse] = useState('');
   const [currentChat, setCurrentChat] = useState([
-    { type: 'incoming', message: 'Hi, how can I help you today?' }
+      { type: 'incoming', message: 'Hi, how can I help you today?' }
   ]);
+  const [chatHistory, setChatHistory] = useState([
+    { type: 'incoming', message: 'Example' }
+]);
+
+  // Generate a simpler session ID
+  const generateSessionId = () => {
+      return Math.random().toString(36).substr(2, 9);
+  };
+
+  // Initialize sessionId state
+  const [sessionId, setSessionId] = useState(generateSessionId());
+
+  useEffect(() => {
+      // If you need to perform any side effects with sessionId, do it here
+      console.log('Session ID:', sessionId);
+  }, [sessionId]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const sessionId = uuidv4(); // Genera un ID univoco per la sessione
-
+    // Use the sessionId from state
     try {
-      const result = await axios.post('http://127.0.0.1:80/query', {
-         session_id: sessionId,
-         input: input
-       });
-      const newMessage = { type: 'outgoing', message: input };
-      const newResponse = { type: 'incoming', message: result.data.answer };
-      setCurrentChat([...currentChat, newMessage]);
-      setCurrentChat([...currentChat, newResponse]);
-      setResponse(result.data.answer);
-      setInput(''); // Resetta il campo di input
+        const response = await fetch('http://127.0.0.1:80/query', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                session_id: sessionId,
+                input: input
+            })
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Network response was not ok: ${response.status} - ${errorText}`);
+        }
+
+        const result = await response.json();
+        const newMessage = { type: 'outgoing', message: input };
+        const newResponse = { type: 'incoming', message: result.answer };
+        setCurrentChat([...currentChat, newMessage, newResponse]);
+        setResponse(result.answer);
+        setInput(''); // Reset the input field
     } catch (error) {
-      console.error('There was an error!', error);
+        console.error('There was an error!', error);
     }
-  };
+};
+
 
   return (
     <div className="chat-container">
@@ -73,7 +96,6 @@ function Chat() {
                 ></textarea>
                 <button type="submit" id="sendBTN">Send</button>
               </form>
-              {response && <p>Response: {response}</p>}
             </div>
           </div>
         </div>
@@ -83,3 +105,79 @@ function Chat() {
 }
 
 export default Chat;
+
+
+
+
+/**
+ * 
+ * import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const Chat = () => {
+    const [input, setInput] = useState('');
+    const [response, setResponse] = useState('');
+    const [currentChat, setCurrentChat] = useState([
+        { type: 'incoming', message: 'Hi, how can I help you today?' }
+    ]);
+
+    // Generate a simpler session ID
+    const generateSessionId = () => {
+        return Math.random().toString(36).substr(2, 9);
+    };
+
+    // Initialize sessionId state
+    const [sessionId, setSessionId] = useState(generateSessionId());
+
+    useEffect(() => {
+        // If you need to perform any side effects with sessionId, do it here
+        console.log('Session ID:', sessionId);
+    }, [sessionId]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        // Use the sessionId from state
+        try {
+            const result = await axios.post('http://127.0.0.1:80/query', {
+                session_id: sessionId,
+                input: input
+            });
+            const newMessage = { type: 'outgoing', message: input };
+            const newResponse = { type: 'incoming', message: result.data.answer };
+            setCurrentChat([...currentChat, newMessage]);
+            setCurrentChat([...currentChat, newResponse]);
+            setResponse(result.data.answer);
+            setInput(''); // Reset the input field
+        } catch (error) {
+            console.error('There was an error!', error);
+        }
+    };
+
+    return (
+        <div>
+            <p>Session ID: {sessionId}</p>
+           
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                />
+                <button type="submit">Send</button>
+            </form>
+            <div>
+                {currentChat.map((chat, index) => (
+                    <p key={index} className={chat.type}>{chat.message}</p>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+export default Chat;
+ * 
+ * 
+ * 
+ * 
+ * 
+ */

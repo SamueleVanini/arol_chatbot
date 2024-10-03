@@ -5,9 +5,9 @@ from .langchain_builder_service import LangChainBuilder, ChainType, MemoryType
 from .llm_service import create_llm_model
 from .retriever_service import create_vectorstore_retriever, get_history_aware_retriever
 
-
 class ArolChatBot:
     async def initialize_chat_bot(self):
+
         configure_system()
         llm = create_llm_model()
         docs = file_loader(file_path="src/backend/processed_catalog.json", loader_model="json")

@@ -6,5 +6,5 @@ REDIS_URL: str = \
 
 def configure_system():
     os.environ['LANGCHAIN_TRACING_V2'] = 'true'
-    os.environ['LANGCHAIN_API_KEY'] = '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"'
-    os.environ["GROQ_API_KEY"] = "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"
+    os.environ['LANGCHAIN_API_KEY'] = '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"'
+    os.environ["GROQ_API_KEY"] = "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"

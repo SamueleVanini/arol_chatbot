@@ -4,6 +4,7 @@
   height: 100vh;
   width: 100%;
   padding-right: 40px; /* Add padding to move the chat to the left */
+  background-color: #01265a;
 }
 
 .history {
@@ -18,7 +19,7 @@
 .list-container {
   width: 35%;
   padding: 20px;
-  padding-top: 150px; /* Add padding to move the list down */
+  padding-top: 200px; /* Add padding to move the list down */
   padding-left: 40px;
   box-sizing: border-box;
 }
@@ -40,7 +41,7 @@
   display: flex;
   justify-content: flex-end; /* Align chat to the right */
   align-items: center;
-  width: 70%;
+  width: 95%;
   box-sizing: border-box;
 }
 
@@ -78,7 +79,7 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  padding: 10px;
+  padding: 30px;
   background-color: #f0f0f0;
 }
 
