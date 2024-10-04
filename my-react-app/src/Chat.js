@@ -85,18 +85,16 @@ function Chat() {
               ))}
             </ul>
             <div className="chat-input">
-              <form onSubmit={handleSubmit}>
-                <textarea
-                  className="text"
-                  rows="1"
-                  cols="17"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Enter a message..."
-                ></textarea>
-                <button type="submit" id="sendBTN">Send</button>
-              </form>
-            </div>
+          <textarea
+            className="text"
+            rows="1"
+            cols="17"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Enter a message..."
+          ></textarea>
+          <button className="button_chat" type="button" id="sendBTN" onClick={handleSubmit}>Send</button>
+        </div>
           </div>
         </div>
       </div>

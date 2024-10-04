@@ -106,8 +106,9 @@ header {
   padding: 10px;
   margin-right: 10px;
   padding-top: 10px;
-  border: 1px solid #ccc;
+  border: 3px solid #ccc;
   border-radius: 5px;
+  width: 90%;
 }
 
 .chat-incoming .chat-bubble {
@@ -141,8 +142,10 @@ header {
   align-self: flex-end;
 }
 
-button {
-  padding: 10px 20px;
+
+
+.button_chat {
+  padding: 10px 10px;
   border: none;
   background-color: #0084ff;
   color: white;
@@ -150,9 +153,16 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.button_chat:hover {
   background-color: #005bb5;
 }
+
+.chat-input {/* Cambia la direzione del flex per posizionare gli elementi in colonna */
+  display: flex; 
+  align-items: center; /* Allinea gli elementi a sinistra */
+}
+
+
 
 /* Media queries for responsiveness */
 @media (max-width: 600px) {
