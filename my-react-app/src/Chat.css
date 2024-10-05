@@ -32,9 +32,10 @@
 .list-container li {
   margin-bottom: 10px;
   padding: 10px;
-  background-color: #fff;
+  background-color: #b9acac;
   border: 1px solid #ccc;
   border-radius: 5px;
+  width: 60%;
 }
 
 .chat {
@@ -43,21 +44,6 @@
   align-items: center;
   width: 95%;
   box-sizing: border-box;
-}
-
-.border-chat {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  background-color: #fff;
-  width: 100%;
-  height: 85%; 
-  max-width: 600px;
-  box-sizing: border-box;
-  position: relative;
 }
 
 .image-container {
@@ -77,10 +63,11 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  height: 100%;
-  padding: 30px;
+  width: 150%;
+  height: 90%;
   background-color: #f0f0f0;
+  border-radius: 20px;
+  border: #b9acac 1px solid;
 }
 
 header {
@@ -115,15 +102,14 @@ header {
   background-color: #e0e0e0;
   color: #000;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 20px;
   margin: 10px 0;
-  max-width: 80%;
+  max-width: 100%;
   align-self: flex-start;
 }
 
 .past-chat {
-  background-color: #007bff;
-  color: #fff;
+  color: #5f5959;
   padding: 10px;
   border-radius: 10px;
   margin: 10px 0;
@@ -159,6 +145,8 @@ header {
 
 .chat-input {/* Cambia la direzione del flex per posizionare gli elementi in colonna */
   display: flex; 
+  padding-bottom: 20px;
+  width: 80%;
   align-items: center; /* Allinea gli elementi a sinistra */
 }
 

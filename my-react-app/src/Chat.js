@@ -62,7 +62,7 @@ function Chat() {
         <h2 className='history'>HISTORY</h2>
         <ul>
           {chatHistory.map((chat, index) => (
-            <li key={index} className={`chat-${chat.type}`}>
+            <li key={index} className="past-chat">
               <p>{chat.message}</p>
             </li>
           ))}
@@ -73,7 +73,6 @@ function Chat() {
       </div>
 
       <div className="chat">
-        <div className="border-chat"> 
           <div className="chatBot">
           <ul className="chatbox">
               {currentChat.map((chat, index) => (
@@ -93,8 +92,8 @@ function Chat() {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Enter a message..."
           ></textarea>
-          <button className="button_chat" type="button" id="sendBTN" onClick={handleSubmit}>Send</button>
-        </div>
+          <button className="button_chat" type="button" id="sendBTN" onClick={handleSubmit}>{'>'}</button>
+       
           </div>
         </div>
       </div>
