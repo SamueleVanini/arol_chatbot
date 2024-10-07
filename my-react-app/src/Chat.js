@@ -76,9 +76,9 @@ function Chat() {
           <div className="chatBot">
           <ul className="chatbox">
               {currentChat.map((chat, index) => (
-                <li key={index} className={`chat-${chat.type} chat`}>
+                <li key={index} className={`chat-bubble-${chat.type}`}>
                   <div className="chat-bubble">
-                    <p>{chat.message}</p>
+                    <p className='chat-message'>{chat.message}</p>
                   </div>
                 </li>
               ))}
