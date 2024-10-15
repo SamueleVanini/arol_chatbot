@@ -17,3 +17,5 @@ tqdm~=4.66.5
 sentence-transformers
 fastapi[standard]
 uvicorn
+scikit-learn
+icecream
