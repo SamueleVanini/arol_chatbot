@@ -2,28 +2,11 @@ import multiprocessing
 import os
 from os.path import expanduser
 from pathlib import Path
-from langchain_community.llms.llamacpp import LlamaCpp
-from langchain_groq import ChatGroq
+from langchain_community.chat_models import ChatLlamaCpp
 from langchain_core.language_models.chat_models import BaseChatModel
+from langchain_groq import ChatGroq
 from langchain_core.rate_limiters import InMemoryRateLimiter
 from langchain_community.chat_models import ChatLlamaCpp
-
-
-def create_llm_model(is_local=False, local_path: str | None = None):
-    def create_local_llm(model_path: str):
-        model_path = expanduser(model_path)
-
-        llm = LlamaCpp(model_path=model_path, n_ctx=4096, max_tokens=1024, temperature=0.65, verbose=True)
-        return llm
-
-    def create_groq_llm(model="llama3-8b-8192"):
-        llm = ChatGroq(model=model)
-        return llm
-
-    if is_local:
-        return create_local_llm(local_path)
-    else:
-        return create_groq_llm()
 
 
 class LlmFactory:
