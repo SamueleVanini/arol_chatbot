@@ -1,6 +1,6 @@
 from enum import Enum, auto
 
-system_prompt: dict[str, str] = {
+_system_prompt: dict[str, str] = {
     "llm_retrieval_with_history": (
         "Given a chat history and the latest user question "
         "which might reference context in the chat history, "
@@ -14,11 +14,13 @@ system_prompt: dict[str, str] = {
         "Given a question, return a database query optimized to retrieve the most relevant results."
         "If there are acronyms or words you are not familiar with, do not try to rephrase them."),
 
-    "qa_base": (
+    "chat": (
         "You are an AI assistant acting as a sales agent for AROL company."
         "Answer customer questions about products directly and concisely using the following information."
         "Do not create a conversation or role-play as both agent and customer."
         "If you don't know the answer, advise the customer to contact a human sales agent."
+        "\n\n"
+        "{context}"
     ),
     "metadata_extractor": (
         "Given the following JSON data about industrial machines:"
@@ -40,9 +42,9 @@ system_prompt: dict[str, str] = {
 class SystemPromptType(Enum):
     LLM_RETRIEVAL_WITH_HISTORY = "llm_retrieval_with_history"
     SELF_QUERY_WITH_METADATA = "self-querying_with_metadata"
-    SIMPLE_QA = "qa_base"
+    CHAT = "chat"
     METADATA_EXTRACTOR = "metadata_extractor"
 
 
 def get_system_prompt(prompt_type: SystemPromptType) -> str:
-    return system_prompt.get(prompt_type.value, "Prompt type not found")
+    return _system_prompt.get(prompt_type.value, "Prompt type not found")

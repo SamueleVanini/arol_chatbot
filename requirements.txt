@@ -13,3 +13,6 @@ uvicorn
 langchain
 pydantic
 langchain_redis
+pymongo
+pyjwt
+passlib[bcrypt]

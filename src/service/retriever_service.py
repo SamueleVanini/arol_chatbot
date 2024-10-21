@@ -1,30 +1,43 @@
+from enum import Enum, auto
+
 from langchain.chains import create_history_aware_retriever
-from langchain_core.prompts import MessagesPlaceholder
+from langchain.retrievers.self_query.base import SelfQueryRetriever
+from langchain_core.language_models import BaseLanguageModel
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.retrievers import BaseRetriever
+from langchain_core.runnables import Runnable
+from langchain_core.vectorstores import VectorStore
 
 
 def create_vectorstore_retriever(vectorstore):
-    retriever = vectorstore.as_retriever(search_kwargs={'k': 20}) #as_retriever: Convert the vectorstore to a retriever
+    retriever = vectorstore.as_retriever(search_kwargs={"k": 20})
     return retriever
 
 
-def get_history_aware_retriever(llm, retriever):
-    contextualize_q_system_prompt = (          #contextualize_q_system_prompt: The system prompt for the contextualize_q_prompt
-        "Given a chat history and the latest user question "
-        "which might reference context in the chat history, "
-        "formulate a standalone question which can be understood "
-        "without the chat history. Do NOT answer the question, "
-        "just reformulate it if needed and otherwise return it as is."
-    )
+class RetrieverType(Enum):
+    SELF_QUERYING = auto()
+    HISTORY_AWARE = auto()
 
-    contextualize_q_prompt = ChatPromptTemplate.from_messages( #ChatPromptTemplate: A class for creating chat prompts
-        [
-            ("system", contextualize_q_system_prompt), #contextualize_q_system_prompt: The system prompt for the contextualize_q_prompt
-            MessagesPlaceholder("chat_history"), #MessagesPlaceholder: A class for creating placeholders for messages
-            ("human", "{input}"), #input: The input to the model
-        ]
-    )
-    history_aware_retriever = create_history_aware_retriever(
-        llm, retriever, contextualize_q_prompt
-    )
-    return history_aware_retriever
+
+class RetrieverFactory:
+
+    @classmethod
+    def get_retriever(
+            cls,
+            retriever_type: RetrieverType,
+            llm: BaseLanguageModel,
+            store: VectorStore | BaseRetriever,
+            llm_context: str | ChatPromptTemplate,
+            *input,
+            **kwargs,
+    ) -> Runnable:
+        match retriever_type:
+            case RetrieverType.SELF_QUERYING:
+                if not isinstance(store, VectorStore):
+                    raise ValueError("Store object must be a VectorStore for self-querying retrieval")
+                # we should check for all the variation of the parameters type, think if it is not better to change the pattern...
+                return SelfQueryRetriever.from_llm(llm, store, llm_context, *input, **kwargs)  # type: ignore
+            case RetrieverType.HISTORY_AWARE:
+                if not isinstance(store, BaseRetriever):
+                    raise ValueError("Store object must be a BaseRetriever for HISTORY_AWARE retrieval")
+                return create_history_aware_retriever(llm, store, llm_context, *input, **kwargs)
