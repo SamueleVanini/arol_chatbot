@@ -79,7 +79,7 @@ async def startup_event():
 
 
 @app.post("/query", response_model=Response)
-async def query_model(query: Query):
+async def query_model(query: Query, current_user: dict = Depends(user_connection.get_current_user)):
     try:
         response = chat_bot.invoke(
             {"input": query.input},
@@ -131,3 +131,19 @@ async def get_user_sessions(current_user: dict = Depends(user_connection.get_cur
     username = current_user["username"]
     session_ids = user_connection.get_user_sessions(username)
     return {"session_ids": session_ids}
+
+
+@app.get("/user/session/{session_id}")
+async def get_session_history(session_id: str, current_user: dict = Depends(user_connection.get_current_user)):
+    username = current_user["username"]
+    session_ids = user_connection.get_user_sessions(username)
+
+    if session_id in session_ids:
+        history = await user_connection.get_session_history(session_id)
+        return {"history": history}
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You don't have the Permission for this request",
+            headers={"WWW-Authenticate": "Bearer"},
+        )

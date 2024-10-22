@@ -1,3 +1,4 @@
+import json
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
 
@@ -7,6 +8,9 @@ from jwt import InvalidTokenError
 from backend.utils.auth_service import AuthService
 from src.backend.mongo_connection import get_database
 import jwt
+import redis
+from core.config import REDIS_URL
+import uuid
 
 
 class UserConnection:
@@ -75,7 +79,8 @@ class UserConnection:
     def add_session(self, username: str) -> str | None:
         try:
             # Create a new session
-            session = username + str(datetime.now())
+            chat_id = uuid.uuid4().hex
+            session = username + chat_id
 
             # Find user and update their sessions list
             result = self.collection_name.update_one(
@@ -102,3 +107,20 @@ class UserConnection:
             {"sessions": 1}
         )
         return user.get("sessions", []) if user else []
+
+    @staticmethod
+    async def get_session_history(session_id):
+        history = []
+
+        r = redis.from_url(REDIS_URL)
+        pattern = f"chat:{session_id}:*"
+
+        # Fetch keys that match the pattern
+        matching_keys = r.keys(pattern)
+        for key in matching_keys:
+            # Get the JSON string from Redis
+            json_data = r.json().get(key)
+            if json_data:
+                history.append(json_data)
+
+        return history
