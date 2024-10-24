@@ -1,4 +1,3 @@
-from core.config import configure_system
 from .file_loader_service import FileLoaderFactory, LoaderType
 from service.history_service import MemoryType
 from .indexing_serivce import create_embeddings
@@ -13,7 +12,6 @@ from service.langchain.prompt.prebuilt_prompt import get_system_prompt, SystemPr
 class ArolChatBot:
     @staticmethod
     async def initialize_chat_bot():
-        configure_system()
         llm = LlmFactory.get_model("llama3-8b-8192", temperature=0)
         # docs = FileLoaderFactory.get_loader(loader_type=LoaderType.JSON, file_path="src/backend/processed_catalog.json")
         docs = FileLoaderFactory.get_loader(loader_type=LoaderType.JSON, file_path="processed_catalog.json").load()

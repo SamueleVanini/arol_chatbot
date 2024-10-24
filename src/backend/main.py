@@ -1,12 +1,12 @@
-from typing import Annotated
-
-from fastapi import FastAPI, HTTPException, Depends, status, Request
+from dotenv import load_dotenv
+from fastapi import FastAPI, HTTPException, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import OAuth2PasswordRequestForm
-from pydantic import BaseModel, field_validator, ValidationError
+from pydantic import BaseModel, field_validator
 
-from src.service.chatbot_service import ArolChatBot
 from src.backend.user_collection import UserConnection
+from src.service.chatbot_service import ArolChatBot
+
+load_dotenv()  # This loads all variables from .env automatically
 
 app = FastAPI()
 
