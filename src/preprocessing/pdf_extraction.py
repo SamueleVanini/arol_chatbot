@@ -85,7 +85,13 @@ class PdfPreprocessing(StateMachine):
             for machine in machines_for_application_field:
                 if machine.name == name:
                     return
-        self.current_machine.name = name.replace(UNICODE_DOT, "-")
+        sanified_name = name
+        if UNICODE_DOT in sanified_name:
+            new_name = ""
+            for split in name.split(UNICODE_DOT):
+                new_name += split.strip() + "-"
+            sanified_name = new_name.removesuffix("-")
+        self.current_machine.name = sanified_name
 
     @main_feature.enter
     @versions.enter

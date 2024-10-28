@@ -80,6 +80,8 @@ def fix_machines(machines: list[Machine]):
         "eagle vp": _multiple_caps,
         "euro pp-c euro pp-g": _multiple_name,
         "quasar r-f-rf": _caps_application,
+        "saturno r-f-rf": _caps_application,
+        "gemini r-f-rf": _caps_application,
     }
 
     new_machines_list = []
@@ -144,7 +146,8 @@ def _multiple_name(machine: Machine):
 def _caps_application(machine: Machine):
     name = machine.name
     splits = name.split("-")
-    base_name, first_version = splits[0].split(" ")
+    base_name, first_version = splits.pop(0).split(" ")
+    # base_name, first_version = splits[0].split(" ")
     splits.append(first_version)
     new_machines = []
     for version in splits:
