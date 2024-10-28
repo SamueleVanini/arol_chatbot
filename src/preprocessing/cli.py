@@ -1,14 +1,15 @@
 from collections import defaultdict
+from copy import deepcopy
 import json
 import pymupdf
 import csv
 
-from typing import Generator
+from typing import Callable, Generator
 from pathlib import Path
 from argparse import ArgumentParser, Namespace
 from tqdm import tqdm
-from .pdf_extraction import PdfPreprocessing
-from .machine import MachineEncoder
+from .pdf_extraction import PdfPreprocessing, UNICODE_DOT
+from .machine import MachineEncoder, Machine
 from core.config import configure_system
 
 from langsmith import Client
@@ -55,7 +56,7 @@ def pdf_preprocessing_cli(args: Namespace):
     pages_gen: Generator[pymupdf.Page] = doc.pages(start=args.start_page - 1, stop=args.end_page)  # type: ignore (pages() -> Unknown, pyrigth is mad about it)\
     total_page_parsed = (args.end_page - args.start_page) + 1
     for page in tqdm(pages_gen, total=total_page_parsed):
-        page_structure = page.get_text(option="dict", sort=True)
+        page_structure = page.get_text(option="dict", sort=True)  # type: ignore
         for block in page_structure["blocks"]:
             if block["type"] == 0:
                 state_machine.parse_block(block)
@@ -66,8 +67,95 @@ def pdf_preprocessing_cli(args: Namespace):
         machines = []
         for machine_list in state_machine.machines.values():
             machines.extend(machine_list)
-        json.dump(machines, out_f, cls=MachineEncoder)
+        machines_fixed = fix_machines(machines)
+        json.dump(machines_fixed, out_f, cls=MachineEncoder)
     print(f"{total_page_parsed} pages has been processed")
+
+
+def fix_machines(machines: list[Machine]):
+    # map to fix the machines that have known problem after parsing
+    # (the issue should be fixed in the parser but for now it's fine to be here)
+    machines_to_fix: dict[str, Callable] = {
+        "next": _multiple_versions,
+        "eagle vp": _multiple_caps,
+        "euro pp-c euro pp-g": _multiple_name,
+        "quasar r-f-rf": _caps_application,
+    }
+
+    new_machines_list = []
+    for machine in machines:
+        if machine.name in machines_to_fix:
+            func = machines_to_fix[machine.name]
+            new_machines = func(machine)
+            new_machines_list.extend(new_machines)
+        else:
+            new_machines_list.append(deepcopy(machine))
+
+    return new_machines_list
+
+
+def _multiple_versions(machine: Machine):
+    speed_production_str = machine.main_features["speed production"][0]
+    splits = speed_production_str.split("bph", maxsplit=1)
+    m1_production_speed = splits[0] + "bph"
+    m2_production_speed = splits[1]
+    m1 = deepcopy(machine)
+    m2 = deepcopy(machine)
+
+    # fix machine 1
+    m1.name += "_pk"
+    m1.main_features["speed production"][0] = m1_production_speed
+    m1.versions.pop("pk")
+    values = m1.versions.pop("pk vp")
+    m1.versions["pk"] = values
+
+    # fix machine 2
+    m2.name += "_vp"
+    m2.main_features["speed production"][0] = m2_production_speed
+    m2.versions.pop("pk")
+    values = m2.versions.pop("pk vp")
+    m2.versions["vp"] = values
+    return [m1, m2]
+
+
+def _multiple_caps(machine: Machine):
+    speed_production_str = machine.main_features["speed production"][0]
+    splits = speed_production_str.split("bph", maxsplit=1)
+    m1_production_speed = splits[0] + "bph"
+    m2_production_speed = splits[1]
+    m1 = deepcopy(machine)
+    m2 = deepcopy(machine)
+    m1.name += "_capsuleDiameterLessEqual38"
+    m1.main_features["speed production"][0] = m1_production_speed
+    m2.name += "_capsuleDiameterGreater38"
+    m2.main_features["speed production"][0] = m2_production_speed
+    return [m1, m2]
+
+
+def _multiple_name(machine: Machine):
+    m1 = deepcopy(machine)
+    m2 = deepcopy(machine)
+    names = machine.name.split("pp-c", maxsplit=1)
+    m1.name = names[0] + "pp-c"
+    m2.name = names[1]
+    return [m1, m2]
+
+
+def _caps_application(machine: Machine):
+    name = machine.name
+    splits = name.split("-")
+    base_name, first_version = splits[0].split(" ")
+    splits.append(first_version)
+    new_machines = []
+    for version in splits:
+        new_m = deepcopy(machine)
+        new_m.name = base_name + " " + version
+        for cap in machine.main_features["caps application"]:
+            if f"{version} version" in cap:
+                new_m.main_features["caps application"] = [cap.split("(")[0].strip()]
+                break
+        new_machines.append(new_m)
+    return new_machines
 
 
 parser = ArgumentParser(
