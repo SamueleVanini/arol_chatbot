@@ -20,30 +20,45 @@ METADATA_FIELD_INFO = [
         description="The number of closed bottles every minute",
         type="integer",
     ),
+    AttributeInfo(
+        name="caps_per_hour",
+        description="The number of closed caps every hour",
+        type="integer",
+    ),
+    AttributeInfo(
+        name="caps_per_minute",
+        description="The number of closed caps every minute",
+        type="integer",
+    ),
+    # try to concatenate caps application values in a single string a use the "like" comparison statement duriong self querying
     # AttributeInfo(name="caps application", description="The type of caps usable by the machine", type="string"),
 ]
 
 DOCUMENT_CONTENT_DESCRIPTION = "Json object describing the capping machine"
 
-# TODO: parse production speed to extract bottles per hour and minute
-# TODO: text the metadata_extraction function
-
 
 def metadata_extraction(record: dict, metadata: dict) -> dict:
 
     metadata["name"] = record.get("name")
-    main_features = record.get("main_features")
+    speed_production = record.get("main_features").get("speed production")[0]
 
-    for prod_speed_str in main_features.get("speed production"):
-        # really ugly name but quite fitting (we are replacing the "." used to represent number in the Arol Catalog with "_")
-        prod_speed_py_int_number = prod_speed_str.replace(".", "_")
-        minutes_split, hours_split = prod_speed_py_int_number.split("/")
-        for word in minutes_split.split(" "):
-            if "_" in word or word.isnumeric():
-                metadata["bottles_per_minute"] = int(word)
+    prod_speed_py_int_number = speed_production.replace(".", "_")
 
-        for word in hours_split.split(" "):
-            if "_" in word or word.isnumeric():
-                metadata["bottles_per_hour"] = int(word)
+    top_type_hour = "bottles_per_hour"
+    top_type_minute = "bottles_per_minute"
+
+    if "cpm" in prod_speed_py_int_number:
+        top_type_hour = "caps_per_hour"
+        top_type_minute = "caps_per_minute"
+
+    # really ugly name but quite fitting (we are replacing the "." used to represent number in the Arol Catalog with "_")
+    minutes_split, hours_split = prod_speed_py_int_number.split("/")
+    for word in minutes_split.split(" "):
+        if "_" in word or word.isnumeric():
+            metadata[top_type_minute] = int(word)
+
+    for word in hours_split.split(" "):
+        if "_" in word or word.isnumeric():
+            metadata[top_type_hour] = int(word)
 
     return metadata
