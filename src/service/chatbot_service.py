@@ -1,12 +1,12 @@
 from .file_loader_service import FileLoaderFactory, LoaderType
-from service.history_service import MemoryType
+from .history_service import MemoryType
 from .indexing_serivce import create_embeddings
-from service.langchain.langchain_builder_service import LangChainBuilder
-from service.langchain.chain_configs import ChainType
+from .langchain.langchain_builder_service import LangChainBuilder
+from .langchain.chain_configs import ChainType
 from .llm_service import LlmFactory
 from .retriever_service import create_vectorstore_retriever, RetrieverFactory, RetrieverType
-from service.langchain.prompt.prompt_template import get_template
-from service.langchain.prompt.prebuilt_prompt import get_system_prompt, SystemPromptType
+from .langchain.prompt.prompt_template import get_template
+from .langchain.prompt.prebuilt_prompt import get_system_prompt, SystemPromptType
 
 
 class ArolChatBot:

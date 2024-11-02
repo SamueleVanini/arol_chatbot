@@ -2,7 +2,7 @@ from enum import Enum, auto
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_redis import RedisChatMessageHistory
-import core.config
+from src.core.config import REDIS_URL
 
 
 # Enum for chat history types
@@ -45,4 +45,4 @@ class ChatHistoryFactory:
     @staticmethod
     def _get_redis_history(session_id: str) -> BaseChatMessageHistory:
         """Return a Redis-based chat message history for a session."""
-        return RedisChatMessageHistory(session_id=session_id, redis_url=core.config.REDIS_URL)
+        return RedisChatMessageHistory(session_id=session_id, redis_url=REDIS_URL)

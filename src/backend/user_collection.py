@@ -1,22 +1,21 @@
-import json
+import uuid
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
 
+import jwt
+import redis
 from fastapi import Depends, HTTPException, status
 from jwt import InvalidTokenError
 
-from backend.utils.auth_service import AuthService
+from src.backend.utils.auth_service import AuthService
+from src.core.config import REDIS_URL
 from src.backend.mongo_connection import get_database
-import jwt
-import redis
-from core.config import REDIS_URL
-import uuid
 
 
 class UserConnection:
 
     def __init__(self):
-        self.dbname = get_database()
+        self.dbname = get_database(is_local=True)
         self.collection_name = self.dbname["user"]
         self.collection_name.create_index('username', unique=True)
         self.auth = AuthService()

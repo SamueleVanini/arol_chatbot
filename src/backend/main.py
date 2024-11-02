@@ -80,6 +80,14 @@ async def startup_event():
 
 @app.post("/query", response_model=Response)
 async def query_model(query: Query, current_user: dict = Depends(user_connection.get_current_user)):
+    username = current_user["username"]
+    session_ids = user_connection.get_user_sessions(username)
+    if not session_ids or (query.session_id not in session_ids):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You don't have the Permission for this request (Wrong Session ID)",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     try:
         response = chat_bot.invoke(
             {"input": query.input},
@@ -104,7 +112,7 @@ async def login_for_access_token(user: User) -> Token:
     return Token(access_token=access_token, token_type="bearer")
 
 
-@app.post("/register", response_model=UserCreate)
+@app.post("/register",status_code=status.HTTP_201_CREATED)
 async def register(user: UserCreate):
     user_exist = user_connection.get_user(username=user.username)
     if user_exist:
@@ -114,7 +122,7 @@ async def register(user: UserCreate):
         )
     try:
         user_connection.create_user(user.username, user.password)
-        return user
+        return {"username":user.username}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

@@ -8,8 +8,7 @@ langsmith
 langchain_experimental
 jq
 langchain-groq
-fastapi[standard]
-uvicorn
+fastapi[standard]==0.115.0
 langchain
 pydantic
 langchain_redis

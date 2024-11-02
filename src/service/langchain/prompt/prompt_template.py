@@ -1,6 +1,6 @@
 from langchain.prompts import ChatPromptTemplate
 from langchain_core.prompts import MessagesPlaceholder
-from service.langchain.chain_configs import ChainType
+from src.service.langchain.chain_configs import ChainType
 
 
 def get_template(system_prompt: str, chain_type: ChainType) -> ChatPromptTemplate:

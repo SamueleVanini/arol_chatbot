@@ -3,7 +3,7 @@ import re
 from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.runnables.history import RunnableWithMessageHistory
-from service.history_service import ChatHistoryFactory, MemoryType
+from src.service.history_service import ChatHistoryFactory, MemoryType
 from .chain_configs import ChainType
 from .prompt.prompt_template import get_template
 from .prompt.prebuilt_prompt import get_system_prompt, SystemPromptType
