@@ -7,14 +7,18 @@ from .llm_service import LlmFactory
 from .retriever_service import create_vectorstore_retriever, RetrieverFactory, RetrieverType
 from .langchain.prompt.prompt_template import get_template
 from .langchain.prompt.prebuilt_prompt import get_system_prompt, SystemPromptType
+import os
 
 
 class ArolChatBot:
     @staticmethod
     async def initialize_chat_bot():
         llm = LlmFactory.get_model("llama3-8b-8192", temperature=0)
-        # docs = FileLoaderFactory.get_loader(loader_type=LoaderType.JSON, file_path="src/backend/processed_catalog.json")
-        docs = FileLoaderFactory.get_loader(loader_type=LoaderType.JSON, file_path="processed_catalog.json").load()
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        file_path = os.path.join(current_dir, '..', 'backend', 'processed_catalog.json')
+        file_path = os.path.normpath(file_path)  # Normalize the path
+        docs = FileLoaderFactory.get_loader(loader_type=LoaderType.JSON, file_path=file_path).load()
+        # docs = FileLoaderFactory.get_loader(loader_type=LoaderType.JSON, file_path="processed_catalog.json").load()
         indexing = create_embeddings(docs=docs)
         retriever = create_vectorstore_retriever(indexing)
 
@@ -25,12 +29,11 @@ class ArolChatBot:
             llm_context=get_template(
                 system_prompt=get_system_prompt(SystemPromptType.LLM_RETRIEVAL_WITH_HISTORY),
                 chain_type=ChainType.CHAT
-            ),
-
+            )
         )
         # Initialize the builder with desired options
         # ChainType: An enumeration of the types of chains
-        chain_builder = LangChainBuilder(chain_type=ChainType.CHAT, memory_type=MemoryType.REDIS)
+        chain_builder = LangChainBuilder(memory_type=MemoryType.REDIS)
 
         # Build the chain
         final_chain = chain_builder.build_chain(llm, history_aware_retriever)

@@ -10,16 +10,14 @@ from .prompt.prebuilt_prompt import get_system_prompt, SystemPromptType
 
 
 class LangChainBuilder:
-    def __init__(self, chain_type: ChainType = ChainType.CHAT, memory_type: MemoryType = MemoryType.REDIS):
-        if not isinstance(chain_type, ChainType):
-            raise ValueError(f"chain_type must be a ChainType, got {type(chain_type)}")
+
+    def __init__(self, memory_type: MemoryType = MemoryType.REDIS):
         if not isinstance(memory_type, MemoryType):
             raise ValueError(f"memory_type must be a MemoryType, got {type(memory_type)}")
-
-        self.chain_type = chain_type
         self.memory_type = memory_type
 
-    def response_parser(self, ai_message: dict) -> dict:
+    @staticmethod
+    def response_parser(ai_message: dict) -> dict:
         cleaned = re.sub(r'^.*?(AI Assistant:|AI:)', '', ai_message['answer'], flags=re.DOTALL)
         cleaned = cleaned.strip()
         ai_message['answer'] = cleaned
@@ -38,7 +36,7 @@ class LangChainBuilder:
         chain = self.create_rag_chain(llm, retriever)
 
         if self.memory_type != MemoryType.NONE:
-            history_session = ChatHistoryFactory.get_chat_history(memory_type=MemoryType.REDIS)
+            history_session = ChatHistoryFactory.get_chat_history(memory_type=self.memory_type)
             return RunnableWithMessageHistory(
                 chain,
                 history_session,
