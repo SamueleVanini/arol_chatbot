@@ -1,27 +1,25 @@
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
-import os
+from src.core.config import MONGO_DB_URL, USE_DOCKER
 
-def get_database(is_local:bool = False):
 
-    if is_local:
-        # Provide the mongodb atlas url to connect python to mongodb using pymongo
-        # CONNECTION_STRING = "mongodb+srv://user:pass@cluster.mongodb.net/myFirstDatabase"
-        CONNECTION_STRING = os.getenv("MONGO_DB_DOCKER_URL")
+def get_database():
+    # Provide the mongodb atlas url to connect python to mongodb using pymongo OR local db
+    uri = MONGO_DB_URL
+    if not uri:
+        raise ValueError("MONGO_DB_URL environment variable is not set.")
 
-        # Create a connection using MongoClient. You can import MongoClient or use pymongo.MongoClient
-        client = MongoClient(CONNECTION_STRING)
-
-        # Create the database for our example (we will use the same database throughout the tutorial
-        return client['Arol']
+    if USE_DOCKER:
+        print("Connecting Mongo image on Docker ...")
+        client = MongoClient(uri)
     else:
-        uri = os.getenv("MONGO_DB_URL")
-        # Create a new client and connect to the server
+        print("Connection to MongoDB ATLAS Server ...")
         client = MongoClient(uri, server_api=ServerApi('1'))
-        return client['ArolCluster']
+
+    return client["ArolCluster"]
 
 
 # This is added so that many files can reuse the function get_database()
 if __name__ == "__main__":
     # Get the database
-    dbname = get_database(is_local=False)
+    dbname = get_database()

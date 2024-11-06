@@ -11,7 +11,7 @@ services:
       - mongodb
       - redis
     env_file:
-      - .env
+      - .env.docker
 
   mongodb:
     image: mongo:latest

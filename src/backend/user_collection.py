@@ -15,7 +15,7 @@ from src.backend.mongo_connection import get_database
 class UserConnection:
 
     def __init__(self):
-        self.dbname = get_database(is_local=True)
+        self.dbname = get_database()
         self.collection_name = self.dbname["user"]
         self.collection_name.create_index('username', unique=True)
         self.auth = AuthService()

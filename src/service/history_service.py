@@ -45,4 +45,7 @@ class ChatHistoryFactory:
     @staticmethod
     def _get_redis_history(session_id: str) -> BaseChatMessageHistory:
         """Return a Redis-based chat message history for a session."""
+        if not REDIS_URL:
+            raise ValueError("REDIS_URL environment variable is not set.")
+
         return RedisChatMessageHistory(session_id=session_id, redis_url=REDIS_URL)

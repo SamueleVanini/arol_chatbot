@@ -6,8 +6,6 @@ from pydantic import BaseModel, field_validator
 from src.backend.user_collection import UserConnection
 from src.service.chatbot_service import ArolChatBot
 
-load_dotenv()  # This loads all variables from .env automatically
-
 app = FastAPI()
 
 chat_bot = None
