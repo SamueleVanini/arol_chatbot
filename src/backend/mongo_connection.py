@@ -7,7 +7,7 @@ def get_database(is_local:bool = False):
     if is_local:
         # Provide the mongodb atlas url to connect python to mongodb using pymongo
         # CONNECTION_STRING = "mongodb+srv://user:pass@cluster.mongodb.net/myFirstDatabase"
-        CONNECTION_STRING = "mongodb://localhost:27017"
+        CONNECTION_STRING = os.getenv("MONGO_DB_DOCKER_URL")
 
         # Create a connection using MongoClient. You can import MongoClient or use pymongo.MongoClient
         client = MongoClient(CONNECTION_STRING)

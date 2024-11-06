@@ -8,6 +8,7 @@ from langchain_core.embeddings import Embeddings
 logger = logging.getLogger(__name__)
 
 
+# TODO Check Why data doesn't persist or if it does, WHERE!?
 class ChromaCollection:
 
     @classmethod
@@ -31,7 +32,7 @@ class ChromaCollection:
                 persist_directory=persist_directory,
                 create_collection_if_not_exists=False,
             )
-        except ValueError as e:
+        except:
             logger.warning(
                 f"requested collection not found at path: {persist_directory}, creating a new collection: {collection_name}"
             )
