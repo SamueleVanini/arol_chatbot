@@ -17,7 +17,7 @@ The following steps will guide you on the local development set-up.
     ```
     pip install -e . # run it from the same directory of pyproject.toml
     ```
-3. Now the CLI tool for parsing the pdf catalog is available using the command ```arol-preprocessing```. Description of the options and configurations available for the tool are avaible using the command ```arol-preprocessing -h``` or ```arol-preprocessing --help```.
+3. Now the CLI tool for parsing the pdf catalog is available using the command ```arol-preprocessing```. Description of the options and configurations available for the tool are available using the command ```arol-preprocessing -h``` or ```arol-preprocessing --help```.
 
 ## Environment variables needed for the project
 you can find the requiring variables in `.env.example` file.
@@ -59,4 +59,4 @@ Important note: with the manual startup you need Redis and mongoDB atlas online 
 To run all the available tests, navigate to the project's root directory and run ```python -m unittest discover```. For all other options on test run refer to the documentation/guides in [PROJECT.md](PROJECT.md).
 
 ## Libraries used and useful guides
-Refer to [PROJECT.md](PROJECT.md) for a list of all libraries, documentation and guides used to set-up and develop the project.
+Refer to [PROJECT.md](PROJECT.md) for a list of all libraries, documentation and guides used to set up and develop the project.
