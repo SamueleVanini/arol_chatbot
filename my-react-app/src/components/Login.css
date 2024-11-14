@@ -1,0 +1,65 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #1e1e1e; /* VS Code background color */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.login-form {
+  background-color: #252526; /* VS Code editor background color */
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center; 
+}
+
+.login-form h2 {
+  margin-bottom: 1.5rem;
+  color: #d4d4d4; /* VS Code text color */
+}
+
+.input-group {
+  margin-bottom: 1rem;
+  width: 94%;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #d4d4d4; /* VS Code text color */
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #3c3c3c; /* VS Code border color */
+  border-radius: 4px;
+  background-color: #3c3c3c; /* VS Code input background color */
+  color: #d4d4d4; /* VS Code text color */
+}
+
+button {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #3c3c3c; /* VS Code border color */
+  border-radius: 4px;
+  background-color: #3c3c3c; /* VS Code input background color */
+  color: #d4d4d4; /* VS Code text color */
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #252526; /* Darker blue for hover effect */
+}
