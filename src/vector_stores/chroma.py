@@ -1,13 +1,13 @@
-import chromadb
 import logging
 from typing import Dict, Optional
 from langchain_chroma import Chroma
-from langchain_core.embeddings import Embeddings
 from langchain_core.documents import Document
+from langchain_core.embeddings import Embeddings
 
 logger = logging.getLogger(__name__)
 
 
+# TODO Check Why data doesn't persist or if it does, WHERE!?
 class ChromaCollection:
 
     @classmethod
@@ -37,13 +37,13 @@ class ChromaCollection:
                 create_collection_if_not_exists=False,
                 collection_metadata=collection_metadata,
             )
-        except ValueError as e:
+        except:
             logger.warning(
                 f"requested collection not found at path: {persist_directory}, creating a new collection: {collection_name}"
             )
 
-        if documents is None:
-            raise ValueError("can't create an empty collection")
+            if documents is None:
+                raise ValueError("can't create an empty collection")
 
         return Chroma.from_documents(
             documents,

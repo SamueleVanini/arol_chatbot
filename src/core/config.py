@@ -1,11 +1,8 @@
+import os
 from dotenv import load_dotenv
 
-# this should be moved in the .env file too
-REDIS_URL: str = (
-    "redis://default:QWoHMeuRDr3d0Gn0iqvUDAeasUIeqkB3@redis-19112.c339.eu-west-3-1.ec2.redns.redis-cloud.com:19112"
-)
+load_dotenv() # This loads all variables from .env automatically
 
-
-def configure_system():
-    """Entry point to configure the running system, add in the body of the function all the logic to configure the chatbot"""
-    load_dotenv()
+REDIS_URL: str = os.getenv('REDIS_URL')
+MONGO_DB_URL: str = os.getenv("MONGO_DB_URL")
+USE_DOCKER = bool(int(os.getenv("USE_DOCKER", "0")))  # Use "0" or "1" in .env

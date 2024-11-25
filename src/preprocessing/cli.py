@@ -1,19 +1,18 @@
-from collections import defaultdict
-from copy import deepcopy
-import json
-import pymupdf
 import csv
-
-from typing import Callable, Generator
-from pathlib import Path
+import json
 from argparse import ArgumentParser, Namespace
-from tqdm import tqdm
-from .pdf_extraction import PdfPreprocessing, UNICODE_DOT
-from .machine import MachineEncoder, Machine
-from .utilities import fix_machines
-from core.config import configure_system
+from collections import defaultdict
+from pathlib import Path
+from typing import Generator
 
+import pymupdf
 from langsmith import Client
+from tqdm import tqdm
+
+from core.config import configure_system
+from .machine import MachineEncoder
+from .pdf_extraction import PdfPreprocessing
+from .utilities import fix_machines
 
 
 def dataset_preprocessing_cli(args: Namespace):
@@ -53,8 +52,9 @@ def pdf_preprocessing_cli(args: Namespace):
     pdf_path = Path(args.file_path)
     doc = pymupdf.open(pdf_path)
     state_machine = PdfPreprocessing()
-    # doc.pages() follow the same convension of bult-in range() function => stop is excluded
-    pages_gen: Generator[pymupdf.Page] = doc.pages(start=args.start_page - 1, stop=args.end_page)  # type: ignore (pages() -> Unknown, pyrigth is mad about it)\
+    # doc.pages() follow the same convention of built-in range() function => stop is excluded
+    pages_gen: Generator[pymupdf.Page] = doc.pages(start=args.start_page - 1, stop=args.end_page)
+    ## type: ignore (pages() -> Unknown, pyright is mad about it)
     total_page_parsed = (args.end_page - args.start_page) + 1
     for page in tqdm(pages_gen, total=total_page_parsed):
         page_structure = page.get_text(option="dict", sort=True)  # type: ignore
@@ -116,7 +116,6 @@ pdf_general.add_argument("-e", "--end-page", type=int, required=False, default=6
 
 dataset_creation = subparser.add_parser("dataset", help="create a dataset given a csv file")
 dataset_creation.set_defaults(func=dataset_preprocessing_cli)
-
 
 ds_config = dataset_creation.add_argument_group("csv config")
 ds_config.add_argument(
