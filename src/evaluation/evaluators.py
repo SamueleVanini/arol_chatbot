@@ -20,12 +20,12 @@ class MultilabelEvaluator:
 
     def __init__(self) -> None:
         self.multilabel_binarizer = MultiLabelBinarizer()
-
-    # TODO: add metrics for number of run without an output
+        self.report: dict | None = None
 
     def evaluation(self, runs: list[Run], examples: list[Example]) -> dict[str, list[dict[str, str | float]]]:
 
         machines_pred = []
+        runs_no_output = 0
         for run in runs:
             docs_run = []
             docs = run.outputs["output"]
@@ -36,23 +36,33 @@ class MultilabelEvaluator:
                         docs_run.append(doc.metadata["name"].lower())
                 machines_pred.append(docs_run)
             else:
-                print(run.outputs)
+                machines_pred.append(["DUMMY"])
+                runs_no_output += 1
 
         # list of list of matchs
         matchs = [example.outputs["matchs"] for example in examples]
         matchs = [list(map(str.lower, match_list)) for match_list in matchs]
 
-        classes = list(set(itertools.chain.from_iterable(matchs)))
+        self.classes = list(set(itertools.chain.from_iterable(matchs)))
 
-        y_true = self.multilabel_binarizer.fit_transform(matchs)
-        y_pred = self.multilabel_binarizer.transform(machines_pred)
+        # TODO: if the model return an empty output we have a mismatch between y_true and y_pred. Handle the case
+        self.y_true = self.multilabel_binarizer.fit_transform(matchs)
+        self.y_pred = self.multilabel_binarizer.transform(machines_pred)
 
-        report: dict = classification_report(y_true=y_true, y_pred=y_pred, target_names=classes, output_dict=True)  # type: ignore
+        self.report = classification_report(y_true=self.y_true, y_pred=self.y_pred, target_names=self.classes, output_dict=True)  # type: ignore
         ic("Summary metrics evaluated")
 
         results: list[dict[str, str | float]] = []
-        for label, metrics in report.items():
+        if not isinstance(self.report, dict):
+            raise Exception("Something went wrong, we don't have a report...")
+        for label, metrics in self.report.items():
             ic(label, metrics)
             for metric, score in metrics.items():
                 results.append({"key": f"{label}_{metric}", "score": score})
+        results.append({"key": "no docs run", "score": runs_no_output})
         return {"results": results}
+
+    def get_report_str(self) -> str:
+        return classification_report(
+            y_true=self.y_true, y_pred=self.y_pred, target_names=self.classes, output_dict=False
+        )  # type: ignore
