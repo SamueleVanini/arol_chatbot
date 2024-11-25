@@ -5,7 +5,7 @@ from pathlib import Path
 from icecream import ic
 
 # CSV_FILE_PATH = "data/test.csv"
-CSV_FILE_PATH = "data/benchmark_arol_chatbot.csv"
+CSV_FILE_PATH = "data/new_benchmark_arol_chatbot.csv"
 JSON_FILE_PATH = "data/processed_catalog.json"
 
 
