@@ -7,7 +7,7 @@ def get_template(system_prompt: str, chain_type: ChainType) -> ChatPromptTemplat
     if chain_type == ChainType.CHAT:
         return ChatPromptTemplate.from_messages([
             ("system", system_prompt),
-            MessagesPlaceholder("chat_history"),
+            MessagesPlaceholder(variable_name="chat_history"),
             ("human", "{input}"),
         ])
     else:  # QA template
