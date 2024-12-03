@@ -1,4 +1,6 @@
-from langchain_community.embeddings import SentenceTransformerEmbeddings            
+from core.config import configure_system
+from doc_loader.hybrid_loader import HybridLoader
+from langchain_community.embeddings import SentenceTransformerEmbeddings
 from langchain_community.document_loaders import JSONLoader
 from transformers import AutoTokenizer
 from langchain_huggingface import HuggingFaceEmbeddings
@@ -17,7 +19,7 @@ TOKENIZER_NAMES = {
     "MSMARCO-DISTILBERT": "sentence-transformers/msmarco-distilbert-base-v4",
 }
 
-# cleaup_tokenization_spaces: Whether or not the model should cleanup the spaces that were added when splitting the input text during the tokenization process. 
+# cleaup_tokenization_spaces: Whether or not the model should cleanup the spaces that were added when splitting the input text during the tokenization process.
 CLEAN_UP_TOKENIZATION_SPACES = True
 
 
@@ -25,7 +27,7 @@ def get_embedding_function(model_name):
     # This notation is horrible and I hate it, blame the langchain_huggingface library developers for it
     model_kwargs = {"tokenizer_kwargs": {"clean_up_tokenization_spaces": CLEAN_UP_TOKENIZATION_SPACES}}
     embedding_function = HuggingFaceEmbeddings(model_name=model_name, model_kwargs=model_kwargs)
-    print(F"EMBEDDING MAX SEQ LENGTH: {embedding_function.client.get_max_seq_length()}")
+    print(f"EMBEDDING MAX SEQ LENGTH: {embedding_function._client.get_max_seq_length()}")
     return embedding_function
 
 
@@ -48,17 +50,20 @@ def print_documents_tokens_statistics(docs: list[str], model_name, apply_padding
     avg_tokenization = sum(len_words_ids) / len(len_words_ids)
     print(f"Smallest doc tokens is {smallest_tokenization}")
     print(f"Largest doc tokens is {largest_tokenization}")
-    print(f"Average doc tokens is {avg_tokenization}")  
+    print(f"Average doc tokens is {avg_tokenization}")
 
 
 if __name__ == "__main__":
-    loader = JSONLoader(file_path="./data/processed_catalog.json", jq_schema=".[]", text_content=False)
+    # loader = JSONLoader(file_path="./data/processed_catalog.json", jq_schema=".[]", text_content=False)
+    # documents = loader.load()
+    configure_system()
+    print(f'EMBEDDING: {EMBEDDING_NAMES["MSMARCO-DISTILBERT"]}')
+    print(f'TOKENIZER: {TOKENIZER_NAMES["MSMARCO-DISTILBERT"]}')
+    embedding_function = get_embedding_function(EMBEDDING_NAMES["MSMARCO-DISTILBERT"])
+    loader = HybridLoader(file_path="./data/processed_catalog.json", jq_schema=".[]", text_content=False)
     documents = loader.load()
-    print(f'EMBEDDING: {EMBEDDING_NAMES["ALL-MINILM"]}')
-    print(f'TOKENIZER: {TOKENIZER_NAMES["ALL-MINILM"]}')
-    embedding_function = get_embedding_function(EMBEDDING_NAMES["ALL-MINILM"])
     docs_content = [doc.page_content for doc in documents]
     print_documents_len_statistics(docs_content)
     print_documents_tokens_statistics(
-        docs_content, TOKENIZER_NAMES["ALL-MINILM"], apply_padding=True, apply_truncation=False
+        docs_content, TOKENIZER_NAMES["MSMARCO-DISTILBERT"], apply_padding=True, apply_truncation=False
     )
