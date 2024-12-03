@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+body {
+  height: 100vh; /* Set height to 100% of the viewport height */
+  margin: 0; /* Remove default margin */
+  display: flex;
+  flex-direction: column;
+}
+
+.chat {
+  display: flex;
+  justify-content: flex-end; /* Align chat to the right */
+  align-items: center;
+  width: 150%;
+  box-sizing: border-box;
+}
+
+.chatbox {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+.chatbox li {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 150%;
+}
+
+.chatbox .incoming {
+  background-color: #3B3B3B; /* Light blue for incoming messages */
+  color: #ccc;
+  transform: translateX(120px);
+}
+
+.chatbox .outgoing {
+  background-color: #1E1E1E; /* Light green for outgoing messages */
+  color: #ccc;
+  transform: translateX(-310px);
+}
+
+.chatBot {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 90%;
+}
+
+.chatBot {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 90%;
+  margin-top: 150px; /* Push the element to the bottom */
+}
+
+.text {
+  flex: 1;
+  padding: 10px;
+  margin-right: 10px;
+  padding-top: 10px;
+  width: 100%;
+}
+
+
+.button_chat {
+  padding: 10px 10px;
+  border: none;
+  background-color: #1E1E1E;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button_chat:hover {
+  background-color: #000000;
+}
+
+.chat-input {/* Cambia la direzione del flex per posizionare gli elementi in colonna */
+  display: flex; 
+  padding-bottom: 20px;
+  width: 350%;
+  align-items: center; /* Allinea gli elementi a sinistra */
+}
+
+
+
+/* Media queries for responsiveness */
+@media (max-width: 600px) {
+  .border-chat {
+    padding: 10px;
+  }
+
+  .chat-input {
+    flex-direction: column;
+  }
+
+  .chat-container {
+    flex-direction: column;
+  }
+
+  .list-container, .chat {
+    width: 100%;
+  }
+}
