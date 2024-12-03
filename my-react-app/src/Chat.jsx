@@ -6,7 +6,8 @@ function Chat() {
   const [response, setResponse] = useState('');
   const [currentChat, setCurrentChat] = useState([
     { type: 'incoming', message: 'Hello! How can I help you today?' },
-    { type: 'outgoing', message: 'I need help for my company' }
+    { type: 'outgoing', message: 'I need help for my company' },
+    { type: 'incoming', message: 'Ok, tell me more details' },
   ]);
   const [chatHistory, setChatHistory] = useState([
     { type: 'incoming', message: 'Example' }
@@ -65,16 +66,31 @@ const toggleMenu = () => {
 
   return (
           <div className="chatBot">
-          <ul className="chatbox">
+            <button className="menu-button" onClick={toggleMenu}>
+            <i className="bi bi-clock-history"></i>
+      </button>
+      {menuOpen && (
+        <div className="side-menu open">
+           <button className="close-button" onClick={toggleMenu}>
+           <i class="bi bi-backspace"></i>
+        </button>
+          <ul className="menu-list">
+          {chatHistory.map((chat, index) => (
+            <li key={index} className={chat.type}>
+              {chat.message}
+            </li>
+          ))}
+          </ul>
+        </div>
+      )}
+          <ul className={"chatbox"}>
               {currentChat.map((chat, index) => (
                 <li key={chat.type + index} className={chat.type}>
-                  <div className="chat-bubble">
                     <p className='chat-message'>{chat.message}</p>
-                  </div>
                 </li>
               ))}
             </ul>
-            <div className="chat-input">
+            <div className={`chat-input`}>
           <textarea
             className="text"
             rows="1"

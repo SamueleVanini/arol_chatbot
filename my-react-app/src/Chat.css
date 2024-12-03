@@ -8,19 +8,58 @@ body {
   flex-direction: column;
 }
 
-.chat {
-  display: flex;
-  justify-content: flex-end; /* Align chat to the right */
-  align-items: center;
-  width: 150%;
-  box-sizing: border-box;
+.menu-list {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0;
+  margin: 0;
 }
+
+.menu-list li {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #1E1E1E; /* Black background color */
+  color: #fff; /* White text color */
+  border: 1px solid #555;
+  border-radius: 5px;
+  width: 100%; /* Full width */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.side-menu {
+  position: absolute;
+  top: 0;
+  left: 0; /* Initially hide the menu off-screen */
+  width: 250px;
+  height: 100%;
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: left 0.3s ease;
+}
+
+
+.menu-button {
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 
 .chatbox {
   list-style-type: none; /* Remove bullet points */
   padding: 0; /* Remove default padding */
   margin: 0; /* Remove default margin */
 }
+
+
+
 
 .chatbox li {
   margin-bottom: 10px;
@@ -42,14 +81,6 @@ body {
   transform: translateX(-310px);
 }
 
-.chatBot {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 90%;
-}
 
 .chatBot {
   display: flex;
@@ -88,6 +119,14 @@ body {
   padding-bottom: 20px;
   width: 350%;
   align-items: center; /* Allinea gli elementi a sinistra */
+}
+
+.chat-input-open {/* Cambia la direzione del flex per posizionare gli elementi in colonna */
+  display: flex; 
+  padding-bottom: 20px;
+  width: 350%;
+  align-items: center; /* Allinea gli elementi a sinistra */
+  transform: translateX(150px);
 }
 
 
