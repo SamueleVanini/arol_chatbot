@@ -1,6 +1,8 @@
 from enum import Enum, auto
 from pathlib import Path
+from typing import Optional
 from doc_loader.hybrid_loader import HybridLoader
+from doc_loader.transform_pipe import ContentTransformation, FromJsonToText
 from langchain_community.document_loaders import PyMuPDFLoader
 from langchain_community.document_loaders import JSONLoader
 from langchain_community.document_loaders.base import BaseLoader
@@ -42,7 +44,13 @@ class FileLoaderFactory:
         )
 
     @classmethod
-    def get_loader(cls, loader_type: LoaderType, file_path: str | Path, **kwargs) -> BaseLoader:
+    def get_loader(
+        cls,
+        loader_type: LoaderType,
+        file_path: str | Path,
+        transformation_pipe: Optional[ContentTransformation] = None,
+        **kwargs,
+    ) -> BaseLoader:
 
         if not isinstance(file_path, Path):
             file_path = Path(file_path)
@@ -57,6 +65,12 @@ class FileLoaderFactory:
                 return PyMuPDFLoader(str(file_path))
             case LoaderType.HYBRID:
                 metadata_func = kwargs.pop("metadata_func", None)
+                if transformation_pipe is None:
+                    transformation_pipe = FromJsonToText()
                 return HybridLoader(
-                    file_path=file_path, jq_schema=".[]", text_content=False, metadata_func=metadata_func
+                    file_path=file_path,
+                    jq_schema=".[]",
+                    text_content=False,
+                    metadata_func=metadata_func,
+                    transformation_pipe=transformation_pipe,
                 )

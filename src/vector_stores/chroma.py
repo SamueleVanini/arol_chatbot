@@ -4,7 +4,9 @@ from langchain_chroma import Chroma
 from langchain_core.documents import Document
 from langchain_core.embeddings import Embeddings
 
-logger = logging.getLogger(__name__)
+from core.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 # TODO Check Why data doesn't persist or if it does, WHERE!?
@@ -42,13 +44,10 @@ class ChromaCollection:
                 f"requested collection not found at path: {persist_directory}, creating a new collection: {collection_name}"
             )
 
-            if documents is None:
-                raise ValueError("can't create an empty collection")
-
-        return Chroma.from_documents(
-            documents,
-            embedding_function,
-            collection_name=collection_name,
-            persist_directory=persist_directory,
-            collection_metadata=collection_metadata,
-        )
+            return Chroma(
+                collection_name=collection_name,
+                embedding_function=embedding_function,
+                persist_directory=persist_directory,
+                create_collection_if_not_exists=True,
+                collection_metadata=collection_metadata,
+            )
