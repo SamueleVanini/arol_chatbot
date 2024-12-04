@@ -3,7 +3,8 @@ from langchain.embeddings import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 
-def create_embeddings(docs, split=False):
+def create_embeddings(docs, collection_name: str = "catalog_indexing",
+                      persist_directory: str = "./chroma_catalog_indexing", split=False):
     if split:
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000,
                                                        chunk_overlap=0)  # chunk_size: The size of each chunk in characters
@@ -17,8 +18,8 @@ def create_embeddings(docs, split=False):
         encode_kwargs=encode_kwargs
     )
     vectorstore = ChromaCollection.get_collection(
-        collection_name="catalog_indexing",
-        persist_directory="./chroma_catalog_indexing",
+        collection_name=collection_name,
+        persist_directory=persist_directory,
         embedding_function=hf_embeddings,
         documents=docs,
     )  # Chroma.from_documents: Create a vectorstore from a list of documents

@@ -9,26 +9,32 @@
   width: 100%;
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
-  font-size: 130%;
+  font-size: 100%;
   font-style: normal;
   padding: 20px; /* Add padding to ensure content doesn't touch the edges */
   box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  background-color: #212121;
 }
+
+
 
 .welcome-image {
   width: 200px; /* Increase the width */
   height: 200px;
-  margin-left: 210px; /* Adjust the margin */
+  margin-bottom: 600px;
+  margin-right: 200px;
 }
 
 .border-homepage {
   display: flex;
   flex-direction: column;
+  align-items: center; /* Center the content horizontally */
   width: 100%;
   padding: 250px;
   max-width: 600px; /* Set a maximum width */
+  max-height: 1200px;
+  margin-top: 50px;
   box-sizing: border-box; /* Include padding and border in the element's total width and height */
-  position: relative;
 }
 
 .text-container {
@@ -50,46 +56,54 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center; /* Center content vertically within the form */
+  width: 100%; /* Ensure the form takes full width */
+  margin-top: 150px; /* Push the form to the bottom */
 }
 
+
 .input-field {
-  width: 100%;
-  max-width: 200px; /* Set a maximum width */
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  width: 100%; /* Imposta la larghezza al 100% del contenitore */
+  height: 30px; /* Imposta l'altezza desiderata */
+  margin-bottom: 10px; /* Aggiungi un margine inferiore per separare gli elementi */
+  padding: 5px; /* Aggiungi padding per un po' di spazio interno */
+  border: 1px solid #ccc; /* Aggiungi un bordo */
+  border-radius: 5px; /* Aggiungi angoli arrotondati */
+  box-sizing: border-box; /* Include padding e bordo nella larghezza totale */
 }
 
 .submit-button {
-  width: 100%;
-  max-width: 220px; /* Set a maximum width */
-  padding: 15px;
-  margin: 10px 0;
-  border: none;
-  background-color: #0084ff;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  width: 100%; /* Imposta la larghezza al 100% del contenitore */
+  height: 30px; /* Imposta l'altezza desiderata */
+  margin-bottom: 10px; /* Aggiungi un margine inferiore per separare i bottoni */
+  padding: 5px; /* Aggiungi padding per un po' di spazio interno */
+  border: none; /* Rimuovi il bordo */
+  background-color: #212121; /* Colore di sfondo */
+  color: white; /* Colore del testo */
+  border-radius: 5px; /* Aggiungi angoli arrotondati */
+  cursor: pointer; /* Cambia il cursore al passaggio del mouse */
+  display: flex; /* Utilizza flexbox per centrare il contenuto */
+  align-items: center; /* Centra verticalmente il contenuto */
+  justify-content: center; /* Centra orizzontalmente il contenuto */
 }
 
 .submit-button:hover {
-  background-color: #005bb5;
+  background-color: #212121; /* Cambia il colore di sfondo al passaggio del mouse */
 }
 
+
 /* Media queries for responsiveness */
-@media (max-width: 600px) {
-  .border-homepage {
-    padding: 10px;
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .homepage {
+    padding: 10px; /* Reduce padding for smaller screens */
+    font-size: 90%; /* Adjust font size for better readability */
   }
+}
 
-  .text-container {
-    top: 50px;
-  }
-
-  .input-field, .submit-button {
-    max-width: 100%;
+@media (max-width: 480px) {
+  .homepage {
+    padding: 5px; /* Further reduce padding for very small screens */
+    font-size: 80%; /* Further adjust font size */
   }
 }

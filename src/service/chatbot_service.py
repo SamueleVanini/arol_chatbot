@@ -14,10 +14,8 @@ class ArolChatBot:
     @staticmethod
     async def initialize_chat_bot():
         llm = LlmFactory.get_model("llama3-8b-8192", temperature=0)
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        file_path = os.path.join(current_dir, '..', 'backend', 'processed_catalog.json')
-        file_path = os.path.normpath(file_path)  # Normalize the path
-        docs = FileLoaderFactory.get_loader(loader_type=LoaderType.JSON, file_path=file_path).load()
+
+        docs = FileLoaderFactory.get_loader(loader_type=LoaderType.JSON, file_path="data/processed_catalog.json").load()
         # docs = FileLoaderFactory.get_loader(loader_type=LoaderType.JSON, file_path="processed_catalog.json").load()
         indexing = create_embeddings(docs=docs)
         retriever = create_vectorstore_retriever(indexing)
