@@ -1,0 +1,48 @@
+{
+  "total_machines": 25,
+  "machine_names": [
+    "euro pk",
+    "next",
+    "eagle pk",
+    "euro vp",
+    "eagle vp",
+    "geyser",
+    "euro dd",
+    "equatorque",
+    "euro pp-c euro pp-g",
+    "kamma pkv",
+    "eagle pp",
+    "euro va-cb",
+    "euro va",
+    "euro vpa",
+    "eagle va",
+    "esse",
+    "esse pk",
+    "eagle c",
+    "quasar r \\u2022 f \\u2022 rf",
+    "saturno r \\u2022 f \\u2022 rf",
+    "gemini r \\u2022 f \\u2022 rf",
+    "la champenoise",
+    "reverse",
+    "over"
+  ],
+  "machine_categories": [
+    "cappers",
+    "corkers",
+    "pluggers",
+    "decappers",
+    "oriented caps elevators"
+  ],
+  "main_markets": [
+    "beverage",
+    "food",
+    "chemical",
+    "pharmaceutical",
+    "personal care",
+    "household care",
+    "wine",
+    "beer",
+    "spirits",
+    "champagne"
+  ]
+}
