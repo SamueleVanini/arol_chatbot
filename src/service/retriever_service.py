@@ -50,7 +50,7 @@ class RetrieverFactory:
                 if not isinstance(store, VectorStore):
                     raise ValueError("Store object must be a VectorStore for self-querying retrieval")
                 # we should check for all the variation of the parameters type, think if it is not better to change the pattern...
-                return SelfQueryRetriever.from_llm(llm, store, llm_context, *input, **kwargs)  # type: ignore
+                return SelfQueryRetriever.from_llm(llm, store, llm_context, search_type="similarity_score_threshold", search_kwargs={"score_threshold": 0.6, "k": 23}, *input, **kwargs)  # type: ignore
             case RetrieverType.HISTORY_AWARE:
                 if not isinstance(store, BaseRetriever):
                     raise ValueError("Store object must be a BaseRetriever for HISTORY_AWARE retrieval")
@@ -69,11 +69,12 @@ class SetMergeRetrieverDirector:
         parrent_docs: list[Document],
         search_type: SearchType = SearchType.similarity_score_threshold,
         parrent_search_kwargs: Optional[Dict] = None,
+        company_info_retriever: Optional[BaseRetriever] = None,
         *input,
         **kwargs,
     ) -> SetMergerRetriever:
         if parrent_search_kwargs is None:
-            parrent_search_kwargs = {"score_threshold": 0.4, "k": 23}
+            parrent_search_kwargs = {"score_threshold": 0.6, "k": 23}
         parent = ParentDocumentRetriever(
             vectorstore=child_vectorstore,
             docstore=store,
@@ -99,5 +100,8 @@ class SetMergeRetrieverDirector:
             # enable limit will set the k for the chroma search (default value is 10, find out how to modify it)
             # enable_limit=True,
         )
+
+        if company_info_retriever:
+            return SetMergerRetriever(retrievers=[parent, self_quering, company_info_retriever])  # type: ignore
 
         return SetMergerRetriever(retrievers=[parent, self_quering])  # type: ignore

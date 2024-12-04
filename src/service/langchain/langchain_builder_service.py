@@ -17,9 +17,9 @@ class LangChainBuilder:
 
     @staticmethod
     def response_parser(ai_message: dict) -> dict:
-        cleaned = re.sub(r'^.*?(AI Assistant:|AI:)', '', ai_message['answer'], flags=re.DOTALL)
+        cleaned = re.sub(r"^.*?(AI Assistant:|AI:)", "", ai_message["answer"], flags=re.DOTALL)
         cleaned = cleaned.strip()
-        ai_message['answer'] = cleaned
+        ai_message["answer"] = cleaned
         return ai_message
 
     def create_rag_chain(self, llm, retriever):
@@ -29,8 +29,7 @@ class LangChainBuilder:
             chain_type = ChainType.CHAT
 
         prompt = get_template(
-            system_prompt=get_system_prompt(prompt_type=SystemPromptType.CHAT),
-            chain_type=chain_type
+            system_prompt=get_system_prompt(prompt_type=SystemPromptType.CHAT_TEST), chain_type=chain_type
         )
 
         question_answer_chain = create_stuff_documents_chain(llm, prompt)
