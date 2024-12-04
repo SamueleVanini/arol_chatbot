@@ -54,10 +54,11 @@
 .input-field {
   width: 100%;
   max-width: 200px; /* Set a maximum width */
-  padding: 10px;
+  padding: 20px;
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 15px;
   box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
@@ -67,15 +68,15 @@
   padding: 15px;
   margin: 10px 0;
   border: none;
-  background-color: #0084ff;
-  color: white;
+  background-color: white;
+  color: #212121;
   border-radius: 5px;
   cursor: pointer;
   box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
 .submit-button:hover {
-  background-color: #005bb5;
+  background-color: #4c4e50;
 }
 
 /* Media queries for responsiveness */
