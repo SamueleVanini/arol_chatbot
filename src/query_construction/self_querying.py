@@ -34,7 +34,8 @@ METADATA_FIELD_INFO = [
     # AttributeInfo(name="caps application", description="The type of caps usable by the machine", type="string"),
 ]
 
-DOCUMENT_CONTENT_DESCRIPTION = "Small paragraph contaning all the machine's information and statistics"
+# DOCUMENT_CONTENT_DESCRIPTION = "Small paragraph contaning all the machine's information and statistics"
+DOCUMENT_CONTENT_DESCRIPTION = "small json object with machine's information and statistics"
 
 
 def metadata_extraction(record: dict, metadata: dict) -> dict:

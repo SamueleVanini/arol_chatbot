@@ -2,7 +2,7 @@ import logging
 
 
 def get_logger(name: str):
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
     console_handler = logging.StreamHandler()
     console_handler.setLevel(logging.INFO)

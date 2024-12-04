@@ -84,7 +84,9 @@ class SetMergeRetrieverDirector:
         parent.add_documents(parrent_docs, ids=None)
         llm = kwargs.pop("self_querying_model", None)
         if llm is None:
-            llm = LlmFactory.get_model("llama3-8b-8192", temperature=0)
+            # 8192 is the maximum for llama-3-8b
+            max_tokens = kwargs.pop("max_tokens", 8192)
+            llm = LlmFactory.get_model("llama3-8b-8192", temperature=0, max_tokens=max_tokens)
         self_quering = RetrieverFactory.get_retriever(
             RetrieverType.SELF_QUERYING,
             llm,

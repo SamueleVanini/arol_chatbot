@@ -1,5 +1,8 @@
+import csv
 from os import PathLike
+from pathlib import Path
 from typing import Any, Callable, Dict, Optional
+from doc_loader.transform_pipe import ContentTransformation, FromJsonToText
 from langchain_community.document_loaders import JSONLoader
 from langchain_core.documents import Document
 from langchain_core.language_models.chat_models import BaseChatModel
@@ -8,6 +11,7 @@ from langchain_core.output_parsers import StrOutputParser
 from service.llm_service import LlmFactory
 
 
+# TODO: load text documents from file and skip llm call
 class HybridLoader(JSONLoader):
 
     def __init__(
@@ -19,27 +23,15 @@ class HybridLoader(JSONLoader):
         metadata_func: Callable[[Dict, Dict], Dict] | None = None,
         text_content: bool = True,
         json_lines: bool = False,
-        transformationModel: BaseChatModel | None = None,
-        model_kwargs: Optional[Dict] = None,
+        transformation_pipe: ContentTransformation = FromJsonToText(),
     ):
         super().__init__(
             file_path, jq_schema, content_key, is_content_key_jq_parsable, metadata_func, text_content, json_lines
         )
-
-        if transformationModel is None:
-            model_kwargs = model_kwargs or {}
-            transformationModel = LlmFactory.get_model("llama3-8b-8192", temperature=0, **model_kwargs)
-        self.transformation_chain = (
-            {"doc": lambda x: x.page_content}
-            | ChatPromptTemplate.from_template(
-                "Rewrite the following json object describing a machine into a small paragraph containing all the relevant information:\n\n{doc}"
-            )
-            | transformationModel
-            | StrOutputParser()
-        )
+        self.transformation_pipe = transformation_pipe
 
     def load(self) -> list[Document]:
         docs = super().load()
         for doc in docs:
-            doc.page_content = self.transformation_chain.invoke(doc)
+            doc.page_content = self.transformation_pipe.transform(doc)
         return docs
