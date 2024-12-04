@@ -8,9 +8,13 @@ function Chat() {
     { type: 'incoming', message: 'Hello! How can I help you today?' },
     { type: 'outgoing', message: 'I need help for my company' },
     { type: 'incoming', message: 'Ok, tell me more details' },
+    { type: 'outgoing', message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed nulla sed turpis dignissim accumsan in ac justo. Sed eget dolor et erat fermentum sodales lacinia quis arcu. Donec consequat leo vel rhoncus blandit. Nullam lectus justo, maximus in sapien vitae, tristique bibendum mauris. In est quam, auctor ac sapien at, blandit fermentum elit. In ultricies massa in viverra consectetur. Curabitur ut est enim. Mauris semper erat est, nec condimentum eros consequat sed. Sed in auctor quam. Nullam condimentum ultricies turpis auctor molestie. Nulla blandit lorem mi, nec finibus est fringilla eget.' },
   ]);
   const [chatHistory, setChatHistory] = useState([
-    { type: 'incoming', message: 'Example' }
+    {  message: 'Example' },
+    {message: 'Example' },
+    { message: 'Example' },
+    {  message: 'Example' }
 ]);
 
 const [menuOpen, setMenuOpen] = useState(false);

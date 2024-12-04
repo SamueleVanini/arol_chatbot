@@ -12,6 +12,9 @@ body {
   list-style-type: none; /* Remove bullet points */
   padding: 0;
   margin: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 300px;
 }
 
 .menu-list li {
@@ -24,6 +27,7 @@ body {
   border-radius: 5px;
   width: 100%; /* Full width */
   box-sizing: border-box; /* Include padding and border in the element's total width and height */
+
 }
 
 .side-menu {
@@ -56,6 +60,10 @@ body {
   list-style-type: none; /* Remove bullet points */
   padding: 0; /* Remove default padding */
   margin: 0; /* Remove default margin */
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 350%;
+  max-height: 300px;
 }
 
 
@@ -66,19 +74,20 @@ body {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  width: 150%;
+  max-width: 200px;
+  overflow-x: hidden;
 }
 
 .chatbox .incoming {
   background-color: #3B3B3B; /* Light blue for incoming messages */
   color: #ccc;
-  transform: translateX(120px);
+  transform: translateX(390px);
 }
 
 .chatbox .outgoing {
   background-color: #1E1E1E; /* Light green for outgoing messages */
   color: #ccc;
-  transform: translateX(-310px);
+
 }
 
 
