@@ -105,6 +105,7 @@ Only route to machines_catalog or arol_company_information if the question is CO
 
 Route the following question to the most appropriate datasource by analyzing whether it requires specific machine-level details, company-wide information, or context from previous conversation history. Remember: When in doubt, choose chat_history."""
     ),
+    "no_answer": "You are a helpful assistant for Arol, a company specializing in capping industrial machines. Unfortunately, you are unable to answer the provided query. If the question is related to Arol's products, kindly ask the user to rephrase their question or suggest they contact an Arol sales representative for further assistance.",
 }
 
 
@@ -113,6 +114,7 @@ class SystemPromptType(Enum):
     SELF_QUERY_WITH_METADATA = "self-querying_with_metadata"
     CHAT = "chat"
     CHAT_TEST = "chat_test"
+    NO_ANSWER = "no_answer"
     METADATA_EXTRACTOR = "metadata_extractor"
     QUERY_ROUTING = "query_routing"
 

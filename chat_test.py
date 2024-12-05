@@ -20,7 +20,7 @@ from src.service.file_loader_service import FileLoaderFactory, LoaderType
 from src.service.llm_service import LlmFactory
 from src.service.langchain.langchain_builder_service import LangChainBuilder
 from src.service.history_service import ChatHistoryFactory, MemoryType
-from src.vector_stores.chroma import ChromaCollection
+from src.vector_stores.chroma import ChromaCollection, custom_cosine_relevance_score_fn
 
 logger = get_logger(__name__)
 
@@ -30,7 +30,9 @@ COLLECTION_NAME = "retrival_matches"
 PERSIST_DIRECTORY = "./data"
 
 # Embedding function should get a class/function to get it?
-EMBEDDING_FUNC = HuggingFaceEmbeddings(model_name="msmarco-distilbert-base-v4")
+EMBEDDING_FUNC = HuggingFaceEmbeddings(
+    model_name="msmarco-distilbert-base-v4", encode_kwargs={"normalize_embeddings": True}
+)
 DATASET_NAME = "retrival_matches"
 CHILD_COLLECTION = "full_documents"
 COMPANY_COLLECTION = "company_info"
@@ -55,22 +57,37 @@ company_docs = company_info_loader.load()
 logger.info("Docs loaded")
 
 self_querying_store = ChromaCollection.get_collection(
-    COLLECTION_NAME, PERSIST_DIRECTORY, EMBEDDING_FUNC, docs, override_collection_if_exists=True
+    COLLECTION_NAME,
+    PERSIST_DIRECTORY,
+    EMBEDDING_FUNC,
+    docs,
+    override_collection_if_exists=True,
+    relevance_score_fn=custom_cosine_relevance_score_fn,
 )
 # we still don't have a way to reset a chroma collection if it's already present but we want do add docs in the future
 parrent_store = ChromaCollection.get_collection(
-    CHILD_COLLECTION, PERSIST_DIRECTORY, EMBEDDING_FUNC, docs, override_collection_if_exists=True
+    CHILD_COLLECTION,
+    PERSIST_DIRECTORY,
+    EMBEDDING_FUNC,
+    docs,
+    override_collection_if_exists=True,
+    relevance_score_fn=custom_cosine_relevance_score_fn,
 )
 
 company_info_collection = ChromaCollection.get_collection(
-    COMPANY_COLLECTION, PERSIST_DIRECTORY, EMBEDDING_FUNC, company_docs, override_collection_if_exists=True
+    COMPANY_COLLECTION,
+    PERSIST_DIRECTORY,
+    EMBEDDING_FUNC,
+    company_docs,
+    override_collection_if_exists=True,
+    relevance_score_fn=custom_cosine_relevance_score_fn,
 )
 
 store = InMemoryStore()
 logger.info("Obtained vector store")
 
 company_info_retriever = company_info_collection.as_retriever(
-    search_type="similarity_score_threshold", search_kwargs={"score_threshold": 0.6, "k": 23}
+    search_type="similarity_score_threshold", search_kwargs={"score_threshold": 0.6, "k": 1}
 )
 
 child_splitter = RecursiveCharacterTextSplitter(chunk_size=200)
@@ -101,8 +118,10 @@ final_chain = builder.build_chain(llm, history_aware_retriever)
 query = ""
 config = {"configurable": {"thread_id": "abc123"}}
 
-while query != "exit":
+while True:
     query = input(">")
+    if query == "exit":
+        break
     result = final_chain.invoke({"input": query}, config={"configurable": {"session_id": "abc123"}})
     logger.info(result["answer"])
     logger.debug(result["context"])
