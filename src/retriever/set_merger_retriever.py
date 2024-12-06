@@ -1,6 +1,7 @@
 import asyncio
 from typing import List
 
+from core.logger import get_logger
 from langchain_core.callbacks import (
     AsyncCallbackManagerForRetrieverRun,
     CallbackManagerForRetrieverRun,
@@ -68,16 +69,21 @@ class SetMergerRetriever(BaseRetriever):
             A list of merged documents.
         """
 
+        logger = get_logger(__name__)
+
         # Get the results of all retrievers.
         retriever_docs = list[list[Document]]()
         for i, retriever in enumerate(self.retrievers):
             # Add error handling if retriever fails
-            docs = retriever.invoke(
-                query,
-                config={"callbacks": run_manager.get_child("retriever_{}".format(i + 1))},
-            )
-            if docs is not None or len(docs):
-                retriever_docs.append(docs)
+            try:
+                docs = retriever.invoke(
+                    query,
+                    config={"callbacks": run_manager.get_child("retriever_{}".format(i + 1))},
+                )
+                if docs is not None or len(docs):
+                    retriever_docs.append(docs)
+            except Exception as e:
+                logger.debug(e)
 
         # Merge the results of the retrievers.
         merged_documents = list[Document]()

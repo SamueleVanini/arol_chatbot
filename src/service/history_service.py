@@ -36,11 +36,12 @@ class ChatHistoryFactory:
             case _:
                 raise ValueError(f"Unsupported history type: {memory_type}")
 
-    def _get_local_session_history(self, session_id: str) -> BaseChatMessageHistory:
+    @classmethod
+    def _get_local_session_history(cls, session_id: str) -> BaseChatMessageHistory:
         """Return a local (in-memory) chat message history for a session."""
-        if session_id not in self.store:
-            self.store[session_id] = ChatMessageHistory()
-        return self.store[session_id]
+        if session_id not in cls.store:
+            cls.store[session_id] = ChatMessageHistory()
+        return cls.store[session_id]
 
     @staticmethod
     def _get_redis_history(session_id: str) -> BaseChatMessageHistory:
