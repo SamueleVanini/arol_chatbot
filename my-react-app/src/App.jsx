@@ -1,6 +1,5 @@
 import React from 'react';
 import Homepage from './Homepage';
-import SignUp from './SignUp';
 import Chat from './Chat';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 

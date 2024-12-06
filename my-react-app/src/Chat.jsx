@@ -86,14 +86,14 @@ const handleSubmit = async (e) => {
           </ul>
         </div>
       )}
-          <ul className={"chatbox"}>
+          <ul className={`chatbox${menuOpen ? '-menu-open' : ''}`}>
               {currentChat.map((chat, index) => (
                 <li key={chat.type + index} className={chat.type}>
                     <p className='chat-message'>{chat.message}</p>
                 </li>
               ))}
             </ul>
-            <div className={`chat-input`}>
+            <div className={`chat-input${menuOpen ? '-menu-open' : ''}`}>
           <textarea
             className="text"
             rows="1"

@@ -63,7 +63,8 @@ body {
   overflow-y: scroll;
   overflow-x: hidden;
   width: 350%;
-  max-height: 300px;
+  max-height: 500px;
+  transform: translateY(-50px);
 }
 
 
@@ -72,22 +73,21 @@ body {
 .chatbox li {
   margin-bottom: 10px;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+
   max-width: 200px;
   overflow-x: hidden;
 }
 
-.chatbox .incoming {
+.chatbox .outgoing {
   background-color: #3B3B3B; /* Light blue for incoming messages */
   color: #ccc;
   transform: translateX(390px);
+  border: 1px solid #ccc;
+  border-radius: 8px;
 }
 
-.chatbox .outgoing {
-  background-color: #1E1E1E; /* Light green for outgoing messages */
+.chatbox .incoming {
   color: #ccc;
-
 }
 
 
@@ -128,14 +128,50 @@ body {
   padding-bottom: 20px;
   width: 350%;
   align-items: center; /* Allinea gli elementi a sinistra */
+  transform: translateY(50px);
 }
 
-.chat-input-open {/* Cambia la direzione del flex per posizionare gli elementi in colonna */
+.chat-input-menu-open {/* Cambia la direzione del flex per posizionare gli elementi in colonna */
   display: flex; 
   padding-bottom: 20px;
   width: 350%;
   align-items: center; /* Allinea gli elementi a sinistra */
   transform: translateX(150px);
+  transform: translateY(150px);
+}
+
+.chatbox-menu-open{
+  transform: translateX(150px);
+}
+
+.chatbox-menu-open {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 350%;
+  max-height: 300px;
+  max-height: 500px;
+}
+
+.chatbox-menu-open li {
+  margin-bottom: 10px;
+  padding: 10px;
+  max-width: 200px;
+  overflow-x: hidden;
+}
+
+.chatbox-menu-open .outgoing {
+  background-color: #3B3B3B; /* Light blue for incoming messages */
+  color: #ccc;
+  transform: translateX(390px);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.chatbox-menu-open .incoming {
+  color: #ccc;
 }
 
 
