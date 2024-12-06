@@ -1,0 +1,1477 @@
+[
+  {
+    "name": "euro pk",
+    "application_field": "pre-threaded plastic caps capper",
+    "main_features": {
+      "speed production": [
+        "up to 1.500 bpm / 90.000 bph"
+      ],
+      "main market": [
+        "beverage",
+        "food",
+        "chemical",
+        "pharmaceutical"
+      ],
+      "caps application": [
+        "sport and flat pre-threaded plastic caps"
+      ],
+      "closure heads": [
+        "magnetic syncronous heads",
+        "hysteresis heads"
+      ]
+    },
+    "versions": {
+      "standard": [
+        "structure with painted steel components. not washable"
+      ],
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ],
+      "washable": [
+        "stainless steel components. complete washing of the capper is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "on caps chute": [
+        "overturned caps automatic ejector (a.e.d.)",
+        "n 2 injection device",
+        "caps washing",
+        "ionizer/dust extraction",
+        "uv lamp",
+        "bottle neck cleaning",
+        "steam injection"
+      ],
+      "quick format change": [
+        "sorter (manual or automatic)",
+        "caps chute",
+        "pick & place",
+        "containers handling"
+      ],
+      "other": [
+        "motorized height adjustment (standard for 'free standing' version)",
+        "centralized lubrication",
+        "multibody",
+        "caps elevator",
+        "caps buffer: twin hopper, flat buffer"
+      ]
+    }
+  },
+  {
+    "name": "next pk",
+    "application_field": "pre-threaded plastic caps lube free capper",
+    "main_features": {
+      "speed production": [
+        "next pk: up to 1.440 bpm / 86.400 bph"
+      ],
+      "main market": [
+        "beverage",
+        "food",
+        "chemical",
+        "pharmaceutical"
+      ],
+      "caps application": [
+        "sport and flat pre-threaded plastic caps"
+      ],
+      "closure heads": [
+        "magnetic syncronous heads",
+        "hysteresis heads"
+      ]
+    },
+    "versions": {
+      "washable": [
+        "opened structure. completely washable. lube free"
+      ],
+      "ultraclean": [
+        "suitable for foamed cleaning with chemicals. split between capping and external zone by means of plenum / hydraulic labyrinth. lube free"
+      ],
+      "aseptic": [
+        "suitable for intensive cleaning with chemicals. split between capping and external zone by means of plenum / hydraulic labyrinth"
+      ],
+      "pk": [
+        "closure chucks",
+        "closure grippers"
+      ]
+    },
+    "other_info": {
+      "on caps chute": [
+        "overturned caps automatic ejector (a.e.d.)",
+        "n 2 injection device",
+        "caps washing",
+        "ionizer/dust extraction",
+        "uv lamp",
+        "bottle neck cleaning",
+        "steam injection"
+      ],
+      "quick format change": [
+        "sorter (manual or automatic)",
+        "caps chute",
+        "pick & place",
+        "containers handling"
+      ],
+      "other": [
+        "multibody",
+        "caps elevator",
+        "caps buffer: twin hopper, flat buffer"
+      ]
+    }
+  },
+  {
+    "name": "next vp",
+    "application_field": "pre-threaded plastic caps lube free capper",
+    "main_features": {
+      "speed production": [
+        " next vp: up to 1.200 bpm / 72.000 bph"
+      ],
+      "main market": [
+        "beverage",
+        "food",
+        "chemical",
+        "pharmaceutical"
+      ],
+      "caps application": [
+        "sport and flat pre-threaded plastic caps"
+      ],
+      "closure heads": [
+        "magnetic syncronous heads",
+        "hysteresis heads"
+      ]
+    },
+    "versions": {
+      "washable": [
+        "opened structure. completely washable. lube free"
+      ],
+      "ultraclean": [
+        "suitable for foamed cleaning with chemicals. split between capping and external zone by means of plenum / hydraulic labyrinth. lube free"
+      ],
+      "aseptic": [
+        "suitable for intensive cleaning with chemicals. split between capping and external zone by means of plenum / hydraulic labyrinth"
+      ],
+      "vp": [
+        "closure chucks",
+        "closure grippers"
+      ]
+    },
+    "other_info": {
+      "on caps chute": [
+        "overturned caps automatic ejector (a.e.d.)",
+        "n 2 injection device",
+        "caps washing",
+        "ionizer/dust extraction",
+        "uv lamp",
+        "bottle neck cleaning",
+        "steam injection"
+      ],
+      "quick format change": [
+        "sorter (manual or automatic)",
+        "caps chute",
+        "pick & place",
+        "containers handling"
+      ],
+      "other": [
+        "multibody",
+        "caps elevator",
+        "caps buffer: twin hopper, flat buffer"
+      ]
+    }
+  },
+  {
+    "name": "eagle pk",
+    "application_field": "single-head capper  for pre-threaded  plastic caps",
+    "main_features": {
+      "speed production": [
+        "up to 41 bpm / 2.500 bph"
+      ],
+      "main market": [
+        "beverage",
+        "food",
+        "chemical",
+        "pharmaceutical"
+      ],
+      "caps application": [
+        "sport and flat pre-threaded plastic caps"
+      ],
+      "closure heads": [
+        "magnetic syncronous heads"
+      ]
+    },
+    "versions": {
+      "standard": [
+        "structure with painted steel components. not washable"
+      ],
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ],
+      "washable": [
+        "stainless steel components. complete washing of the capper is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "on caps chute": [
+        "overturned caps automatic ejector (a.e.d.)",
+        "caps washing",
+        "ionizer/dust extraction",
+        "uv lamp",
+        "bottle neck cleaning",
+        "steam injection"
+      ],
+      "quick format change": [
+        "sorter (manual or automatic)",
+        "caps chute",
+        "containers handling"
+      ],
+      "other": [
+        "motorized height adjustment",
+        "caps elevator"
+      ]
+    }
+  },
+  {
+    "name": "euro vp",
+    "application_field": "capper for  pre-threaded plastic,  irregular  geometry  and large caps",
+    "main_features": {
+      "speed production": [
+        "up to 1.200 bpm / 72.000 bph"
+      ],
+      "main market": [
+        "beverage",
+        "food",
+        "chemical",
+        "pharmaceutical"
+      ],
+      "caps application": [
+        "pre-threaded irregular geometry and large plastic caps",
+        "aluminum pre-threaded caps"
+      ],
+      "closure heads": [
+        "magnetic syncronous heads",
+        "hysteresis heads"
+      ]
+    },
+    "versions": {
+      "standard": [
+        "structure with painted steel components. not washable"
+      ],
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ],
+      "washable": [
+        "stainless steel components. complete washing of the capper is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "on caps chute": [
+        "overturned caps automatic ejector",
+        "caps washing",
+        "ionizer/dust extraction",
+        "uv lamp",
+        "bottle-neck cleaning",
+        "steam injection"
+      ],
+      "quick format change": [
+        "caps sorter",
+        "caps chute",
+        "pick&place",
+        "containers handling"
+      ],
+      "other": [
+        "motorized height adjustment",
+        "centralized lubrication",
+        "multibody equipment",
+        "caps elevator",
+        "caps buffer: twin hopper, flat buffer"
+      ]
+    }
+  },
+  {
+    "name": "eagle vp",
+    "application_field": "single-head capper for  pre-threaded plastic,  irregular  geometry  and large caps",
+    "main_features": {
+      "speed production": [
+        "capsule less or equal  diameter38: up to 33 bpm / 2.000 bph"
+      ],
+      "main market": [
+        "beverage",
+        "food",
+        "spirits",
+        "chemical",
+        "pharmaceutical"
+      ],
+      "caps application": [
+        "pre-threaded plastic, irregular geometry and large caps on glass or plastic bottles"
+      ],
+      "closure heads": [
+        "magnetic synchronous heads"
+      ]
+    },
+    "versions": {
+      "standard": [
+        "structure with painted steel components. not washable"
+      ],
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ],
+      "washable": [
+        "stainless steel components. complete washing of the capper is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "on caps chute": [
+        "overturned caps automatic ejector",
+        "ionizer/dust extraction",
+        "uv lamp"
+      ],
+      "quick format change": [
+        "caps sorter",
+        "caps chute",
+        "pick & place",
+        "body-guide assembly",
+        "grippers"
+      ],
+      "other": [
+        "height adjustment",
+        "caps elevator",
+        "supplementary hopper"
+      ]
+    }
+  },
+  {
+    "name": "eagle vp",
+    "application_field": "single-head capper for  pre-threaded plastic,  irregular  geometry  and large caps",
+    "main_features": {
+      "speed production": [
+        " capsule >  diameter38: up to 25 bpm / 1.500 bph"
+      ],
+      "main market": [
+        "beverage",
+        "food",
+        "spirits",
+        "chemical",
+        "pharmaceutical"
+      ],
+      "caps application": [
+        "pre-threaded plastic, irregular geometry and large caps on glass or plastic bottles"
+      ],
+      "closure heads": [
+        "magnetic synchronous heads"
+      ]
+    },
+    "versions": {
+      "standard": [
+        "structure with painted steel components. not washable"
+      ],
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ],
+      "washable": [
+        "stainless steel components. complete washing of the capper is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "on caps chute": [
+        "overturned caps automatic ejector",
+        "ionizer/dust extraction",
+        "uv lamp"
+      ],
+      "quick format change": [
+        "caps sorter",
+        "caps chute",
+        "pick & place",
+        "body-guide assembly",
+        "grippers"
+      ],
+      "other": [
+        "height adjustment",
+        "caps elevator",
+        "supplementary hopper"
+      ]
+    }
+  },
+  {
+    "name": "geyser",
+    "application_field": "capper for twist-off  and pre-threaded  plastic caps",
+    "main_features": {
+      "speed production": [
+        "up to 900 bpm / 54.000 bph"
+      ],
+      "main market": [
+        "beverage",
+        "food"
+      ],
+      "caps application": [
+        "twist-off and pre-threaded plastic caps"
+      ],
+      "closure heads": [
+        "magnetic synchronous heads",
+        "magnetic hysteresis heads"
+      ]
+    },
+    "versions": {
+      "washable": [
+        "stainless steel components. complete washing of the capper is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "quick format change": [
+        "caps sorter",
+        "caps chute",
+        "pick&place",
+        "containers handling"
+      ],
+      "other": [
+        "motorized height adjustment",
+        "centralized lubrication",
+        "pick&place and caps chute steam injection device"
+      ]
+    }
+  },
+  {
+    "name": "euro dd",
+    "application_field": "capper for  dispenser pumps  application",
+    "main_features": {
+      "speed production": [
+        "up to 240 bpm / 14.400 bph"
+      ],
+      "main market": [
+        "personal care",
+        "home care"
+      ],
+      "caps application": [
+        "dispenser",
+        "pre-threaded caps"
+      ],
+      "features": [
+        "turret pre-insert tube into the container"
+      ]
+    },
+    "versions": {
+      "standard": [
+        "structure with painted steel components. not washable"
+      ],
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ],
+      "washable": [
+        "stainless steel components. complete washing of the capper is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "quick format change": [
+        "caps sorter",
+        "caps chute",
+        "pick&place",
+        "containers handling"
+      ],
+      "other": [
+        "motorized height adjustment",
+        "caps elevator"
+      ]
+    }
+  },
+  {
+    "name": "equatorque",
+    "application_field": "capper with brushless motors on vertical and  rotary spindle control",
+    "main_features": {
+      "speed production": [
+        "up to 1.320 bpm / 79.200 bph"
+      ],
+      "main market": [
+        "beverage",
+        "food",
+        "chemical",
+        "pharmaceutical"
+      ],
+      "caps application": [
+        "sport and flat pre-threaded plastic caps",
+        "irregular and large caps"
+      ],
+      "closure heads": [
+        "equatorque series with closure chucks",
+        "equatorque series with closure grippers"
+      ]
+    },
+    "versions": {
+      "standard": [
+        "structure with painted steel components. not washable"
+      ],
+      "washable": [
+        "stainless steel components. complete washing of the capper is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "on caps chute": [
+        "overturned caps automatic ejector",
+        "n2 injection device",
+        "ionizer/dust extraction",
+        "uv lamp",
+        "caps washing"
+      ],
+      "quick format change": [
+        "caps sorter",
+        "caps chute",
+        "containers handling"
+      ],
+      "other": [
+        "motorized height adjustment",
+        "multibody equipment",
+        "caps elevator",
+        "bottle neck cleaning",
+        "caps revolver"
+      ]
+    }
+  },
+  {
+    "name": "euro pp-c",
+    "application_field": "plugger for  press-on caps",
+    "main_features": {
+      "speed production": [
+        "up to 1.200 bpm / 72.000 bph"
+      ],
+      "main market": [
+        "wine&spirits",
+        "food",
+        "chemical",
+        "pharmaceutical",
+        "personal care",
+        "home care"
+      ],
+      "caps application": [
+        "plastic pressure caps",
+        "mushroom plastic caps",
+        "t caps with plastic head and cork body on glass or plastic bottles"
+      ]
+    },
+    "versions": {
+      "standard": [
+        "structure with painted steel components. not washable"
+      ],
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ],
+      "washable": [
+        "stainless steel components. complete washing of the plugger is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "on caps chute": [
+        "overturned caps automatic ejector",
+        "ionizer/dust extraction",
+        "uv lamp"
+      ],
+      "quick format change": [
+        "caps sorter",
+        "caps chute",
+        "pick & place",
+        "bottle-neck guide assembly",
+        "body-guide assembly",
+        "chucks or grippers"
+      ],
+      "other": [
+        "motorized height adjustment",
+        "centralized lubrication",
+        "caps elevator"
+      ]
+    }
+  },
+  {
+    "name": "euro pp-g",
+    "application_field": "plugger for  press-on caps",
+    "main_features": {
+      "speed production": [
+        "up to 1.200 bpm / 72.000 bph"
+      ],
+      "main market": [
+        "wine&spirits",
+        "food",
+        "chemical",
+        "pharmaceutical",
+        "personal care",
+        "home care"
+      ],
+      "caps application": [
+        "plastic pressure caps",
+        "mushroom plastic caps",
+        "t caps with plastic head and cork body on glass or plastic bottles"
+      ]
+    },
+    "versions": {
+      "standard": [
+        "structure with painted steel components. not washable"
+      ],
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ],
+      "washable": [
+        "stainless steel components. complete washing of the plugger is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "on caps chute": [
+        "overturned caps automatic ejector",
+        "ionizer/dust extraction",
+        "uv lamp"
+      ],
+      "quick format change": [
+        "caps sorter",
+        "caps chute",
+        "pick & place",
+        "bottle-neck guide assembly",
+        "body-guide assembly",
+        "chucks or grippers"
+      ],
+      "other": [
+        "motorized height adjustment",
+        "centralized lubrication",
+        "caps elevator"
+      ]
+    }
+  },
+  {
+    "name": "kamma pkv",
+    "application_field": "plugger for press-on caps",
+    "main_features": {
+      "speed production": [
+        "up to 1.200 bpm / 70.000 bph"
+      ],
+      "main market": [
+        "wine&spirits",
+        "food",
+        "chemical",
+        "pharmaceutical",
+        "personal care",
+        "home care"
+      ],
+      "caps application": [
+        "plastic pressure caps, mushroom plastic caps, 't' caps with plastic head and cork body on glass and plastic bottles"
+      ],
+      "closure heads": [
+        "closure chuck with vacuum"
+      ]
+    },
+    "versions": {
+      "standard": [
+        "structure with painted steel components. not washable"
+      ],
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ],
+      "washable": [
+        "stainless steel components. complete washing of the plugger is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "on caps chute": [
+        "overturned caps automatic ejector",
+        "ionizer/dust extraction",
+        "uv lamp"
+      ],
+      "quick format change": [
+        "caps sorter",
+        "caps chute",
+        "pick & place",
+        "bottle-neck guide assembly",
+        "body-guide assembly",
+        "closure chucks"
+      ],
+      "other": [
+        "motorized height adjustment",
+        "centralized lubrication",
+        "caps elevator"
+      ]
+    }
+  },
+  {
+    "name": "eagle pp",
+    "application_field": "single-head plugger  for press-on caps",
+    "main_features": {
+      "speed production": [
+        "up to 50 bpm / 3.000 bph"
+      ],
+      "main market": [
+        "wine&spirits",
+        "food",
+        "chemical",
+        "pharmaceutical",
+        "personal care",
+        "home care"
+      ],
+      "caps application": [
+        "plastic pressure caps, mushroom plastic caps, 't' caps with plastic head and cork body on glass or plastic bottles"
+      ],
+      "closure heads": [
+        "closure chuck with vacuum",
+        "closure chuck or gripper"
+      ]
+    },
+    "versions": {
+      "standard": [
+        "structure with painted steel components. not washable"
+      ],
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ],
+      "washable": [
+        "stainless steel components. complete washing of the plugger is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "on caps chute": [
+        "overturned caps automatic ejector",
+        "ionizer/dust extraction",
+        "uv lamp"
+      ],
+      "quick format change": [
+        "caps sorter",
+        "caps chute",
+        "pick & place",
+        "body-guide assembly",
+        "chucks"
+      ],
+      "other": [
+        "motorized height adjustment",
+        "caps elevator",
+        "supplementary hopper"
+      ]
+    }
+  },
+  {
+    "name": "euro va-cb",
+    "application_field": "capper for aluminum caps on can bottles",
+    "main_features": {
+      "speed production": [
+        "up to 750 bpm / 45.000 bph"
+      ],
+      "main market": [
+        "beverage",
+        "beer"
+      ],
+      "caps application": [
+        "ropp aluminum caps on aluminum bottles"
+      ],
+      "closure heads": [
+        "ssd/cb threading heads"
+      ]
+    },
+    "versions": {
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ],
+      "washable": [
+        "stainless steel components. complete washing of the capper is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "on caps chute": [
+        "overturned caps automatic ejector",
+        "n2 injection device",
+        "ionizer/dust extraction",
+        "uv lamp"
+      ],
+      "quick format change": [
+        "caps sorter",
+        "caps chute",
+        "threading heads",
+        "bottle-neck guide assembly",
+        "body-guide assembly"
+      ],
+      "other": [
+        "motorized height adjustment",
+        "centralized lubrication",
+        "caps elevator"
+      ]
+    }
+  },
+  {
+    "name": "euro va",
+    "application_field": "capper for ropp aluminum caps",
+    "main_features": {
+      "speed production": [
+        "up to 1.200 bpm / 72.000 bph"
+      ],
+      "main market": [
+        "wine&spirits",
+        "beverage",
+        "food",
+        "pharmaceutical"
+      ],
+      "caps application": [
+        "ropp aluminum caps on glass and plastic bottles"
+      ],
+      "closure heads": [
+        "ssd threading heads"
+      ]
+    },
+    "versions": {
+      "standard": [
+        "structure with painted steel components. not washable"
+      ],
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ],
+      "washable": [
+        "stainless steel components. complete washing of the capper is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "on caps chute": [
+        "overturned caps automatic ejector",
+        "n2 injection device",
+        "ionizer/dust extraction",
+        "uv lamp"
+      ],
+      "quick format change": [
+        "caps sorter",
+        "caps chute",
+        "threading heads",
+        "bottle-neck guide assembly",
+        "body-guide assembly"
+      ],
+      "other": [
+        "motorized height adjustment",
+        "centralized lubrication",
+        "multibody equipment",
+        "caps elevator"
+      ]
+    }
+  },
+  {
+    "name": "euro vpa",
+    "application_field": "capper for ropp aluminum caps with plastic insert",
+    "main_features": {
+      "speed production": [
+        "up to 1.200 bpm / 72.000 bph"
+      ],
+      "main market": [
+        "spirits"
+      ],
+      "caps application": [
+        "aluminum caps with pre-threaded insert (stelvinlux - wak) on glass bottles"
+      ],
+      "closure heads": [
+        "vpa900 threading/edging heads"
+      ]
+    },
+    "versions": {
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ],
+      "washable": [
+        "stainless steel components. complete washing of the capper is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "on caps chute": [
+        "overturned caps automatic ejector",
+        "n2 injection device",
+        "ionizer/dust extraction",
+        "uv lamp"
+      ],
+      "quick format change": [
+        "caps sorter",
+        "caps chute",
+        "threading heads",
+        "bottle-neck guide assembly",
+        "body-guide assembly"
+      ],
+      "other": [
+        "motorized height adjustment",
+        "centralized lubrication",
+        "multibody equipment",
+        "caps elevator"
+      ]
+    }
+  },
+  {
+    "name": "eagle va",
+    "application_field": "single-head capper for ropp  aluminum caps",
+    "main_features": {
+      "speed production": [
+        "up to 50 bpm / 3.000 bph"
+      ],
+      "main market": [
+        "wine&spirits",
+        "beverage",
+        "food",
+        "pharmaceutical"
+      ],
+      "caps application": [
+        "ropp aluminum caps on glass and plastic bottles"
+      ],
+      "closure heads": [
+        "ssd threading heads"
+      ]
+    },
+    "versions": {
+      "standard": [
+        "structure with painted steel components. not washable"
+      ],
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ],
+      "washable": [
+        "stainless steel components. complete washing of the capper is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "on caps chute": [
+        "n2 injection device",
+        "caps washing",
+        "uv lamp"
+      ],
+      "quick format change": [
+        "caps sorter",
+        "caps chute",
+        "threading heads",
+        "body-guide assembly"
+      ],
+      "other": [
+        "motorized height adjustment",
+        "supplementary hopper",
+        "caps elevator"
+      ]
+    }
+  },
+  {
+    "name": "esse",
+    "application_field": "crowner for steel and aluminum caps",
+    "main_features": {
+      "speed production": [
+        "up to 300 bpm / 18.000 bph"
+      ],
+      "main market": [
+        "beverage",
+        "food",
+        "wine",
+        "beer",
+        "champagne"
+      ],
+      "caps application": [
+        "crown corks in stainless steel, aluminium and iron on glass bottles"
+      ]
+    },
+    "versions": {
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ],
+      "washable": [
+        "stainless steel components. complete washing of the crowner is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "on caps chute": [
+        "ionizer/dust extraction on caps chute",
+        "uv lamp"
+      ],
+      "quick format change": [
+        "bottle-neck guide assembly",
+        "body-guide assembly"
+      ],
+      "other": [
+        "motorized height adjustment",
+        "centralized lubrication",
+        "caps elevator"
+      ]
+    }
+  },
+  {
+    "name": "esse pk",
+    "application_field": "crowner for steel and aluminum caps",
+    "main_features": {
+      "speed production": [
+        "up to 1.000 bpm / 60.000 bph"
+      ],
+      "main market": [
+        "beverage",
+        "food",
+        "wine",
+        "beer"
+      ],
+      "caps application": [
+        "steel crown corks on glass, plastic and aluminum bottles"
+      ],
+      "closure spindles": [
+        "standard",
+        "i.e.s.",
+        "washable"
+      ]
+    },
+    "versions": {
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ],
+      "washable": [
+        "stainless steel components. complete washing of the capper is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "on caps chute": [
+        "ionizer/dust extraction on caps chute",
+        "uv lamp"
+      ],
+      "other": [
+        "motorized height adjustment",
+        "centralized lubrication",
+        "caps elevator",
+        "spring plates (i.e.s. and washable)"
+      ]
+    }
+  },
+  {
+    "name": "eagle c",
+    "application_field": "single-head  crowner for steel and aluminum caps",
+    "main_features": {
+      "speed production": [
+        "up to 50 bpm / 3.000 bph"
+      ],
+      "main market": [
+        "beverage",
+        "beer",
+        "champagne"
+      ],
+      "caps application": [
+        "steel, stainless steel and aluminum crown corks on glass bottles"
+      ],
+      "closure spindles": [
+        "standard",
+        "i.e.s.",
+        "washable"
+      ]
+    },
+    "versions": {
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ],
+      "washable": [
+        "stainless steel components. complete washing of the capper is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "other": [
+        "motorized height adjustment",
+        "caps elevator",
+        "supplementary hopper",
+        "uv/deionization lamp",
+        "dust extraction"
+      ]
+    }
+  },
+  {
+    "name": "quasar f",
+    "application_field": "corker for natural,  agglomerated and synthetic corks",
+    "main_features": {
+      "speed production": [
+        "up to 667 bpm / 40.000 bph"
+      ],
+      "main market": [
+        "wine",
+        "beer"
+      ],
+      "caps application": [
+        "mushroom corks"
+      ]
+    },
+    "versions": {
+      "washable": [
+        "stainless-steel components. with corklocks, complete washing of the corker is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "other": [
+        "compressing unit heating system",
+        "n2 injection device ('r' and 'rf' versions only)",
+        "gas evacuation from bottle-neck ('r' and 'rf' versions only)",
+        "replacement corklocks for washing of corking zone",
+        "corks feeder/sorter",
+        "automatic die regulation",
+        "bottle-neck gas evacuation circuit cleaning"
+      ]
+    }
+  },
+  {
+    "name": "quasar rf",
+    "application_field": "corker for natural,  agglomerated and synthetic corks",
+    "main_features": {
+      "speed production": [
+        "up to 667 bpm / 40.000 bph"
+      ],
+      "main market": [
+        "wine",
+        "beer"
+      ],
+      "caps application": [
+        "straight and mushroom corks"
+      ]
+    },
+    "versions": {
+      "washable": [
+        "stainless-steel components. with corklocks, complete washing of the corker is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "other": [
+        "compressing unit heating system",
+        "n2 injection device ('r' and 'rf' versions only)",
+        "gas evacuation from bottle-neck ('r' and 'rf' versions only)",
+        "replacement corklocks for washing of corking zone",
+        "corks feeder/sorter",
+        "automatic die regulation",
+        "bottle-neck gas evacuation circuit cleaning"
+      ]
+    }
+  },
+  {
+    "name": "quasar r",
+    "application_field": "corker for natural,  agglomerated and synthetic corks",
+    "main_features": {
+      "speed production": [
+        "up to 667 bpm / 40.000 bph"
+      ],
+      "main market": [
+        "wine",
+        "beer"
+      ],
+      "caps application": [
+        "straight corks"
+      ]
+    },
+    "versions": {
+      "washable": [
+        "stainless-steel components. with corklocks, complete washing of the corker is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "other": [
+        "compressing unit heating system",
+        "n2 injection device ('r' and 'rf' versions only)",
+        "gas evacuation from bottle-neck ('r' and 'rf' versions only)",
+        "replacement corklocks for washing of corking zone",
+        "corks feeder/sorter",
+        "automatic die regulation",
+        "bottle-neck gas evacuation circuit cleaning"
+      ]
+    }
+  },
+  {
+    "name": "saturno f",
+    "application_field": "corker for natural, agglomerated and synthetic corks",
+    "main_features": {
+      "speed production": [
+        "up to 500 bpm / 30.000 bph"
+      ],
+      "main market": [
+        "wine"
+      ],
+      "caps application": [
+        "mushroom corks"
+      ]
+    },
+    "versions": {
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ]
+    },
+    "other_info": {
+      "other": [
+        "compressing unit heating system",
+        "automatic die regulation",
+        "n2 injection device ('r' and 'rf' versions only)",
+        "gas evacuation from bottle-neck ('r' and 'rf' versions only)",
+        "dust extraction",
+        "corks feeder/sorter"
+      ]
+    }
+  },
+  {
+    "name": "saturno rf",
+    "application_field": "corker for natural, agglomerated and synthetic corks",
+    "main_features": {
+      "speed production": [
+        "up to 500 bpm / 30.000 bph"
+      ],
+      "main market": [
+        "wine"
+      ],
+      "caps application": [
+        "straight and mushroom corks"
+      ]
+    },
+    "versions": {
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ]
+    },
+    "other_info": {
+      "other": [
+        "compressing unit heating system",
+        "automatic die regulation",
+        "n2 injection device ('r' and 'rf' versions only)",
+        "gas evacuation from bottle-neck ('r' and 'rf' versions only)",
+        "dust extraction",
+        "corks feeder/sorter"
+      ]
+    }
+  },
+  {
+    "name": "saturno r",
+    "application_field": "corker for natural, agglomerated and synthetic corks",
+    "main_features": {
+      "speed production": [
+        "up to 500 bpm / 30.000 bph"
+      ],
+      "main market": [
+        "wine"
+      ],
+      "caps application": [
+        "straight corks"
+      ]
+    },
+    "versions": {
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ]
+    },
+    "other_info": {
+      "other": [
+        "compressing unit heating system",
+        "automatic die regulation",
+        "n2 injection device ('r' and 'rf' versions only)",
+        "gas evacuation from bottle-neck ('r' and 'rf' versions only)",
+        "dust extraction",
+        "corks feeder/sorter"
+      ]
+    }
+  },
+  {
+    "name": "gemini f",
+    "application_field": "single-head corker  for natural, agglomerated and synthetic corks",
+    "main_features": {
+      "speed production": [
+        "up to 50 bpm / 3.000 bph"
+      ],
+      "main market": [
+        "wine",
+        "beer"
+      ],
+      "caps application": [
+        "mushroom corks"
+      ]
+    },
+    "versions": {
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ]
+    },
+    "other_info": {
+      "other": [
+        "compressing unit heating",
+        "n2 injection device ('r' and 'rf' versions only)",
+        "gas evacuation from bottle-neck ('r' and 'rf' versions only)",
+        "caps feeder\\sorter",
+        "motorized height adjustment"
+      ]
+    }
+  },
+  {
+    "name": "gemini rf",
+    "application_field": "single-head corker  for natural, agglomerated and synthetic corks",
+    "main_features": {
+      "speed production": [
+        "up to 50 bpm / 3.000 bph"
+      ],
+      "main market": [
+        "wine",
+        "beer"
+      ],
+      "caps application": [
+        "straight and mushroom corks"
+      ]
+    },
+    "versions": {
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ]
+    },
+    "other_info": {
+      "other": [
+        "compressing unit heating",
+        "n2 injection device ('r' and 'rf' versions only)",
+        "gas evacuation from bottle-neck ('r' and 'rf' versions only)",
+        "caps feeder\\sorter",
+        "motorized height adjustment"
+      ]
+    }
+  },
+  {
+    "name": "gemini r",
+    "application_field": "single-head corker  for natural, agglomerated and synthetic corks",
+    "main_features": {
+      "speed production": [
+        "up to 50 bpm / 3.000 bph"
+      ],
+      "main market": [
+        "wine",
+        "beer"
+      ],
+      "caps application": [
+        "straight corks"
+      ]
+    },
+    "versions": {
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ]
+    },
+    "other_info": {
+      "other": [
+        "compressing unit heating",
+        "n2 injection device ('r' and 'rf' versions only)",
+        "gas evacuation from bottle-neck ('r' and 'rf' versions only)",
+        "caps feeder\\sorter",
+        "motorized height adjustment"
+      ]
+    }
+  },
+  {
+    "name": "la champenoise",
+    "application_field": "combinated bidule plugger and crowner for champenoise  method",
+    "main_features": {
+      "speed production": [
+        "up to 200 bpm / 12.000 bph"
+      ],
+      "main market": [
+        "wines produced using champenoise and classic method"
+      ],
+      "caps application": [
+        "bidule plastic pressure caps, and steel, stainless steel and aluminium crown corks on glass bottles"
+      ],
+      "closure heads": [
+        "monoblock composed of kamma pk turret (bidule caps) and esse turret (crown corks)"
+      ]
+    },
+    "versions": {
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ],
+      "washable": [
+        "stainless steel components. complete washing of the plugger is possible (thanks to gaskets and labyrinths)"
+      ]
+    },
+    "other_info": {
+      "on caps chute": [
+        "ionizer/dust extraction on caps chute",
+        "uv lamp"
+      ],
+      "quick format change": [
+        "body-guide assembly",
+        "bidule neck + chute"
+      ],
+      "other": [
+        "motorized height adjustment",
+        "caps elevator"
+      ]
+    }
+  },
+  {
+    "name": "reverse",
+    "application_field": "decapper for pre-threaded plastic and aluminum caps",
+    "main_features": {
+      "speed production": [
+        "up to 1.000 bpm / 60.000 bph"
+      ],
+      "main market": [
+        "beverage",
+        "food"
+      ],
+      "caps application": [
+        "pre-threaded plastic caps and threaded aluminum caps to be removed from glass and pet bottles"
+      ],
+      "closure heads": [
+        "arms with hard metal insert"
+      ]
+    },
+    "versions": {
+      "inox external surfaces (i.e.s.)": [
+        "external stainless steel components. suitable for washing of the capping zone"
+      ]
+    },
+    "other_info": {
+      "quick format change": [
+        "containers handling"
+      ],
+      "other": [
+        "motorized height adjustment",
+        "centralized lubrication",
+        "stainless steel infeed worm"
+      ]
+    }
+  },
+  {
+    "name": "over",
+    "application_field": "caps orienting and elevating  system",
+    "main_features": {
+      "speed production": [
+        "up to 1.200 cpm / 72.000 cph"
+      ],
+      "main market": [
+        "beverage",
+        "food",
+        "chemical",
+        "pharmaceutical",
+        "personal care",
+        "houseold care"
+      ],
+      "caps application": [
+        "flat pre-threaded caps",
+        "sport pre-threaded caps",
+        "fragile caps",
+        "crown corks"
+      ],
+      "main features": [
+        "caps orienting by gravity",
+        "caps exit through blower",
+        "500 litres hopper",
+        "secondary belt in the hopper",
+        "structure entirely in stainless steel",
+        "discharging height: 2.500 mm",
+        "electrical board with plc"
+      ],
+      "options": [
+        "magnetic cleats",
+        "1.000, 1.500 and 2.000 litres hopper",
+        "discharging height: 6.000 mm"
+      ]
+    },
+    "versions": {},
+    "other_info": {}
+  },
+  {
+    "name": "flex",
+    "application_field": "oriented caps elevator",
+    "main_features": {
+      "speed production": [
+        "up to 1.500 cpm / 90.000 cph"
+      ],
+      "main market": [
+        "beverage",
+        "food",
+        "chemical"
+      ],
+      "caps application": [
+        "flat pre-threaded caps",
+        "sport pre-threaded caps"
+      ],
+      "main features": [
+        "mechanical caps elevator",
+        "star-wheel for equally spacing the caps",
+        "conveyor belt"
+      ],
+      "quick format change": [
+        "caps guide"
+      ],
+      "other": [
+        "combined structure with centrifugal/mechanical sorter and/or buffer"
+      ]
+    },
+    "versions": {},
+    "other_info": {}
+  }
+]
