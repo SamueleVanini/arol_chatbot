@@ -1,5 +1,5 @@
 import logging
-from typing import Callable, Dict, Optional, Self
+from typing import Callable, Dict, Optional
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
 from langchain_core.embeddings import Embeddings
