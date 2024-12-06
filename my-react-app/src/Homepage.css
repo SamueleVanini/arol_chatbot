@@ -58,7 +58,7 @@
   align-items: center;
   justify-content: center; /* Center content vertically within the form */
   width: 100%; /* Ensure the form takes full width */
-  margin-top: 150px; /* Push the form to the bottom */
+  margin-top: 200px; /* Push the form to the bottom */
 }
 
 
@@ -88,7 +88,7 @@
 }
 
 .submit-button:hover {
-  background-color: #212121; /* Cambia il colore di sfondo al passaggio del mouse */
+  background-color: #000; /* Cambia il colore di sfondo al passaggio del mouse */
 }
 
 

@@ -3,6 +3,7 @@ import './Chat.css';
 
 function Chat() {
   const [input, setInput] = useState('');
+  const [sessionId, setSessionId] = useState(null);
   const [response, setResponse] = useState('');
   const [currentChat, setCurrentChat] = useState([
     { type: 'incoming', message: 'Hello! How can I help you today?' },
@@ -22,49 +23,47 @@ const [menuOpen, setMenuOpen] = useState(false);
 const toggleMenu = () => {
   setMenuOpen(!menuOpen);
 };
-
-  // Generate a simpler session ID
-  const generateSessionId = () => {
-      return Math.random().toString(36).substr(2, 9);
+  
+useEffect(() => {
+  const fetchSessionId = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/user/session');
+      const data = await response.json();
+      setSessionId(data.session_id);
+    } catch (error) {
+      console.error('Error fetching session ID:', error);
+    }
   };
 
-  // Initialize sessionId state
-  const [sessionId, setSessionId] = useState(generateSessionId());
+  fetchSessionId();
+}, []);
 
-  useEffect(() => {
-      // If you need to perform any side effects with sessionId, do it here
-      console.log('Session ID:', sessionId);
-  }, [sessionId]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Use the sessionId from state
-    try {
-        const response = await fetch('http://127.0.0.1:80/query', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                session_id: sessionId,
-                input: input
-            })
-        });
-
-        if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`Network response was not ok: ${response.status} - ${errorText}`);
-        }
-
-        const result = await response.json();
-        const newMessage = { type: 'outgoing', message: input };
-        const newResponse = { type: 'incoming', message: result.answer };
-        setCurrentChat([...currentChat, newMessage, newResponse]);
-        setResponse(result.answer);
-        setInput(''); // Reset the input field
-    } catch (error) {
-        console.error('There was an error!', error);
-    }
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+      const response = await fetch('http://127.0.0.1:80/query', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              session_id: sessionId,
+              input: input
+          })
+      });
+      if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Network response was not ok: ${response.status} - ${errorText}`);
+      }
+      const result = await response.json();
+      const newMessage = { type: 'outgoing', message: input };
+      const newResponse = { type: 'incoming', message: result.answer };
+      setCurrentChat([...currentChat, newMessage, newResponse]);
+      setResponse(result.answer);
+      setInput(''); // Reset the input field
+  } catch (error) {
+      console.error('There was an error!', error);
+  }
 };
 
 
