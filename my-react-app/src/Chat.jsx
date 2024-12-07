@@ -5,18 +5,10 @@ function Chat() {
   const [input, setInput] = useState('');
   const [sessionId, setSessionId] = useState(null);
   const [response, setResponse] = useState('');
-  const [currentChat, setCurrentChat] = useState([
-    { type: 'incoming', message: 'Hello! How can I help you today?' },
-    { type: 'outgoing', message: 'I need help for my company' },
-    { type: 'incoming', message: 'Ok, tell me more details' },
-    { type: 'outgoing', message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed nulla sed turpis dignissim accumsan in ac justo. Sed eget dolor et erat fermentum sodales lacinia quis arcu. Donec consequat leo vel rhoncus blandit. Nullam lectus justo, maximus in sapien vitae, tristique bibendum mauris. In est quam, auctor ac sapien at, blandit fermentum elit. In ultricies massa in viverra consectetur. Curabitur ut est enim. Mauris semper erat est, nec condimentum eros consequat sed. Sed in auctor quam. Nullam condimentum ultricies turpis auctor molestie. Nulla blandit lorem mi, nec finibus est fringilla eget.' },
-  ]);
-  const [chatHistory, setChatHistory] = useState([
-    {  message: 'Example' },
-    {message: 'Example' },
-    { message: 'Example' },
-    {  message: 'Example' }
-]);
+  const [currentChat, setCurrentChat] = useState([]);
+  const [chatHistory, setChatHistory] = useState([]);
+  const token = localStorage.getItem('token');
+
 
 const [menuOpen, setMenuOpen] = useState(false);
 
@@ -27,7 +19,12 @@ const toggleMenu = () => {
 useEffect(() => {
   const fetchSessionId = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/user/session');
+      const response = await fetch('http://0.0.0.0:80/user/session',{
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application',
+          'Authorization': `Bearer ${token}`
+      }});
       const data = await response.json();
       setSessionId(data.session_id);
     } catch (error) {
@@ -41,26 +38,26 @@ useEffect(() => {
 const handleSubmit = async (e) => {
   e.preventDefault();
   try {
-      const response = await fetch('http://127.0.0.1:80/query', {
+    
+      const response = await fetch('http://0.0.0.0:80/query', {
           method: 'POST',
           headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
           },
-          body: JSON.stringify({
-              session_id: sessionId,
-              input: input
-          })
+          body: JSON.stringify({ session_id: sessionId, input: input })
       });
       if (!response.ok) {
           const errorText = await response.text();
           throw new Error(`Network response was not ok: ${response.status} - ${errorText}`);
-      }
+      }else{
       const result = await response.json();
       const newMessage = { type: 'outgoing', message: input };
       const newResponse = { type: 'incoming', message: result.answer };
       setCurrentChat([...currentChat, newMessage, newResponse]);
       setResponse(result.answer);
       setInput(''); // Reset the input field
+      }
   } catch (error) {
       console.error('There was an error!', error);
   }

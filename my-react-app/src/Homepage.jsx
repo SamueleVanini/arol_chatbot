@@ -1,56 +1,62 @@
 import React, { useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 import './Homepage.css';
 
 const Homepage = () => {
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
+  const navigate = useNavigate();
+
 
 
   const handleSignIn = async () => {
+    if(isSignUp){
     setIsSignUp(false);
-    // const response = await fetch('http://localhost:3001/login', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({ username: username, password: password })
-    // });
+    }else{
+    const response = await fetch('http://0.0.0.0:80/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username: username, password: password })
+    });
 
-    // if (response.ok) {
-    //   const data = await response.json();
-    //   alert('Login successful! Token: ' + data.access_token);
-    // } else {
-    //   alert('Login failed: ' + response.statusText);
-    // }
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem('token', data.access_token); // Store the token
+      navigate('/chat');
+    } else {
+      alert('Login failed: ' + response.statusText);
+    }
+    }
   };
 
   const handleSignUp = async () => {
-    setIsSignUp(true);
-    // const response = await fetch('http://localhost:3001/register', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({ username: username, password: password })
-    // });
-
-    // if (response.ok) {
-    //   alert('Registration successful! You can now log in.');
-    // } else {
-    //   alert('Registration failed: ' + response.statusText);
-    // }
-  };
-
-  const handleSubmitSignUp = () => {
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
-    // Handle sign-up logic
-  };
+    if(!isSignUp){
+    setIsSignUp(true);
+    }else{
+    const response = await fetch('http://0.0.0.0:80/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username: username, password: password, password_confirm: confirmPassword })
+    });
 
+    if (response.ok) {
+      alert('Registration successful! You can now log in.');
+    } else {
+      alert('Registration failed: pwd should be at least 8 characters long');
+    }
+  }
+  };
 
   return (
 
