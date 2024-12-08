@@ -16,10 +16,6 @@ function Chat() {
     setMenuOpen(!menuOpen);
   };
 
-  useEffect(() => {
-
-    fetchSessionId();
-  }, []);
 
   const fetchSessionId = async () => {
     try {
@@ -40,8 +36,16 @@ function Chat() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
 
+    
+  if (!currentChat || currentChat.length === 0) {
+    await fetchSessionId();
+  }
+
+  if (!input.trim()) return;
+
+    try {
+     
       const response = await fetch('http://0.0.0.0:80/query', {
         method: 'POST',
         headers: {
@@ -55,8 +59,8 @@ function Chat() {
         throw new Error(`Network response was not ok: ${response.status} - ${errorText}`);
       } else {
         const result = await response.json();
-        const newMessage = { type: 'outgoing' , data: {content: input }};
-        const newResponse = { type: 'incoming', data: {content: result.answer} };
+        const newMessage = { type: 'outgoing', data: { content: input } };
+        const newResponse = { type: 'incoming', data: { content: result.answer } };
         setCurrentChat([...currentChat, newMessage, newResponse]);
         setResponse(result.answer);
         setInput(''); // Reset the input field
@@ -100,7 +104,7 @@ function Chat() {
       const data = await response.json();
       console.log(data.history);
       setSessionId(session_id);
-      setCurrentChat(data.history);
+      setCurrentChat(data.history.sort((a, b) => a.timestamp - b.timestamp));
     } catch (error) {
       console.error('Error fetching session history:', error);
       setErrorText('Error fetching session history');
@@ -115,45 +119,45 @@ function Chat() {
 
   return (
     <div className="chatBot">
-      <button className="menu-button" onClick={toggleMenu}>
-        <i className="bi bi-clock-history"></i>
-      </button>
-      {menuOpen && (
-        <div className="side-menu open">
-          <button className="close-button" onClick={toggleMenu}>
-            <i class="bi bi-backspace"></i>
-          </button>
-          <ul className="menu-list">
-            <li className="menu-item" onClick={handleNewChat}> New Chat</li>
-            {chatHistory && chatHistory.map((chat, index) => (
-              <li key={index} className={chat.type} onClick={() => fetchSessionHistory(chat)}>
-                {"Chat " + index}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      <ul className={`chatbox${menuOpen ? '-menu-open' : ''}`}>
-        {currentChat && currentChat.map((chat, index) => (
-          <li key={chat.type + index} className={chat.type}>
-            <p className='chat-message'>{chat.data.content}</p>
-          </li>
-        ))}
+     {menuOpen ? (
+  <div className="side-menu-container">
+    <div className="side-menu open">
+      <ul className="menu-list">
+     
+<button className="menu-button" onClick={toggleMenu}>
+  <i className="bi bi-backspace"></i>
+</button>
+<li className="menu-item" onClick={handleNewChat}> New Chat</li>
+{chatHistory && chatHistory.slice().reverse().map((chat, index) => (
+  <li key={index} className={chat.type} onClick={() => fetchSessionHistory(chat)}>
+    {"Chat " + (chatHistory.length - 1 - index)}
+  </li>
+))}
       </ul>
-      <div className={`chat-input${menuOpen ? '-menu-open' : ''}`}>
-        <textarea
-          className="text"
-          rows="1"
-          cols="17"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Enter a message..."
-        ></textarea>
-        <button className="button_chat" type="button" id="sendBTN" onClick={handleSubmit}>{'>'}</button>
+    </div>
+  </div>
+) : (
+  <button className="menu-button" onClick={toggleMenu}>
+    <i className="bi bi-clock-history"></i>
+  </button>
+)}
+
+      <div className="chat-container">
+        <ul className="chatbox">
+          {currentChat && currentChat.map((chat, index) => (
+            <li key={chat.type + index} className={chat.type}>
+              <p className='chat-message'>{chat.data.content}</p>
+            </li>
+          ))}
+        </ul>
+        <div className="chat-input">
+          <div contenteditable="true" className="text editable-rectangle"  onChange={(e) => setInput(e.target.value)} >
+          </div>
+          <button className="button_chat" type="button" id="sendBTN" onClick={handleSubmit}><i class="bi bi-send"></i></button>
+        </div>
       </div>
     </div>
   );
 }
 
 export default Chat;
-
