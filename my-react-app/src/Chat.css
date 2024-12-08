@@ -63,20 +63,11 @@ body {
   overflow-y: scroll;
   overflow-x: hidden;
   width: 350%;
-  max-height: 500px;
+  max-height: 350px;
   transform: translateY(-50px);
 }
 
 
-
-
-.chatbox li {
-  margin-bottom: 10px;
-  padding: 10px;
-
-  max-width: 200px;
-  overflow-x: hidden;
-}
 
 .chatbox .outgoing {
   background-color: #3B3B3B; /* Light blue for incoming messages */
@@ -84,11 +75,45 @@ body {
   transform: translateX(390px);
   border: 1px solid #ccc;
   border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 10px;
+
+  max-width: 200px;
+  overflow-x: hidden;
 }
 
-.chatbox .incoming {
+.chatbox .incoming  {
+  margin-bottom: 10px;
+  padding: 10px;
+
+  max-width: 200px;
+  overflow-x: hidden;
   color: #ccc;
 }
+
+
+.chatbox .human {
+  background-color: #3B3B3B; /* Light blue for incoming messages */
+  color: #ccc;
+  transform: translateX(390px);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 10px;
+
+  max-width: 200px;
+  overflow-x: hidden;
+}
+
+.chatbox .ai  {
+  margin-bottom: 10px;
+  padding: 10px;
+
+  max-width: 200px;
+  overflow-x: hidden;
+  color: #ccc;
+}
+
 
 
 .chatBot {
@@ -128,7 +153,7 @@ body {
   padding-bottom: 20px;
   width: 350%;
   align-items: center; /* Allinea gli elementi a sinistra */
-  transform: translateY(50px);
+  transform: translateY(-100px);
 }
 
 .chat-input-menu-open {/* Cambia la direzione del flex per posizionare gli elementi in colonna */
@@ -173,6 +198,19 @@ body {
 .chatbox-menu-open .incoming {
   color: #ccc;
 }
+
+.chatbox-menu-open .human {
+  background-color: #3B3B3B; /* Light blue for incoming messages */
+  color: #ccc;
+  transform: translateX(390px);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.chatbox-menu-open .ai {
+  color: #ccc;
+}
+
 
 
 
