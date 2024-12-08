@@ -2,7 +2,6 @@
 
 .side-menu-container {
   display: flex;
-  border: 2px solid yellow;
 
   flex: 0.3;
   width: 30%;
@@ -12,7 +11,6 @@
 .chat-container {
   display: flex;
   flex-direction: column;
-  border: 2px solid red;
 
   flex: 1;
   width: 70%;
@@ -72,7 +70,6 @@
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  border: 2px solid aqua;
   padding: 16px;
   margin: 0;
   width: 75%;
@@ -90,20 +87,20 @@
 
 .incoming {
  align-self: flex-start;
- background-color: #6ecbed;
+ color:#000000;
 }
 
 .ai {
  align-self: flex-start;
- background-color: #6ecbed;
+ color:#000000;
+
 }
 
 .chatbox li {
-  max-width: 70%;
+  max-width: 100%;
   padding: 12px;
   border-radius: 16px;
   margin-bottom: 8px;
-  color: #fff;
 }
 
 p {
@@ -185,7 +182,7 @@ p {
 
 .-chat-input {/* Cambia la direzione del flex per posizionare gli elementi in colonna */
   display: flex; 
-  border: 2px solid orange;
+
   align-items: center; /* Allinea gli elementi a sinistra */
   width: 75%;
   border-radius: 12px;
