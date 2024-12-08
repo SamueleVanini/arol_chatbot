@@ -162,7 +162,7 @@ body {
   width: 350%;
   align-items: center; /* Allinea gli elementi a sinistra */
   transform: translateX(150px);
-  transform: translateY(150px);
+  transform: translateY(-100px);
 }
 
 .chatbox-menu-open{

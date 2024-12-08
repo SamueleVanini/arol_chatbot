@@ -55,8 +55,8 @@ function Chat() {
         throw new Error(`Network response was not ok: ${response.status} - ${errorText}`);
       } else {
         const result = await response.json();
-        const newMessage = { type: 'outgoing' , message: input };
-        const newResponse = { type: 'incoming', message: result.answer };
+        const newMessage = { type: 'outgoing' , data: {content: input }};
+        const newResponse = { type: 'incoming', data: {content: result.answer} };
         setCurrentChat([...currentChat, newMessage, newResponse]);
         setResponse(result.answer);
         setInput(''); // Reset the input field
@@ -127,14 +127,14 @@ function Chat() {
             <li className="menu-item" onClick={handleNewChat}> New Chat</li>
             {chatHistory && chatHistory.map((chat, index) => (
               <li key={index} className={chat.type} onClick={() => fetchSessionHistory(chat)}>
-                {chat}
+                {"Chat " + index}
               </li>
             ))}
           </ul>
         </div>
       )}
       <ul className={`chatbox${menuOpen ? '-menu-open' : ''}`}>
-        {currentChat && currentChat.slice().reverse().map((chat, index) => (
+        {currentChat && currentChat.map((chat, index) => (
           <li key={chat.type + index} className={chat.type}>
             <p className='chat-message'>{chat.data.content}</p>
           </li>
