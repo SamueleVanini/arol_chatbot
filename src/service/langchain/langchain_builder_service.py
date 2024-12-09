@@ -41,7 +41,7 @@ class LangChainBuilder:
             chain_type = ChainType.CHAT
 
         question_answer_prompt = get_template(
-            system_prompt=get_system_prompt(prompt_type=SystemPromptType.CHAT_TEST), chain_type=chain_type
+            system_prompt=get_system_prompt(prompt_type=SystemPromptType.CHAT), chain_type=chain_type
         )
 
         no_answer_prompt = get_template(
