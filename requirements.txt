@@ -17,3 +17,4 @@ pymongo
 pyjwt
 passlib[bcrypt]
 python-dotenv
+lark

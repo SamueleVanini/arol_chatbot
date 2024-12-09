@@ -16,7 +16,7 @@ const Homepage = () => {
     if(isSignUp){
     setIsSignUp(false);
     }else{
-    const response = await fetch('http://0.0.0.0:80/login', {
+    const response = await fetch('http://127.0.0.1:80/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -42,7 +42,7 @@ const Homepage = () => {
     if(!isSignUp){
     setIsSignUp(true);
     }else{
-    const response = await fetch('http://0.0.0.0:80/register', {
+    const response = await fetch('http://127.0.0.1:80/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -53,7 +53,8 @@ const Homepage = () => {
     if (response.ok) {
       alert('Registration successful! You can now log in.');
     } else {
-      alert('Registration failed: pwd should be at least 8 characters long');
+      const errorData = await response.json();
+      alert(`Registration failed: ${errorData.detail}`);
     }
   }
   };
