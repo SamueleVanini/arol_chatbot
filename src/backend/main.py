@@ -12,6 +12,7 @@ chat_bot = None
 
 origins = [
     "http://localhost:3000",
+    "http://localhost:5173",
     # Aggiungi altri domini se necessario
 ]
 

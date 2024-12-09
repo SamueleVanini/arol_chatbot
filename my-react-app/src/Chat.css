@@ -1,12 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
+.side-menu-container {
+  display: flex;
 
-body {
-  height: 100vh; /* Set height to 100% of the viewport height */
-  margin: 0; /* Remove default margin */
+  flex: 0.3;
+  width: 30%;
+  height: 100%;
+}
+
+.chat-container {
   display: flex;
   flex-direction: column;
+
+  flex: 1;
+  width: 70%;
+  height: 100%;
+  align-items: center;
 }
+
+
 
 .menu-list {
   list-style-type: none; /* Remove bullet points */
@@ -14,15 +26,15 @@ body {
   margin: 0;
   overflow-y: scroll;
   overflow-x: hidden;
-  max-height: 300px;
+  max-height: 500px;
 }
 
 .menu-list li {
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 10px;
-  background-color: #1E1E1E; /* Black background color */
-  color: #fff; /* White text color */
+  color: #1E1E1E;
+  background-color: #fff;
   border: 1px solid #555;
   border-radius: 5px;
   width: 100%; /* Full width */
@@ -31,12 +43,11 @@ body {
 }
 
 .side-menu {
-  position: absolute;
   top: 0;
   left: 0; /* Initially hide the menu off-screen */
   width: 250px;
   height: 100%;
-  background-color: #333;
+  background-color: #fff;
   color: white;
   padding: 20px;
   box-sizing: border-box;
@@ -45,63 +56,109 @@ body {
 
 
 .menu-button {
-  position: absolute;
-  top: 20px;
-  left: 10px;
-  padding: 10px 20px;
-  color: white;
-  border: none;
-  border-radius: 5px;
+  color: #00aaff;
+  background-color: #fff;
   cursor: pointer;
+  font-size: 24px;
 }
 
 
 .chatbox {
   list-style-type: none; /* Remove bullet points */
-  padding: 0; /* Remove default padding */
-  margin: 0; /* Remove default margin */
-  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
   overflow-x: hidden;
-  width: 350%;
-  max-height: 300px;
+  padding: 16px;
+  margin: 0;
+  width: 75%;
 }
 
+.outgoing {
+  align-self: flex-end;
+  background-color: #788999;
+}
 
+.human {
+  align-self: flex-end;
+  background-color: #788999;
+}
 
+.incoming {
+ align-self: flex-start;
+ color:#000000;
+}
+
+.ai {
+ align-self: flex-start;
+ color:#000000;
+
+}
 
 .chatbox li {
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  max-width: 200px;
-  overflow-x: hidden;
+  max-width: 100%;
+  padding: 12px;
+  border-radius: 16px;
+  margin-bottom: 8px;
 }
 
-.chatbox .incoming {
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.chatbox .-outgoing {
   background-color: #3B3B3B; /* Light blue for incoming messages */
   color: #ccc;
   transform: translateX(390px);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 10px;
+  overflow: hidden;
 }
 
-.chatbox .outgoing {
-  background-color: #1E1E1E; /* Light green for outgoing messages */
+.chatbox .-incoming  {
+  margin-bottom: 10px;
+  padding: 10px;
+  overflow: hidden;
   color: #ccc;
-
 }
+
+
+.chatbox .-human {
+  background-color: #3B3B3B; /* Light blue for incoming messages */
+  color: #ccc;
+  transform: translateX(390px);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 10px;
+  overflow-x: hidden;
+}
+
+.chatbox .-ai  {
+  margin-bottom: 10px;
+  padding: 10px;
+  overflow-x: hidden;
+  color: #ccc;
+}
+
 
 
 .chatBot {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
+
+  flex: 1;
   width: 100%;
-  height: 90%;
-  margin-top: 150px; /* Push the element to the bottom */
+  height: 100%;
 }
 
-.text {
+.-text {
   flex: 1;
   padding: 10px;
   margin-right: 10px;
@@ -110,7 +167,7 @@ body {
 }
 
 
-.button_chat {
+.-button_chat {
   padding: 10px 10px;
   border: none;
   background-color: #1E1E1E;
@@ -119,24 +176,79 @@ body {
   cursor: pointer;
 }
 
-.button_chat:hover {
+.-button_chat:hover {
   background-color: #000000;
 }
 
-.chat-input {/* Cambia la direzione del flex per posizionare gli elementi in colonna */
+.-chat-input {/* Cambia la direzione del flex per posizionare gli elementi in colonna */
   display: flex; 
-  padding-bottom: 20px;
-  width: 350%;
+
   align-items: center; /* Allinea gli elementi a sinistra */
+  width: 75%;
+  border-radius: 12px;
+
 }
 
-.chat-input-open {/* Cambia la direzione del flex per posizionare gli elementi in colonna */
-  display: flex; 
-  padding-bottom: 20px;
-  width: 350%;
-  align-items: center; /* Allinea gli elementi a sinistra */
-  transform: translateX(150px);
+.chat-input {
+  background-color: white; /* Sfondo bianco per il div */
+  padding: 8px; /* Padding per separare gli elementi */
+  display: flex; /* Per allineare gli elementi in orizzontale */
+  flex-direction: row; /* Disporre gli elementi verticalmente */
+  align-items: center; /* Centrare gli elementi orizzontalmente */
+  border-radius: 10px; /* Angoli arrotondati */
+  width: 75%; /* Larghezza del div */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombra per dare profondità */
 }
+
+/* Stile per la textarea */
+.text {
+  background-color: #fff; /* Sfondo bianco */
+  color: #333; /* Testo scuro */
+  border: none; /* Rimuove i bordi */
+  outline: none; /* Rimuove il contorno */
+  resize: none; /* Disabilita la possibilità di ridimensionare la textarea */
+  padding: 12px 24px; /* Padding interno per distanziare il testo dal bordo */
+  font-size: 16px; /* Dimensione del testo */
+  box-sizing: border-box; /* Include il padding nelle dimensioni */
+  border-radius: 10px; /* Rende i bordi della textarea arrotondati */
+  flex: 1;
+  word-wrap: break-word;
+  max-width: 90%;
+}
+
+/* Stile per il pulsante */
+.button_chat {
+  background-color: transparent; /* Pulsante trasparente */
+  border: none; /* Rimuove i bordi */
+  cursor: pointer; /* Cambia il cursore quando sopra il pulsante */
+  padding: 0 24px; /* Padding interno per il pulsante */
+  border-radius: 5px; /* Angoli arrotondati */
+  display: flex; /* Flex per allineare l'icona */
+}
+
+.button_chat i{
+  font-size: 24px; /* Dimensione dell'icona */
+  color: #00aaff; /* Colore azzurro dell'icona */
+  padding-top: 8px;
+}
+
+.editable-rectangle {
+  padding: 10px;
+  font-size: 16px;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.editable-rectangle[contenteditable]:empty:before {
+  content: "Enter a message here..";
+  color: #aaa;
+}
+
+.editable-rectangle:focus {
+  outline: none;
+}
+
+
 
 
 
@@ -147,10 +259,6 @@ body {
   }
 
   .chat-input {
-    flex-direction: column;
-  }
-
-  .chat-container {
     flex-direction: column;
   }
 

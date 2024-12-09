@@ -1,6 +1,5 @@
 import React from 'react';
 import Homepage from './Homepage';
-import SignUp from './SignUp';
 import Chat from './Chat';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -13,7 +12,6 @@ function App() {
     <Router>
     <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/signup" element={<SignUp />} />
           <Route path="/chat" element={<Chat />} />
     </Routes>
     </Router>
