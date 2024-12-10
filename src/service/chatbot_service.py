@@ -78,7 +78,8 @@ class ArolChatBot:
             custom_cosine_relevance_score_fn,
             retriever_kwargs={
                 "search_type": "similarity_score_threshold",
-                "search_kwargs": {"score_threshold": 0.6, "k": 1},
+                # "search_kwargs": {"score_threshold": 0.6, "k": 1},
+                "search_kwargs": {"score_threshold": 0.6},
             },
         )
 

@@ -8,6 +8,7 @@ from langchain_core.callbacks import (
 )
 from langchain_core.documents import Document
 from langchain_core.retrievers import BaseRetriever
+from langchain_community.document_transformers import LongContextReorder
 
 
 class SetMergerRetriever(BaseRetriever):
@@ -88,13 +89,27 @@ class SetMergerRetriever(BaseRetriever):
         # Merge the results of the retrievers.
         merged_documents = list[Document]()
         documents_hash_set = set[int]()
-        for docs in retriever_docs:
-            for doc in docs:
-                content_hash = hash(doc.page_content)
-                if content_hash not in documents_hash_set:
-                    merged_documents.append(doc)
-                    documents_hash_set.add(content_hash)
-        return merged_documents
+
+        flattened = [element for column in zip(*retriever_docs) for element in column]
+
+        for doc in flattened:
+            content_hash = hash(doc.page_content)
+            if content_hash not in documents_hash_set:
+                merged_documents.append(doc)
+                documents_hash_set.add(content_hash)
+
+        # for docs in retriever_docs:
+        #     for doc in docs:
+        #         content_hash = hash(doc.page_content)
+        #         if content_hash not in documents_hash_set:
+        #             merged_documents.append(doc)
+        #             documents_hash_set.add(content_hash)
+
+        reordering = LongContextReorder()
+        reordered_docs = reordering.transform_documents(merged_documents)
+        return list(reordered_docs)
+
+        # return merged_documents
 
     async def amerge_documents(self, query: str, run_manager: AsyncCallbackManagerForRetrieverRun) -> List[Document]:
         """
