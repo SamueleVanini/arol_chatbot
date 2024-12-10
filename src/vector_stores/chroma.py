@@ -18,12 +18,12 @@ def custom_cosine_relevance_score_fn(distance: float) -> float:
     Returns:
        float: distance normalized in [0,1]
     """
-    if distance <= 1:
-        return distance
-    else:
-        return 0
+    # if distance <= 1:
+    #     return distance
+    # else:
+    #     return 0
 
-    #return 1 - min(distance, 1)
+    return 1 - min(distance, 1)
 
 
 class ChromaCollection:

@@ -90,13 +90,17 @@ class SetMergerRetriever(BaseRetriever):
         merged_documents = list[Document]()
         documents_hash_set = set[int]()
 
-        flattened = [element for column in zip(*retriever_docs) for element in column]
+        longest_list = len(max(retriever_docs, key=len))
 
-        for doc in flattened:
-            content_hash = hash(doc.page_content)
-            if content_hash not in documents_hash_set:
-                merged_documents.append(doc)
-                documents_hash_set.add(content_hash)
+        for doc_position in range(longest_list):
+            for retriever_idx in range(len(self.retrievers)):
+                docs = retriever_docs[retriever_idx]
+                if docs is not None and docs:
+                    doc = docs[doc_position]
+                    content_hash = hash(doc.page_content)
+                    if content_hash not in documents_hash_set:
+                        merged_documents.append(doc)
+                        documents_hash_set.add(content_hash)
 
         # for docs in retriever_docs:
         #     for doc in docs:
