@@ -18,7 +18,12 @@ def custom_cosine_relevance_score_fn(distance: float) -> float:
     Returns:
        float: distance normalized in [0,1]
     """
-    return 1 - min(distance, 1)
+    if distance <= 1:
+        return distance
+    else:
+        return 0
+
+    #return 1 - min(distance, 1)
 
 
 class ChromaCollection:
@@ -32,7 +37,7 @@ class ChromaCollection:
         documents: Optional[list[Document]] = None,
         override_collection_if_exists: Optional[bool] = False,
         collection_metadata: Optional[Dict] = {"hnsw:space": "cosine"},
-        relevance_score_fn: Optional[Callable[[float], float]] = None,
+        relevance_score_fn: Callable[[float], float] = custom_cosine_relevance_score_fn,
     ) -> Chroma:
 
         if override_collection_if_exists and documents is not None:
