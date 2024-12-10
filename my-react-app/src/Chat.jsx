@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import './Chat.css';
 
 function Chat() {
@@ -7,15 +7,14 @@ function Chat() {
     const [response, setResponse] = useState('');
     const [currentChat, setCurrentChat] = useState([]);
     const [chatHistory, setChatHistory] = useState([]);
-    const token = localStorage.getItem('token');
-
-
+    const [pendingInput, setPendingInput] = useState(null);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [errorText, setErrorText] = useState('');
+    const token = localStorage.getItem('token');
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
-
 
     const fetchSessionId = async () => {
         try {
@@ -33,42 +32,56 @@ function Chat() {
         }
     };
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-
-        if (!currentChat || currentChat.length === 0) {
-            await fetchSessionId();
-        }
-
         if (!input.trim()) return;
 
-        try {
+        // If it's the first message in a new chat, we need a sessionId first
+        if (!currentChat || currentChat.length === 0) {
+            // Set the pending input and fetch the sessionId
+            setPendingInput(input);
+            await fetchSessionId();
+            setInput(''); // Clear input field
+        } else {
+            // If we already have a sessionId, just make the query call directly
+            await makeQuery(sessionId, input);
+            setInput(''); // Clear input field
+        }
+    };
 
+    const makeQuery = async (activeSessionId, userInput) => {
+        try {
             const response = await fetch('http://127.0.0.1:80/query', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({session_id: sessionId, input: input})
+                body: JSON.stringify({ session_id: activeSessionId, input: userInput })
             });
             if (!response.ok) {
                 const errorText = await response.text();
                 throw new Error(`Network response was not ok: ${response.status} - ${errorText}`);
             } else {
                 const result = await response.json();
-                const newMessage = {type: 'outgoing', data: {content: input}};
-                const newResponse = {type: 'incoming', data: {content: result.answer}};
-                setCurrentChat([...currentChat, newMessage, newResponse]);
+                const newMessage = { type: 'outgoing', data: { content: userInput } };
+                const newResponse = { type: 'incoming', data: { content: result.answer } };
+                setCurrentChat((prevChat) => [...prevChat, newMessage, newResponse]);
                 setResponse(result.answer);
-                setInput(''); // Reset the input field
             }
         } catch (error) {
             console.error('There was an error!', error);
         }
     };
+
+    // useEffect to process pendingInput once sessionId is set
+    useEffect(() => {
+        if (sessionId && pendingInput) {
+            // Now we have both a sessionId and a pending input, we can send the query
+            makeQuery(sessionId, pendingInput);
+            setPendingInput(null);
+        }
+    }, [sessionId, pendingInput]);
 
     useEffect(() => {
         const fetchChatHistory = async () => {
@@ -81,7 +94,6 @@ function Chat() {
                     }
                 });
                 const data = await response.json();
-                console.log(data);
                 setChatHistory(data.session_ids);
             } catch (error) {
                 console.error('Error fetching chat history:', error);
@@ -102,7 +114,6 @@ function Chat() {
                 }
             });
             const data = await response.json();
-            console.log(data.history);
             setSessionId(session_id);
             setCurrentChat(data.history.sort((a, b) => a.timestamp - b.timestamp));
         } catch (error) {
@@ -116,14 +127,12 @@ function Chat() {
         fetchSessionId();
     };
 
-
     return (
         <div className="chatBot">
             {menuOpen ? (
                 <div className="side-menu-container">
                     <div className="side-menu open">
                         <ul className="menu-list">
-
                             <button className="menu-button" onClick={toggleMenu}>
                                 <i className="bi bi-backspace"></i>
                             </button>
@@ -151,11 +160,14 @@ function Chat() {
                     ))}
                 </ul>
                 <div className="chat-input">
-                    <div contenteditable="true" className="text editable-rectangle"
-                         onInput={(e) => setInput(e.target.innerText)}>
-                    </div>
-                    <button className="button_chat" type="button" id="sendBTN" onClick={handleSubmit}><i
-                        class="bi bi-send"></i></button>
+                    <div
+                        contentEditable="true"
+                        className="text editable-rectangle"
+                        onInput={(e) => setInput(e.target.innerText)}
+                    ></div>
+                    <button className="button_chat" type="button" id="sendBTN" onClick={handleSubmit}>
+                        <i className="bi bi-send"></i>
+                    </button>
                 </div>
             </div>
         </div>
