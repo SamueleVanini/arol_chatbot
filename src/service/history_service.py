@@ -2,7 +2,7 @@ from enum import Enum, auto
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_redis import RedisChatMessageHistory
-from src.core.config import REDIS_URL
+from core.config import REDIS_URL
 
 
 # Enum for chat history types

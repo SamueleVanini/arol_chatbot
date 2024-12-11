@@ -93,9 +93,9 @@ class SetMergerRetriever(BaseRetriever):
         longest_list = len(max(retriever_docs, key=len))
 
         for doc_position in range(longest_list):
-            for retriever_idx in range(len(self.retrievers)):
+            for retriever_idx in range(len(retriever_docs)):
                 docs = retriever_docs[retriever_idx]
-                if docs is not None and docs:
+                if docs is not None and len(docs) > doc_position:
                     doc = docs[doc_position]
                     content_hash = hash(doc.page_content)
                     if content_hash not in documents_hash_set:

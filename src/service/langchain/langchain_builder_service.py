@@ -10,6 +10,7 @@ from .prompt.prompt_template import get_template
 from .prompt.prebuilt_prompt import get_system_prompt, SystemPromptType
 from langchain_core.output_parsers import StrOutputParser
 
+
 class LangChainBuilder:
 
     def __init__(self, memory_type: MemoryType = MemoryType.REDIS):
@@ -48,17 +49,14 @@ class LangChainBuilder:
             system_prompt=get_system_prompt(prompt_type=SystemPromptType.NO_ANSWER), chain_type=ChainType.NO_ANSWER
         )
 
-
-
         output_parser = StrOutputParser()
-
 
         self.question_answer_chain = create_stuff_documents_chain(llm, question_answer_prompt)
         self.default_answer_chain = no_answer_prompt | llm | output_parser
         # rag_chain = create_retrieval_chain(retriever, self.question_answer_chain)
         rag_chain = create_retrieval_chain(retriever, RunnableLambda(self.chain_selection))
         return rag_chain | self.response_parser
-        #return rag_chain
+        # return rag_chain
 
     def build_chain(self, llm, retriever):
         chain = self.create_rag_chain(llm, retriever)

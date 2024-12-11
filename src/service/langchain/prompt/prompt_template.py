@@ -1,6 +1,6 @@
 from langchain.prompts import ChatPromptTemplate
 from langchain_core.prompts import MessagesPlaceholder
-from src.service.langchain.chain_configs import ChainType
+from service.langchain.chain_configs import ChainType
 
 
 def get_template(system_prompt: str, chain_type: ChainType) -> ChatPromptTemplate:
@@ -13,12 +13,7 @@ def get_template(system_prompt: str, chain_type: ChainType) -> ChatPromptTemplat
             ]
         )
     elif chain_type == ChainType.NO_ANSWER:
-        return ChatPromptTemplate.from_messages(
-            [
-                ("system", system_prompt),
-                ("human", "{input}")
-            ]
-        )
+        return ChatPromptTemplate.from_messages([("system", system_prompt), ("human", "{input}")])
     else:  # QA template
         return ChatPromptTemplate.from_messages(
             [

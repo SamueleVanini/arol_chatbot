@@ -74,13 +74,20 @@ class LangsmithEvaluator(BaseEvaluator):
     def add_metadata(self, data: dict[str, str]) -> None:
         self.metadata = copy(data)
 
-    def set_target(self, chain: Runnable) -> None:
+    def set_target(self, chain: Runnable, use_dict_input: bool = False) -> None:
 
         def target_fun(chain, inputs):
             output = chain.invoke(inputs["question"])
             return {"output": output}
 
-        self.target = partial(target_fun, chain)
+        def target_fun_dict(chain, inputs):
+            output = chain.invoke({"input": inputs["question"]})
+            return {"output": output}
+
+        if use_dict_input:
+            self.target = partial(target_fun_dict, chain)
+        else:
+            self.target = partial(target_fun, chain)
 
     @property
     def results(self) -> Any:

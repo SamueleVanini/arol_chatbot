@@ -1,13 +1,13 @@
 from pathlib import Path
 from typing import Any, Callable, Optional
 
-from langchain.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.embeddings import Embeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 from langchain_core.vectorstores import VectorStore, VectorStoreRetriever
 
-from src.vector_stores.chroma import ChromaCollection
+from vector_stores.chroma import ChromaCollection
 
 
 def create_embeddings(
