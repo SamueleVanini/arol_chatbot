@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Default.css';
+import './default.css';
 import {useNavigate} from "react-router-dom"; // Import the CSS file for styling
 
 function Header() {

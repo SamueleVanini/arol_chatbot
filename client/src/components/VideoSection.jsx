@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Default.css'; // Import the CSS file for styling
+import './default.css'; // Import the CSS file for styling
 
 function VideoSection() {
   return (

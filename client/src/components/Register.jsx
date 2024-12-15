@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import './default.css';
-import Header from "./components/Header.jsx";
+import Header from "./Header.jsx";
 
 const Register = () => {
 

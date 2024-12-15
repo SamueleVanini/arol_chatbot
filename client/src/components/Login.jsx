@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import './default.css';
-import Header from "./components/Header.jsx";
+import Header from "./Header.jsx";
 
 const Login = () => {
 
@@ -13,10 +13,7 @@ const Login = () => {
 
 
     const handleSignIn = async () => {
-        if (isSignUp) {
-            setIsSignUp(false);
-        } else {
-            const response = await fetch('http://127.0.0.1:80/login', {
+        const response = await fetch('http://127.0.0.1:80/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -31,7 +28,6 @@ const Login = () => {
             } else {
                 alert('Login failed: ' + response.statusText);
             }
-        }
     };
 
 

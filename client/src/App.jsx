@@ -1,13 +1,12 @@
 import React from 'react';
-import Homepage from './Homepage';
+import Homepage from './components/Homepage.jsx';
 import Chat from './Chat';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import Register from "./Register.jsx";
-import Login from "./Login.jsx";
+import Register from "./components/Register.jsx";
+import Login from "./components/Login.jsx";
 
 
 function App() {
-
 
     return (
         <Router>

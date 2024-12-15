@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import './default.css';
-import Header from "./components/Header.jsx";
-import VideoSection from "./components/VideoSection.jsx";
+import Header from "./Header.jsx";
+import VideoSection from "./VideoSection.jsx";
 
 const Homepage = () => {
 
