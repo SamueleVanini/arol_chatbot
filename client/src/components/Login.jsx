@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import './default.css';
 import Header from "./Header.jsx";
+import API from "../API.js";
 
 const Login = () => {
 
@@ -13,23 +14,15 @@ const Login = () => {
 
 
     const handleSignIn = async () => {
-        const response = await fetch('http://127.0.0.1:80/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({username: username, password: password})
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                localStorage.setItem('token', data.access_token); // Store the token
+        API.login(username, password)
+            .then(response => {
+                localStorage.setItem('token', response.access_token); // Store the token
                 navigate('/chat');
-            } else {
-                alert('Login failed: ' + response.statusText);
-            }
+            })
+            .catch(e => {
+                alert('Login failed: ' + e.message);
+            })
     };
-
 
     return (
         <div>

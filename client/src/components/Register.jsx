@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import './default.css';
 import Header from "./Header.jsx";
+import API from "../API.js";
 
 const Register = () => {
 
@@ -13,24 +14,14 @@ const Register = () => {
 
 
     const handleSignUp = async () => {
-        if (password !== confirmPassword) {
-            alert("Passwords do not match!");
-            return;
-        }
-        const response = await fetch('http://127.0.0.1:80/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({username: username, password: password, password_confirm: confirmPassword})
-        });
 
-        if (response.ok) {
-            navigate('/login')
-        } else {
-            const errorData = await response.json();
-            alert(`Registration failed: ${errorData.detail}`);
-        }
+        API.register(username, password, confirmPassword)
+            .then(response => {
+                navigate('/login');
+            })
+            .catch(e => {
+                alert(`Registration failed: ${e.message}`);
+            })
     };
 
     return (
