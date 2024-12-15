@@ -26,7 +26,7 @@
   margin: 0;
   overflow-y: scroll;
   overflow-x: hidden;
-  max-height: 500px;
+  height: 100%;
 }
 
 .menu-list li {
@@ -198,6 +198,7 @@ p {
   border-radius: 10px; /* Angoli arrotondati */
   width: 75%; /* Larghezza del div */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombra per dare profondità */
+  margin: 20px;
 }
 
 /* Stile per la textarea */
