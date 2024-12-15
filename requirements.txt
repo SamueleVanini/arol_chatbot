@@ -18,3 +18,4 @@ pyjwt
 passlib[bcrypt]
 python-dotenv
 lark
+langchain_huggingface

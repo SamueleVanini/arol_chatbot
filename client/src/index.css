@@ -17,8 +17,8 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch; /* Allows children to stretch horizontally */
+  justify-content: flex-start; /* Aligns children to the top */
   height: 100%;
   width: 100%;
 }
