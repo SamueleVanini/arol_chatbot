@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Chat.css';
+
 
 function Chat() {
     const [input, setInput] = useState('');
@@ -10,11 +11,22 @@ function Chat() {
     const [pendingInput, setPendingInput] = useState(null);
     const [menuOpen, setMenuOpen] = useState(false);
     const [errorText, setErrorText] = useState('');
+    const [isLoading, setIsLoading] = useState(false); 
     const token = localStorage.getItem('token');
+    const editableRef = useRef(null);
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
+
+    const logout = () => {
+        // Clear the token from local storage or any other storage mechanism
+        localStorage.removeItem('token');
+        // Optionally, you can also clear other user-related data
+        localStorage.removeItem('user');
+        // Redirect to login page or home page
+        window.location.href = '/login';
+    }
 
     const fetchSessionId = async () => {
         try {
@@ -51,6 +63,7 @@ function Chat() {
 
     const makeQuery = async (activeSessionId, userInput) => {
         try {
+            setIsLoading(true);
             const response = await fetch('http://127.0.0.1:80/query', {
                 method: 'POST',
                 headers: {
@@ -71,6 +84,9 @@ function Chat() {
             }
         } catch (error) {
             console.error('There was an error!', error);
+        }finally {
+            editableRef.current.innerText = ''; 
+            setIsLoading(false);
         }
     };
 
@@ -136,6 +152,9 @@ function Chat() {
                             <button className="menu-button" onClick={toggleMenu}>
                                 <i className="bi bi-backspace"></i>
                             </button>
+                            <button className="logout-button" onClick={logout}>
+                                Logout
+                            </button>
                             <li className="menu-item" onClick={handleNewChat}> New Chat</li>
                             {chatHistory && chatHistory.slice().reverse().map((chat, index) => (
                                 <li key={index} className={chat.type} onClick={() => fetchSessionHistory(chat)}>
@@ -146,27 +165,36 @@ function Chat() {
                     </div>
                 </div>
             ) : (
+                <div className="side-menu-closed">
                 <button className="menu-button" onClick={toggleMenu}>
                     <i className="bi bi-clock-history"></i>
                 </button>
+                <button className="logout-button" onClick={logout}>
+                Logout
+            </button>
+                </div>
             )}
 
             <div className="chat-container">
                 <ul className="chatbox">
-                    {currentChat && currentChat.map((chat, index) => (
-                        <li key={chat.type + index} className={chat.type}>
-                            <p className='chat-message'>{chat.data.content}</p>
-                        </li>
-                    ))}
+                {currentChat && currentChat.map((chat, index) => (
+                <li key={chat.type + index} className={chat.type}>
+                    <div key={index} className={`chat-message ${chat.type}`}>
+                    {(chat.type === 'incoming' || chat.type === 'ai') && <img src={"/public/favicon.png"} alt="Chat Icon" className="chat-icon" />}
+                    <p>{chat.data.content}</p>
+                    </div>
+                </li>
+                ))}
                 </ul>
                 <div className="chat-input">
                     <div
+                        ref={editableRef}
                         contentEditable="true"
                         className="text editable-rectangle"
                         onInput={(e) => setInput(e.target.innerText)}
                     ></div>
-                    <button className="button_chat" type="button" id="sendBTN" onClick={handleSubmit}>
-                        <i className="bi bi-send"></i>
+                    <button className="button_chat" type="button" id="sendBTN" onClick={handleSubmit} disabled={isLoading}>
+                        {isLoading ? <i className="bi bi-arrow-repeat"></i> : <i className="bi bi-send"></i>}
                     </button>
                 </div>
             </div>
@@ -175,3 +203,5 @@ function Chat() {
 }
 
 export default Chat;
+
+

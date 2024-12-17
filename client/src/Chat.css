@@ -2,11 +2,11 @@
 
 .side-menu-container {
   display: flex;
-
-  flex: 0.3;
-  width: 30%;
+  flex: 0.1;
+  width: 20%;
   height: 100%;
 }
+
 
 .chat-container {
   display: flex;
@@ -18,7 +18,10 @@
   align-items: center;
 }
 
-
+.chat-icon {
+  width: 25px; /* Adjust size as needed */
+  height: 25px; /* Adjust size as needed */
+}
 
 .menu-list {
   list-style-type: none; /* Remove bullet points */
@@ -37,9 +40,13 @@
   background-color: #fff;
   border: 1px solid #555;
   border-radius: 5px;
-  width: 100%; /* Full width */
+  width: 90%; /* Full width */
   box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  cursor: pointer;
+}
 
+.menu-list li:hover {
+  background-color: #f0f0f0; /* Optional: Change background color on hover */
 }
 
 .side-menu {
@@ -60,6 +67,13 @@
   background-color: #fff;
   cursor: pointer;
   font-size: 24px;
+}
+
+.logout-button {
+  color: #00aaff;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 20px;
 }
 
 
@@ -249,7 +263,16 @@ p {
   outline: none;
 }
 
+.bi-arrow-repeat {
+  animation: spin 1s linear infinite;
+  cursor: not-allowed;
+}
 
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 
 
