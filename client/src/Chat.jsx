@@ -171,9 +171,7 @@ function Chat() {
               
                 </div>
             )}
-  <button className="logout-button" onClick={logout}>
-                Logout
-            </button>
+           
             <div className="chat-container">
                 <ul className="chatbox">
                 {currentChat && currentChat.map((chat, index) => (
@@ -184,9 +182,11 @@ function Chat() {
                     </div>
                 </li>
                 ))}
+                
                 </ul>
                 
                 <div className="chat-input">
+                    
                     <div
                         ref={editableRef}
                         contentEditable="true"
@@ -197,6 +197,12 @@ function Chat() {
                         {isLoading ? <i className="bi bi-arrow-repeat"></i> : <i className="bi bi-send"></i>}
                     </button>
                 </div>
+                
+            </div>
+            <div className='logout-container'>
+  <button className="logout-button" onClick={logout}>
+                Logout
+            </button>
             </div>
         </div>
     );
