@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Chat.css';
+import API from '../API';
 
 
 function Chat() {
@@ -19,26 +20,12 @@ function Chat() {
         setMenuOpen(!menuOpen);
     };
 
-    const logout = () => {
-        // Clear the token from local storage or any other storage mechanism
-        localStorage.removeItem('token');
-        // Optionally, you can also clear other user-related data
-        localStorage.removeItem('user');
-        // Redirect to login page or home page
-        window.location.href = '/login';
-    }
+   
 
     const fetchSessionId = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:80/user/session', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application',
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            const data = await response.json();
-            setSessionId(data.session_id);
+            const sessionId = await API.fetchSession(token);
+            setSessionId(sessionId);
         } catch (error) {
             console.error('Error fetching session ID:', error);
         }
@@ -62,26 +49,14 @@ function Chat() {
     };
 
     const makeQuery = async (activeSessionId, userInput) => {
-        try {
-            setIsLoading(true);
-            const response = await fetch('http://127.0.0.1:80/query', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({ session_id: activeSessionId, input: userInput })
-            });
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`Network response was not ok: ${response.status} - ${errorText}`);
-            } else {
-                const result = await response.json();
+        setIsLoading(true);
+        try{
+                const result = await API.makeQueryAPI(activeSessionId, userInput, token);
                 const newMessage = { type: 'outgoing', data: { content: userInput } };
                 const newResponse = { type: 'incoming', data: { content: result.answer } };
                 setCurrentChat((prevChat) => [...prevChat, newMessage, newResponse]);
                 setResponse(result.answer);
-            }
+        
         } catch (error) {
             console.error('There was an error!', error);
         }finally {
@@ -102,15 +77,8 @@ function Chat() {
     useEffect(() => {
         const fetchChatHistory = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:80/user/session/all', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                const data = await response.json();
-                setChatHistory(data.session_ids);
+                const sessionIds = await API.fetchChatHistoryAPI(token);
+                setChatHistory(sessionIds);
             } catch (error) {
                 console.error('Error fetching chat history:', error);
                 setErrorText('Error fetching chat history');
@@ -122,16 +90,9 @@ function Chat() {
 
     const fetchSessionHistory = async (session_id) => {
         try {
-            const response = await fetch(`http://127.0.0.1:80/user/session/${session_id}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            const data = await response.json();
-            setSessionId(session_id);
-            setCurrentChat(data.history.sort((a, b) => a.timestamp - b.timestamp));
+                const history = await API.fetchSessionHistoryAPI(session_id, token);
+                setSessionId(session_id);
+                setCurrentChat(history);
         } catch (error) {
             console.error('Error fetching session history:', error);
             setErrorText('Error fetching session history');
@@ -200,7 +161,7 @@ function Chat() {
                 
             </div>
             <div className='logout-container'>
-  <button className="logout-button" onClick={logout}>
+  <button className="logout-button" onClick={API.logout}>
                 Logout
             </button>
             </div>

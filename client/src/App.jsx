@@ -1,6 +1,6 @@
 import React from 'react';
 import Homepage from './components/Homepage.jsx';
-import Chat from './Chat';
+import Chat from './components/Chat';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Register from "./components/Register.jsx";
 import Login from "./components/Login.jsx";
