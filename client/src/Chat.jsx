@@ -139,8 +139,10 @@ function Chat() {
     };
 
     const handleNewChat = () => {
-        setCurrentChat([]);
-        fetchSessionId();
+        if (currentChat.length > 0) {
+            setCurrentChat([]);
+            fetchSessionId();
+        }
     };
 
     return (
@@ -151,9 +153,6 @@ function Chat() {
                         <ul className="menu-list">
                             <button className="menu-button" onClick={toggleMenu}>
                                 <i className="bi bi-backspace"></i>
-                            </button>
-                            <button className="logout-button" onClick={logout}>
-                                Logout
                             </button>
                             <li className="menu-item" onClick={handleNewChat}> New Chat</li>
                             {chatHistory && chatHistory.slice().reverse().map((chat, index) => (
@@ -169,12 +168,12 @@ function Chat() {
                 <button className="menu-button" onClick={toggleMenu}>
                     <i className="bi bi-clock-history"></i>
                 </button>
-                <button className="logout-button" onClick={logout}>
-                Logout
-            </button>
+              
                 </div>
             )}
-
+  <button className="logout-button" onClick={logout}>
+                Logout
+            </button>
             <div className="chat-container">
                 <ul className="chatbox">
                 {currentChat && currentChat.map((chat, index) => (
@@ -186,6 +185,7 @@ function Chat() {
                 </li>
                 ))}
                 </ul>
+                
                 <div className="chat-input">
                     <div
                         ref={editableRef}

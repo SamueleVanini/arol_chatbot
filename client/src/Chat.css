@@ -63,18 +63,21 @@
 
 
 .menu-button {
-  color: #00aaff;
-  background-color: #fff;
+  color: #555;
+  background-color: transparent;
   cursor: pointer;
   font-size: 24px;
+
 }
 
 .logout-button {
-  color: #00aaff;
-  background-color: #fff;
+  color: #555;
+  background-color: transparent;
   cursor: pointer;
   font-size: 20px;
+ 
 }
+
 
 
 .chatbox {
@@ -243,7 +246,7 @@ p {
 
 .button_chat i{
   font-size: 24px; /* Dimensione dell'icona */
-  color: #00aaff; /* Colore azzurro dell'icona */
+  color: #555; /* Colore azzurro dell'icona */
   padding-top: 8px;
 }
 
