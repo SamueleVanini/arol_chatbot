@@ -80,7 +80,7 @@
   background-color: transparent;
   cursor: pointer;
   font-size: 20px;
- 
+
 }
 
 .logout-button:hover {
@@ -101,12 +101,14 @@
 
 .outgoing {
   align-self: flex-end;
-  background-color: #788999;
+  background-color: #cbcccc;
+  color: #000000;
 }
 
 .human {
   align-self: flex-end;
-  background-color: #788999;
+  background-color: #cbcccc;
+  color: #000000;
 }
 
 .incoming {
