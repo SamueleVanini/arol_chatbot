@@ -3,11 +3,14 @@ import {useNavigate} from 'react-router-dom';
 import './default.css';
 import Header from "./Header.jsx";
 import API from "../API.js";
+import "./Login.css";
 
 const Login = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [showError, setShowError] = useState(false);
 
 
     const navigate = useNavigate();
@@ -20,8 +23,13 @@ const Login = () => {
                 navigate('/chat');
             })
             .catch(e => {
-                alert('Login failed: ' + e.message);
+                setErrorMessage('Login failed: ' + e.message);
+                setShowError(true); // Mostra il pop-up
             })
+    };
+
+    const closeErrorPopup = () => {
+        setShowError(false); // Chiude il pop-up
     };
 
     return (
@@ -51,6 +59,14 @@ const Login = () => {
                     onClick={() => navigate("/register")}> Don't have an account yet? Click to register now!</span>
 
             </form>
+
+            
+            {showError && (
+                <div className="error-popup">
+                    <span>{errorMessage}</span>
+                    <button className="close-btn" onClick={closeErrorPopup}>Close</button>
+                </div>
+            )}
         </div>
 
 
