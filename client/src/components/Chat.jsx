@@ -102,7 +102,6 @@ function Chat() {
     const handleNewChat = () => {
         if (currentChat.length > 0) {
             setCurrentChat([]);
-            fetchSessionId();
         }
     };
 
