@@ -274,18 +274,6 @@ p {
   outline: none;
 }
 
-.bi-arrow-repeat {
-  animation: spin 1s linear infinite;
-  cursor: not-allowed;
-}
-
-@keyframes spin {
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-
 
 /* Media queries for responsiveness */
 @media (max-width: 600px) {
@@ -300,4 +288,19 @@ p {
   .list-container, .chat {
     width: 100%;
   }
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 5px solid #f3f3f3; /* Colore dello sfondo */
+  border-top: 5px solid #555; /* Colore della parte in movimento */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  cursor: not-allowed;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

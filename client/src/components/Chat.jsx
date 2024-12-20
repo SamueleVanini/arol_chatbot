@@ -154,7 +154,7 @@ function Chat() {
                         onInput={(e) => setInput(e.target.innerText)}
                     ></div>
                     <button className="button_chat" type="button" id="sendBTN" onClick={handleSubmit} disabled={isLoading}>
-                        {isLoading ? <i className="bi bi-arrow-repeat"></i> : <i className="bi bi-send"></i>}
+                        {isLoading ? <div class="spinner"></div> : <i className="bi bi-send"></i>}
                     </button>
                 </div>
                 
