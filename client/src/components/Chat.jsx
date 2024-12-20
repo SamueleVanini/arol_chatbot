@@ -137,7 +137,7 @@ function Chat() {
                 {currentChat && currentChat.map((chat, index) => (
                 <li key={chat.type + index} className={chat.type}>
                     <div key={index} className={`chat-message ${chat.type}`}>
-                    {(chat.type === 'incoming' || chat.type === 'ai') && <img src={"/public/favicon.png"} alt="Chat Icon" className="chat-icon" />}
+                    {(chat.type === 'incoming' || chat.type === 'ai') && <img src={"/public/image.png"} alt="Chat Icon" className="chat-icon" />}
                     <p>{chat.data.content}</p>
                     </div>
                 </li>

@@ -19,18 +19,24 @@
 }
 
 .chat-icon {
-  width: 25px; /* Adjust size as needed */
-  height: 25px; /* Adjust size as needed */
+  width: 25px; /* Aumenta la dimensione del cerchio */
+  height: 25px; /* Aumenta la dimensione del cerchio */
+  background-color: white; /* Sfondo bianco */
+  border: 2px solid #888; /* Bordo grigio */
+  border-radius: 50%; /* Forma rotonda */
+  display: flex; /* Usa flexbox per centrare il contenuto */
+  justify-content: center; /* Centra orizzontalmente */
+  align-items: center; /* Centra verticalmente */
+  overflow: hidden; /* Assicura che l'immagine rimanga dentro il cerchio */
 }
 
-.menu-list {
-  list-style-type: none; /* Remove bullet points */
-  padding: 0;
-  margin: 0;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  height: 100%;
+.chat-icon img {
+  width: 80%; /* Imposta la larghezza dell'immagine al 80% del cerchio */
+  height: 80%; /* Imposta l'altezza dell'immagine al 80% del cerchio */
+  object-fit: contain; /* Mantiene le proporzioni senza deformare l'immagine */
 }
+
+
 
 .menu-list li {
   margin-top: 10px;
