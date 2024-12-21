@@ -130,7 +130,9 @@ function Chat({showError}) {
                         <li key={chat.type + index} className={chat.type}>
                             <div key={index} className={`chat-message ${chat.type}`}>
                                 {(chat.type === 'incoming' || chat.type === 'ai') &&
-                                    <img src={"/public/image.png"} alt="Chat Icon" className="chat-icon"/>}
+                                    <div className="circular-container">
+                                        <img src="/favicon.png" className="circular-image" alt="Circular profile"/>
+                                    </div>}
                                 <p>{chat.data.content}</p>
                             </div>
                         </li>
