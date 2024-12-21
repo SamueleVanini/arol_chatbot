@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import './Chat.css';
 import API from '../API';
 import {useAuth} from "./AuthContext.jsx";
-
+import ReactMarkdown from 'react-markdown';
 
 function Chat({showError}) {
     const [input, setInput] = useState('');
@@ -135,9 +135,9 @@ function Chat({showError}) {
                                     <div className="circular-container">
                                         <img src="/favicon.png" className="circular-image" alt="Circular profile"/>
                                     </div>}
-                                <div style={{whiteSpace: 'pre-wrap'}}>
+                                <ReactMarkdown>
                                     {chat.data.content}
-                                </div>
+                                </ReactMarkdown>
                             </div>
                         </li>
                     ))}
