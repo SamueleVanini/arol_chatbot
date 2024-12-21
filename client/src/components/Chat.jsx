@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import './Chat.css';
 import API from '../API';
 
 
-function Chat() {
+function Chat({showError}) {
     const [input, setInput] = useState('');
     const [sessionId, setSessionId] = useState(null);
     const [response, setResponse] = useState('');
@@ -11,8 +11,7 @@ function Chat() {
     const [chatHistory, setChatHistory] = useState([]);
     const [pendingInput, setPendingInput] = useState(null);
     const [menuOpen, setMenuOpen] = useState(false);
-    const [errorText, setErrorText] = useState('');
-    const [isLoading, setIsLoading] = useState(false); 
+    const [isLoading, setIsLoading] = useState(false);
     const token = localStorage.getItem('token');
     const editableRef = useRef(null);
 
@@ -20,15 +19,13 @@ function Chat() {
         setMenuOpen(!menuOpen);
     };
 
-   
 
     const fetchSessionId = async () => {
-        try {
-            const sessionId = await API.fetchSession(token);
-            setSessionId(sessionId);
-        } catch (error) {
-            console.error('Error fetching session ID:', error);
-        }
+        API.fetchSession(token)
+            .then(response => setSessionId(response.session_id))
+            .catch(e => {
+                showError(e.message)
+            })
     };
 
     const handleSubmit = async (e) => {
@@ -50,19 +47,25 @@ function Chat() {
 
     const makeQuery = async (activeSessionId, userInput) => {
         setIsLoading(true);
-        try{
-                const result = await API.makeQueryAPI(activeSessionId, userInput, token);
-                const newMessage = { type: 'outgoing', data: { content: userInput } };
-                const newResponse = { type: 'incoming', data: { content: result.answer } };
+        API.makeQuery(activeSessionId, userInput, token)
+            .then((result) => {
+                const newMessage = {type: 'outgoing', data: {content: userInput}};
+                const newResponse = {type: 'incoming', data: {content: result.answer}};
                 setCurrentChat((prevChat) => [...prevChat, newMessage, newResponse]);
                 setResponse(result.answer);
-        
-        } catch (error) {
-            console.error('There was an error!', error);
-        }finally {
-            editableRef.current.innerText = ''; 
-            setIsLoading(false);
-        }
+                editableRef.current.innerText = '';
+                setIsLoading(false);
+            })
+            .catch((e) => showError(e.message))
+
+    };
+
+    const fetchChatHistory = async () => {
+        API.fetchChatHistory(token)
+            .then(sessionIds => {
+                setChatHistory(sessionIds)
+            })
+            .catch(e => showError(e.message))
     };
 
     // useEffect to process pendingInput once sessionId is set
@@ -75,28 +78,17 @@ function Chat() {
     }, [sessionId, pendingInput]);
 
     useEffect(() => {
-        const fetchChatHistory = async () => {
-            try {
-                const sessionIds = await API.fetchChatHistoryAPI(token);
-                setChatHistory(sessionIds);
-            } catch (error) {
-                console.error('Error fetching chat history:', error);
-                setErrorText('Error fetching chat history');
-            }
-        };
 
         fetchChatHistory();
     }, [token]);
 
     const fetchSessionHistory = async (session_id) => {
-        try {
-                const history = await API.fetchSessionHistoryAPI(session_id, token);
+        API.fetchSessionHistory(session_id, token)
+            .then(history => {
                 setSessionId(session_id);
                 setCurrentChat(history);
-        } catch (error) {
-            console.error('Error fetching session history:', error);
-            setErrorText('Error fetching session history');
-        }
+            })
+            .catch(e => showError(e.message))
     };
 
     const handleNewChat = () => {
@@ -125,44 +117,46 @@ function Chat() {
                 </div>
             ) : (
                 <div className="side-menu-closed">
-                <button className="menu-button" onClick={toggleMenu}>
-                    <i className="bi bi-clock-history"></i>
-                </button>
-              
+                    <button className="menu-button" onClick={toggleMenu}>
+                        <i className="bi bi-clock-history"></i>
+                    </button>
+
                 </div>
             )}
-           
+
             <div className="chat-container">
                 <ul className="chatbox">
-                {currentChat && currentChat.map((chat, index) => (
-                <li key={chat.type + index} className={chat.type}>
-                    <div key={index} className={`chat-message ${chat.type}`}>
-                    {(chat.type === 'incoming' || chat.type === 'ai') && <img src={"/public/image.png"} alt="Chat Icon" className="chat-icon" />}
-                    <p>{chat.data.content}</p>
-                    </div>
-                </li>
-                ))}
-                
+                    {currentChat && currentChat.map((chat, index) => (
+                        <li key={chat.type + index} className={chat.type}>
+                            <div key={index} className={`chat-message ${chat.type}`}>
+                                {(chat.type === 'incoming' || chat.type === 'ai') &&
+                                    <img src={"/public/image.png"} alt="Chat Icon" className="chat-icon"/>}
+                                <p>{chat.data.content}</p>
+                            </div>
+                        </li>
+                    ))}
+
                 </ul>
-                
+
                 <div className="chat-input">
-                    
+
                     <div
                         ref={editableRef}
                         contentEditable="true"
                         className="text editable-rectangle"
                         onInput={(e) => setInput(e.target.innerText)}
                     ></div>
-                    <button className="button_chat" type="button" id="sendBTN" onClick={handleSubmit} disabled={isLoading}>
+                    <button className="button_chat" type="button" id="sendBTN" onClick={handleSubmit}
+                            disabled={isLoading}>
                         {isLoading ? <div class="spinner"></div> : <i className="bi bi-send"></i>}
                     </button>
                 </div>
-                
+
             </div>
             <div className='logout-container'>
-  <button className="logout-button" onClick={API.logout}>
-                Logout
-            </button>
+                <button className="logout-button" onClick={API.logout}>
+                    Logout
+                </button>
             </div>
         </div>
     );
