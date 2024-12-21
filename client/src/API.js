@@ -78,14 +78,6 @@ async function fetchSessionHistory(session_id, token) {
         .then(response => response.history.sort((a, b) => a.timestamp - b.timestamp))
 }
 
-const logout = () => {
-    // Clear the token from local storage or any other storage mechanism
-    localStorage.removeItem('token');
-    // Optionally, you can also clear other user-related data
-    localStorage.removeItem('user');
-    // Redirect to login page or home page
-    window.location.href = '/login';
-}
 
 function handleInvalidResponse(response) {
     if (!response.ok) {
@@ -97,5 +89,5 @@ function handleInvalidResponse(response) {
 }
 
 
-const API = {register, login, logout, fetchSession, makeQuery, fetchChatHistory, fetchSessionHistory};
+const API = {register, login, fetchSession, makeQuery, fetchChatHistory, fetchSessionHistory};
 export default API;

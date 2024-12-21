@@ -1,22 +1,28 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import './default.css';
 import Header from "./Header.jsx";
 import API from "../API.js";
 import PropTypes from "prop-types";
+import {Authorization, useAuth} from "./AuthContext.jsx";
 
-function Login({showError}){
+function Login({showError}) {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const {login,authenticatedStatus} = useAuth()
 
+    useEffect(() => {
+        if (authenticatedStatus === Authorization.Authorized) {
+            navigate('/chat');
+        }
+    }, [authenticatedStatus, navigate]);
 
     const handleSignIn = async () => {
         API.login(username, password)
             .then(response => {
-                localStorage.setItem('token', response.access_token); // Store the token
-                navigate('/chat');
+                login(response.access_token)
             })
             .catch(e => {
                 console.log(e.message)

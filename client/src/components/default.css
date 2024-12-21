@@ -37,8 +37,7 @@
   top: 50%; /* Center vertically */
   left: 50%; /* Center horizontally */
   transform: translate(-50%, -50%); /* Offset to ensure perfect centering */
-  width: 50%; /* Optional: Set a width for the form */
-  max-width: 400px; /* Optional: Set a maximum width */
+  width: 40%; /* Optional: Set a width for the form */
   padding: 60px; /* Add some padding for better spacing */
   background-color: #ffffff; /* Optional: Add a background color */
   border-radius: 8px; /* Optional: Add rounded corners */

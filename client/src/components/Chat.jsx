@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import './Chat.css';
 import API from '../API';
+import {useAuth} from "./AuthContext.jsx";
 
 
 function Chat({showError}) {
@@ -14,6 +15,7 @@ function Chat({showError}) {
     const [isLoading, setIsLoading] = useState(false);
     const token = localStorage.getItem('token');
     const editableRef = useRef(null);
+    const {logout} = useAuth();
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
@@ -133,7 +135,9 @@ function Chat({showError}) {
                                     <div className="circular-container">
                                         <img src="/favicon.png" className="circular-image" alt="Circular profile"/>
                                     </div>}
-                                <p>{chat.data.content}</p>
+                                <div style={{whiteSpace: 'pre-wrap'}}>
+                                    {chat.data.content}
+                                </div>
                             </div>
                         </li>
                     ))}
@@ -156,7 +160,7 @@ function Chat({showError}) {
 
             </div>
             <div className='logout-container'>
-                <button className="logout-button" onClick={API.logout}>
+                <button className="logout-button" onClick={logout}>
                     Logout
                 </button>
             </div>
