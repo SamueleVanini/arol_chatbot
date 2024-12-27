@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import './Chat.css';
+import API from '../API';
+import {useAuth} from "./AuthContext.jsx";
+import ReactMarkdown from 'react-markdown';
 
-function Chat() {
+function Chat({showError}) {
     const [input, setInput] = useState('');
     const [sessionId, setSessionId] = useState(null);
     const [response, setResponse] = useState('');
@@ -9,27 +12,22 @@ function Chat() {
     const [chatHistory, setChatHistory] = useState([]);
     const [pendingInput, setPendingInput] = useState(null);
     const [menuOpen, setMenuOpen] = useState(false);
-    const [errorText, setErrorText] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const token = localStorage.getItem('token');
+    const editableRef = useRef(null);
+    const {logout} = useAuth();
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
 
+
     const fetchSessionId = async () => {
-        try {
-            const response = await fetch('http://127.0.0.1:80/user/session', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application',
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            const data = await response.json();
-            setSessionId(data.session_id);
-        } catch (error) {
-            console.error('Error fetching session ID:', error);
-        }
+        API.fetchSession(token)
+            .then(response => setSessionId(response.session_id))
+            .catch(e => {
+                showError(e.message)
+            })
     };
 
     const handleSubmit = async (e) => {
@@ -50,28 +48,26 @@ function Chat() {
     };
 
     const makeQuery = async (activeSessionId, userInput) => {
-        try {
-            const response = await fetch('http://127.0.0.1:80/query', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({ session_id: activeSessionId, input: userInput })
-            });
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`Network response was not ok: ${response.status} - ${errorText}`);
-            } else {
-                const result = await response.json();
-                const newMessage = { type: 'outgoing', data: { content: userInput } };
-                const newResponse = { type: 'incoming', data: { content: result.answer } };
+        setIsLoading(true);
+        API.makeQuery(activeSessionId, userInput, token)
+            .then((result) => {
+                const newMessage = {type: 'outgoing', data: {content: userInput}};
+                const newResponse = {type: 'incoming', data: {content: result.answer}};
                 setCurrentChat((prevChat) => [...prevChat, newMessage, newResponse]);
                 setResponse(result.answer);
-            }
-        } catch (error) {
-            console.error('There was an error!', error);
-        }
+                editableRef.current.innerText = '';
+                setIsLoading(false);
+            })
+            .catch((e) => showError(e.message))
+
+    };
+
+    const fetchChatHistory = async () => {
+        API.fetchChatHistory(token)
+            .then(sessionIds => {
+                setChatHistory(sessionIds)
+            })
+            .catch(e => showError(e.message))
     };
 
     // useEffect to process pendingInput once sessionId is set
@@ -84,47 +80,23 @@ function Chat() {
     }, [sessionId, pendingInput]);
 
     useEffect(() => {
-        const fetchChatHistory = async () => {
-            try {
-                const response = await fetch('http://127.0.0.1:80/user/session/all', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                const data = await response.json();
-                setChatHistory(data.session_ids);
-            } catch (error) {
-                console.error('Error fetching chat history:', error);
-                setErrorText('Error fetching chat history');
-            }
-        };
 
         fetchChatHistory();
     }, [token]);
 
     const fetchSessionHistory = async (session_id) => {
-        try {
-            const response = await fetch(`http://127.0.0.1:80/user/session/${session_id}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            const data = await response.json();
-            setSessionId(session_id);
-            setCurrentChat(data.history.sort((a, b) => a.timestamp - b.timestamp));
-        } catch (error) {
-            console.error('Error fetching session history:', error);
-            setErrorText('Error fetching session history');
-        }
+        API.fetchSessionHistory(session_id, token)
+            .then(history => {
+                setSessionId(session_id);
+                setCurrentChat(history);
+            })
+            .catch(e => showError(e.message))
     };
 
     const handleNewChat = () => {
-        setCurrentChat([]);
-        fetchSessionId();
+        if (currentChat.length > 0) {
+            setCurrentChat([]);
+        }
     };
 
     return (
@@ -146,32 +118,56 @@ function Chat() {
                     </div>
                 </div>
             ) : (
-                <button className="menu-button" onClick={toggleMenu}>
-                    <i className="bi bi-clock-history"></i>
-                </button>
+                <div className="side-menu-closed">
+                    <button className="menu-button" onClick={toggleMenu}>
+                        <i className="bi bi-clock-history"></i>
+                    </button>
+
+                </div>
             )}
 
             <div className="chat-container">
                 <ul className="chatbox">
                     {currentChat && currentChat.map((chat, index) => (
                         <li key={chat.type + index} className={chat.type}>
-                            <p className='chat-message'>{chat.data.content}</p>
+                            <div key={index} className={`chat-message ${chat.type}`}>
+                                {(chat.type === 'incoming' || chat.type === 'ai') &&
+                                    <div className="circular-container">
+                                        <img src="/favicon.png" className="circular-image" alt="Circular profile"/>
+                                    </div>}
+                                <ReactMarkdown>
+                                    {chat.data.content}
+                                </ReactMarkdown>
+                            </div>
                         </li>
                     ))}
+
                 </ul>
+
                 <div className="chat-input">
+
                     <div
+                        ref={editableRef}
                         contentEditable="true"
                         className="text editable-rectangle"
                         onInput={(e) => setInput(e.target.innerText)}
                     ></div>
-                    <button className="button_chat" type="button" id="sendBTN" onClick={handleSubmit}>
-                        <i className="bi bi-send"></i>
+                    <button className="button_chat" type="button" id="sendBTN" onClick={handleSubmit}
+                            disabled={isLoading}>
+                        {isLoading ? <div class="spinner"></div> : <i className="bi bi-send"></i>}
                     </button>
                 </div>
+
+            </div>
+            <div className='logout-container'>
+                <button className="logout-button" onClick={logout}>
+                    Logout
+                </button>
             </div>
         </div>
     );
 }
 
 export default Chat;
+
+

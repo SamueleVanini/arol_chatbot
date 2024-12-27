@@ -22,7 +22,6 @@
   align-items: center; /* Center the content horizontally */
   width: 100%;
   padding: 250px;
-  max-width: 600px; /* Set a maximum width */
   max-height: 1200px;
   margin-top: 50px;
   box-sizing: border-box; /* Include padding and border in the element's total width and height */
@@ -31,12 +30,20 @@
 
 .input-form {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; /* Center content vertically within the form */
-  width: 30%; /* Ensure the form takes full width */
-  margin-top: 20px; /* Push the form to the bottom */
+  flex-direction: column; /* Stack the inputs vertically */
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically */
+  position: fixed; /* Position relative to the viewport */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Offset to ensure perfect centering */
+  width: 40%; /* Optional: Set a width for the form */
+  padding: 60px; /* Add some padding for better spacing */
+  background-color: #ffffff; /* Optional: Add a background color */
+  border-radius: 8px; /* Optional: Add rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
 }
+
 
 
 .input-field {
@@ -83,4 +90,71 @@
     padding: 5px; /* Further reduce padding for very small screens */
     font-size: 80%; /* Further adjust font size */
   }
+}
+
+.header {
+  display: flex;
+  justify-content: center; /* Centers the logo horizontally */
+  align-items: center; /* Centers the logo vertically if the header has a defined height */
+  padding: 10px 20px;
+  background-color: #064080; /* Light grey background color */
+}
+
+.logo {
+  height: 50px; /* Adjust the height as needed */
+  width: auto; /* Maintains aspect ratio */
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.background-video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.button-overlay {
+  position: fixed; /* Position the button relative to the viewport */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Offset for perfect centering */
+  z-index: 10; /* Ensure it appears above the video and other elements */
+}
+
+.overlay-button {
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  width: 70vh;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth interactions */
+}
+
+.overlay-button:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.overlay-button:active {
+  background-color: #e0e0e0;
+  transform: scale(0.95); /* Slightly shrink on click */
+}
+.clickable-text {
+  color: #0645ad; /* Initial text color */
+  cursor: pointer; /* Change the cursor to a pointer to indicate clickability */
+  text-decoration: underline; /* Optional: Add underline to emphasize it's clickable */
+  transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+.clickable-text:hover {
+  color: #0b79d0; /* Change color on hover */
 }
