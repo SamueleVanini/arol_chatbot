@@ -4,7 +4,7 @@ from service.langchain.chain_configs import ChainType
 
 
 def get_template(system_prompt: str, chain_type: ChainType) -> ChatPromptTemplate:
-    if chain_type == ChainType.CHAT:
+    if chain_type.value == ChainType.CHAT.value:
         return ChatPromptTemplate.from_messages(
             [
                 ("system", system_prompt),
@@ -12,7 +12,7 @@ def get_template(system_prompt: str, chain_type: ChainType) -> ChatPromptTemplat
                 ("human", "{input}"),
             ]
         )
-    elif chain_type == ChainType.NO_ANSWER:
+    elif chain_type.value == ChainType.NO_ANSWER.value:
         return ChatPromptTemplate.from_messages([("system", system_prompt), ("human", "{input}")])
     else:  # QA template
         return ChatPromptTemplate.from_messages(
