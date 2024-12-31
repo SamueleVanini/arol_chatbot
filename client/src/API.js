@@ -1,4 +1,5 @@
-const SERVER_URL = 'http://localhost:80';
+//const SERVER_URL = 'http://localhost:80';
+const SERVER_URL = `${import.meta.env.VITE_API_URL}`;
 
 async function register(username, password, confirmPassword) {
     return await fetch(SERVER_URL + '/register', {
