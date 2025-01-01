@@ -47,7 +47,7 @@ class LangChainBuilder:
         )
 
         no_answer_prompt = get_template(
-            system_prompt=get_system_prompt(prompt_type=SystemPromptType.NO_ANSWER), chain_type=ChainType.NO_ANSWER
+            system_prompt=get_system_prompt(prompt_type=SystemPromptType.NO_ANSWER), chain_type=chain_type
         )
 
         output_parser = StrOutputParser()
