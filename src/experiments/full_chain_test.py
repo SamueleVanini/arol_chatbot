@@ -1,5 +1,5 @@
-import sys
 import os
+import sys
 
 # this is more of an hack than a solution, consider re-structure the project
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
@@ -13,30 +13,22 @@ from evaluation.evaluators import FullChainAnswerPrecision
 from evaluation.pipeline import LangsmithEvaluator
 from langchain_community.document_loaders import TextLoader
 from langchain.storage import InMemoryStore
-from langchain.chains import create_history_aware_retriever
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from query_construction.self_querying import metadata_extraction
 from vector_stores.chroma import custom_cosine_relevance_score_fn
 from service.file_loader_service import FileLoaderFactory, LoaderType
-from service.history_service import MemoryType
+from src.service.history_service import MemoryType
 from service.indexing_serivce import (
     build_vector_store,
     build_vector_store_as_retriever,
-    create_embeddings,
     get_embedding_function,
 )
 from service.langchain.langchain_builder_service import LangChainBuilder
-from service.langchain.chain_configs import ChainType
 from service.llm_service import LlmFactory
 from service.retriever_service import (
     SetMergeRetrieverDirector,
-    create_vectorstore_retriever,
-    RetrieverFactory,
-    RetrieverType,
 )
-from service.langchain.prompt.prompt_template import get_template
-from service.langchain.prompt.prebuilt_prompt import get_system_prompt, SystemPromptType
 from core.config import (
     PERSIST_DIRECTORY,
     JSON_MACHINES_FILE_PATH,
@@ -160,5 +152,12 @@ pipeline.add_dataset(DATASET_NAME)
 evaluator = FullChainAnswerPrecision(machines)
 pipeline.add_summary_evaluator(evaluator)
 pipeline.set_target(final_chain, use_dict_input=True)
-pipeline.results
-logger.info(evaluator.get_report_str())
+
+try:
+    results = pipeline.results
+    if results:
+        logger.info(evaluator.get_report_str())
+    else:
+        logger.error("Evaluation did not complete successfully")
+except Exception as e:
+    logger.error(f"Error during evaluation: {str(e)}")
