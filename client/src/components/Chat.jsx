@@ -24,7 +24,11 @@ function Chat({showError}) {
 
     const fetchSessionId = async () => {
         API.fetchSession(token)
-            .then(response => setSessionId(response.session_id))
+            .then(
+            response => {setSessionId(response.session_id);
+            console.log("sessionId inside fetchSessionId: " + response.session_id);}
+        )
+
             .catch(e => {
                 showError(e.message)
             })
@@ -39,6 +43,7 @@ function Chat({showError}) {
             // Set the pending input and fetch the sessionId
             setPendingInput(input);
             await fetchSessionId();
+            
             setInput(''); // Clear input field
         } else {
             // If we already have a sessionId, just make the query call directly
@@ -93,10 +98,9 @@ function Chat({showError}) {
             .catch(e => showError(e.message))
     };
 
-    const handleNewChat = () => {
-        if (currentChat.length > 0) {
+    const handleNewChat = async () => {
             setCurrentChat([]);
-        }
+            setSessionId(null);
     };
 
     return (
