@@ -12,8 +12,6 @@ def get_template(system_prompt: str, chain_type: ChainType) -> ChatPromptTemplat
                 ("human", "{input}"),
             ]
         )
-    elif chain_type.value == ChainType.NO_ANSWER.value:
-        return ChatPromptTemplate.from_messages([("system", system_prompt), ("human", "{input}")])
     else:  # QA template
         return ChatPromptTemplate.from_messages(
             [
