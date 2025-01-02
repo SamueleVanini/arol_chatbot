@@ -50,7 +50,7 @@ class RetrieverFactory:
                     raise ValueError("Store object must be a VectorStore for self-querying retrieval")
                 # we should check for all the variation of the parameters type, think if it is not better to change the pattern...
                 # return SelfQueryRetriever.from_llm(llm, store, llm_context, *input, **kwargs)  # type: ignore
-                return SelfQueryRetriever.from_llm(llm, store, llm_context, search_type="similarity_score_threshold", search_kwargs={"score_threshold": 0.1, "k": 23}, *input, **kwargs)  # type: ignore
+                return SelfQueryRetriever.from_llm(llm, store, llm_context, search_type="similarity_score_threshold", search_kwargs={"score_threshold": 0.3, "k": 23}, *input, **kwargs)  # type: ignore
             case RetrieverType.HISTORY_AWARE:
                 if not isinstance(store, BaseRetriever):
                     raise ValueError("Store object must be a BaseRetriever for HISTORY_AWARE retrieval")
