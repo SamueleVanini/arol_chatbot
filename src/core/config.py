@@ -18,6 +18,7 @@ def configure_system():
 JSON_MACHINES_FILE_PATH = "./data/processed_catalog.json"
 MACHINE_PARAGRAPH = Path("./data/json_rewritten.csv")
 COMPANY_INFO_FILE_PATH = "./data/company_info_cleaned.txt"
+COMPANY_INFO_2_FILE_PATH = "./data/company_info_cleaned_v2.txt"
 
 # collections info
 PERSIST_DIRECTORY = "./data"
