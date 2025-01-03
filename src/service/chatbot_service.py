@@ -24,6 +24,7 @@ from core.config import (
     JSON_MACHINES_FILE_PATH,
     MACHINE_PARAGRAPH,
     COMPANY_INFO_FILE_PATH,
+    COMPANY_INFO_2_FILE_PATH,
     SELF_QUERYING_COLLECTION_NAME,
     PARRENT_DOCUMENT_COLLECTION,
     COMPANY_INFO_COLLECTION,
@@ -48,7 +49,7 @@ class ArolChatBot:
             metadata_func=metadata_extraction,
             max_tokens=8192,
         )
-        company_info_loader = TextLoader(COMPANY_INFO_FILE_PATH)
+        company_info_loader = TextLoader(COMPANY_INFO_2_FILE_PATH)
 
         machines_docs = machines_hybrid_loader.load()
         company_docs = company_info_loader.load()
@@ -70,16 +71,20 @@ class ArolChatBot:
             machines_docs,
             custom_cosine_relevance_score_fn,
         )
+
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=400, chunk_overlap=100)
+        company_docs_splitted = text_splitter.split_documents(company_docs)
+
         company_info_retriever = build_vector_store_as_retriever(
             COMPANY_INFO_COLLECTION,
             PERSIST_DIRECTORY,
             embedding_function,
-            company_docs,
+            company_docs_splitted,
             custom_cosine_relevance_score_fn,
             retriever_kwargs={
                 "search_type": "similarity_score_threshold",
                 # "search_kwargs": {"score_threshold": 0.6, "k": 1},
-                "search_kwargs": {"score_threshold": 0.6},
+                "search_kwargs": {"score_threshold": 0.2},
             },
         )
 
@@ -96,7 +101,7 @@ class ArolChatBot:
         )
 
         llm_context = get_template(
-            system_prompt=get_system_prompt(SystemPromptType.LLM_RETRIEVAL_WITH_HISTORY), chain_type=ChainType.CHAT
+            system_prompt=get_system_prompt(SystemPromptType.LLM_RETRIEVAL_WITH_HISTORY), chain_type=ChainType.RETRIEVER
         )
 
         history_aware_retriever = create_history_aware_retriever(

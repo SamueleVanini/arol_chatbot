@@ -103,6 +103,35 @@ function Chat({showError}) {
             setSessionId(null);
     };
 
+
+    const handlePaste = (e) => {
+        e.preventDefault();
+    
+        // Ottieni il contenuto incollato come testo semplice
+        const paste = e.clipboardData.getData("text/plain");
+    
+        // Ottieni la posizione del cursore
+        const selection = window.getSelection();
+        if (!selection.rangeCount) return;
+        const range = selection.getRangeAt(0);
+    
+        // Crea un nodo di testo con il contenuto incollato
+        const textNode = document.createTextNode(paste);
+    
+        // Inserisci il nodo di testo nella posizione del cursore
+        range.deleteContents();
+        range.insertNode(textNode);
+    
+        // Aggiorna la posizione del cursore
+        range.setStartAfter(textNode);
+        range.setEndAfter(textNode);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    
+        // Aggiorna lo stato dell'input
+        setInput(editableRef.current.innerText);
+    };
+
     return (
         <div className="chatBot">
             {menuOpen ? (
@@ -155,6 +184,7 @@ function Chat({showError}) {
                         contentEditable="true"
                         className="text editable-rectangle"
                         onInput={(e) => setInput(e.target.innerText)}
+                        onPaste={handlePaste}
                     ></div>
                     <button className="button_chat" type="button" id="sendBTN" onClick={handleSubmit}
                             disabled={isLoading}>
