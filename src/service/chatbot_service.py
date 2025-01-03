@@ -101,7 +101,7 @@ class ArolChatBot:
         )
 
         llm_context = get_template(
-            system_prompt=get_system_prompt(SystemPromptType.LLM_RETRIEVAL_WITH_HISTORY), chain_type=ChainType.CHAT
+            system_prompt=get_system_prompt(SystemPromptType.LLM_RETRIEVAL_WITH_HISTORY), chain_type=ChainType.RETRIEVER
         )
 
         history_aware_retriever = create_history_aware_retriever(

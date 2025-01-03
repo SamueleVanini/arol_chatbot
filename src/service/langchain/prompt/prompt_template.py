@@ -12,6 +12,15 @@ def get_template(system_prompt: str, chain_type: ChainType) -> ChatPromptTemplat
                 ("human", "{input}"),
             ]
         )
+    elif chain_type.value == ChainType.RETRIEVER.value:
+        return ChatPromptTemplate.from_messages([
+            ("system", system_prompt),
+            ("system", "Previous conversation context:"),
+            MessagesPlaceholder(variable_name="chat_history"),
+            ("system", "Latest input to reformulate:"),
+            ("human", "{input}"),
+            ("system", "Remember: Only output the reformulated question with the prefix 'REFORMULATED: '")
+        ])
     else:  # QA template
         return ChatPromptTemplate.from_messages(
             [
