@@ -40,12 +40,11 @@ from core.config import (
 )
 from doc_loader.transform_pipe import FromFileToText
 
-# DATASET_NAME = "retrival_matches"
-DATASET_NAME = "debug_ds"
+DATASET_NAME = "full_chain_matches"
 
 logger = get_logger(__name__)
 
-llm = LlmFactory.get_model("llama3-8b-8192", temperature=0)
+llm = LlmFactory.get_model("llama3-8b-8192", temperature=0, max_tokens=1500)
 
 transformation_pipe = FromFileToText(text_docs_path=MACHINE_PARAGRAPH)
 
@@ -109,7 +108,7 @@ retriever = SetMergeRetrieverDirector.build_self_parrent(
 
 chain_builder = LangChainBuilder(memory_type=MemoryType.NONE)
 
-final_chain = chain_builder.build_chain(llm, retriever)
+final_chain = chain_builder.build_chain(llm, retriever, is_test=True)
 
 logger.info("Chain constructed")
 

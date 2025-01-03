@@ -36,15 +36,20 @@ class LangChainBuilder:
             return self.question_answer_chain
         return self.default_answer_chain
 
-    def create_rag_chain(self, llm, retriever):
+    def create_rag_chain(self, llm, retriever, is_test: bool = False):
         if self.memory_type == MemoryType.NONE:
             chain_type = ChainType.QA
         else:
             chain_type = ChainType.CHAT
 
-        question_answer_prompt = get_template(
-            system_prompt=get_system_prompt(prompt_type=SystemPromptType.CHAT), chain_type=chain_type
-        )
+        if is_test:
+            question_answer_prompt = get_template(
+                system_prompt=get_system_prompt(prompt_type=SystemPromptType.CHAT_EVAL), chain_type=chain_type
+            )
+        else:
+            question_answer_prompt = get_template(
+                system_prompt=get_system_prompt(prompt_type=SystemPromptType.CHAT), chain_type=chain_type
+            )
 
         no_answer_prompt = get_template(
             system_prompt=get_system_prompt(prompt_type=SystemPromptType.NO_ANSWER), chain_type=chain_type
@@ -59,8 +64,8 @@ class LangChainBuilder:
         return rag_chain | self.response_parser
         # return rag_chain
 
-    def build_chain(self, llm, retriever):
-        chain = self.create_rag_chain(llm, retriever)
+    def build_chain(self, llm, retriever, is_test: bool = False):
+        chain = self.create_rag_chain(llm, retriever, is_test)
         if self.memory_type == MemoryType.NONE:
             return chain
 
