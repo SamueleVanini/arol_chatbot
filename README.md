@@ -36,7 +36,7 @@ REDIS_URL=redis://username:password@Redis_URL:PORT OR redis://redis:6379 (For Do
 USE_DOCKER= 0 OR 1
 ```
 
-## Start Backend Server
+## Start Backend Server + Client
 
 ### 1. Run the project with Docker-Compose (Recommended)
 Inorder to Run the project correctly you need to create `.env.docker` file in the `Root directory` of the project (where you find `Docker-compose.yaml` file).
@@ -51,12 +51,15 @@ USE_DOCKER=1
 Finally, to run the project run  `docker-compose up -d` in the `Root directory` of the project.
 
 ### 2. Run the project manually
-You can run the project with `FastAPI` directly but run the command `fastapi run` in the `src/backend` directory.
+You can run the Backend Server with `FastAPI` manually. For that make sure all the requirements are installed, then run the command `fastapi run .\src\backend\main.py` in the `Root` directory.
 keep in mind that you need to create `.env` file with the mentioned keys in the `.env.example` file.
-Important note: with the manual startup you need Redis and mongoDB atlas online client or use respecting docker images manually.
+To start the Client part, inside the `client` directory run:
+```
+npm install
+npm run dev
+```
+Important note: with the manual startup you need Redis and mongoDB atlas online client or use respecting docker images manually. Also, you should change`BASE_URL`in `API.JS`file.
 
 ## Testing
-To run all the available tests, navigate to the project's root directory and run ```python -m unittest discover```. For all other options on test run refer to the documentation/guides in [PROJECT.md](PROJECT.md).
+To run all the available tests, navigate to the project's root directory and run ```python -m unittest discover```. For all other options on test run refer to the documentation/guides in [Unit Test](https://docs.python.org/3/library/unittest.html).
 
-## Libraries used and useful guides
-Refer to [PROJECT.md](PROJECT.md) for a list of all libraries, documentation and guides used to set up and develop the project.
