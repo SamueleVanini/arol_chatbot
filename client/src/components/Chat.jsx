@@ -63,6 +63,7 @@ function Chat({showError}) {
                 editableRef.current.innerText = '';
                 setIsLoading(false);
             })
+            .then((r)=>fetchChatHistory())
             .catch((e) => showError(e.message))
 
     };
