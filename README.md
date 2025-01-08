@@ -1,5 +1,7 @@
 # Introduction
 
+CapMate, a chatbot tailored for Arol Closure Systems. Developed as experimental project during the course System and Device Programming 2023-2024 at Politecnico of Torino, the repository contains all the code, data (e.g. pdf from which the data are extracted, ready to use data and dataset created for evaluation) and instruction to modify and launch the chatbot.
+
 # Development
 
 ## Local environment
@@ -17,10 +19,10 @@ The following steps will guide you on the local development set-up.
     ```
     pip install -e . # run it from the same directory of pyproject.toml
     ```
-3. Now the CLI tool for parsing the pdf catalog is available using the command ```arol-preprocessing```. Description of the options and configurations available for the tool are available using the command ```arol-preprocessing -h``` or ```arol-preprocessing --help```.
+3. Now the CLI tool for parsing the pdf catalog and to load datasets is available using the command ```arol-preprocessing```. Description of the options and configurations available for the tool are available using the command ```arol-preprocessing -h``` or ```arol-preprocessing --help```.
 
 ## Environment variables needed for the project
-you can find the requiring variables in `.env.example` file.
+You can find the requiring variables in `.env.example` file.
 these are also the variables listed in the mentioned file:
 ```
 LANGCHAIN_TRACING_V2=true
@@ -35,6 +37,9 @@ REDIS_URL=redis://username:password@Redis_URL:PORT OR redis://redis:6379 (For Do
 
 USE_DOCKER= 0 OR 1
 ```
+
+## Paths configuration
+At run-time some paths are required by the chatbot (e.g.)
 
 ## Start Backend Server + Client
 
@@ -58,8 +63,28 @@ To start the Client part, inside the `client` directory run:
 npm install
 npm run dev
 ```
-Important note: with the manual startup you need Redis and mongoDB atlas online client or use respecting docker images manually. Also, you should change`BASE_URL`in `API.JS`file.
+Important note: with the manual startup you need Redis and mongoDB atlas online client or use respecting docker images manually. Also, you should change `BASE_URL` in `API.JS` file.
 
 ## Testing
 To run all the available tests, navigate to the project's root directory and run ```python -m unittest discover```. For all other options on test run refer to the documentation/guides in [Unit Test](https://docs.python.org/3/library/unittest.html).
 
+# Evaluation pipeline
+
+## Dataset
+There are two different versions of the created dataset:
+- full dataset can be found in `data/dataset.csv` 
+- reduced version in `data/full_chain_dataset.csv`.
+
+This distinction is done to the limitation of maximum number of tokens given by the free tier of the LLM provider Groq.
+Both dataset are in csv format. The utility `arol-preprocesing dataset` by default skip the first line and any line that start with the character "#" (used inside the file to subdivide the data in thematic areas).
+
+## Evaluation script
+The solution provide two scripts to evaluate both the retriever and the full chain. To use them be sure to activate the virtual environment and to have uploaded the required dataset in Langsmith.
+Move to the root folder of the project and run the command:
+``` bash
+python src/experiments/retriever_eval.py # for the retrieval evaluation
+python src/experiments/full_chain_test.py # for the full chain evaluation
+```
+NOTES:
+- `retriever_eval.py` suppose to find a dataset on Langsmith called "retrival_matches". If the dataset created has a different name change the value of the variable `DATASET_NAME`.
+- `full_chain_matches.py` suppose to find a dataset on Langsmith called "retrival_matches". If the dataset created has a different name change the value of the variable `DATASET_NAME`.
