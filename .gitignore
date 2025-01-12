@@ -1,6 +1,5 @@
 # Project custom ignore
-data/*
-*.json
+.vscode
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

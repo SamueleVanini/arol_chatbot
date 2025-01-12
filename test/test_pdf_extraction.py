@@ -1,6 +1,8 @@
+from typing import Iterable
 import unittest
 from preprocessing.machine import Machine, PdfData
 import pymupdf
+from pymupdf import Page
 
 from pathlib import Path
 from src.preprocessing.pdf_extraction import PdfPreprocessing
@@ -9,7 +11,7 @@ from src.preprocessing.pdf_extraction import PdfPreprocessing
 class TestPdfExtraction(unittest.TestCase):
 
     # used to not truncate the difference output when tests fails
-    # unittest.TestCase.maxDiff = None
+    unittest.TestCase.maxDiff = None
 
     @classmethod
     def setUpClass(cls) -> None:
@@ -17,9 +19,9 @@ class TestPdfExtraction(unittest.TestCase):
         pdf_path = Path("data/AROL_GENERAL_CATALOGUE_11.0_EN_20230215.pdf")
         doc = pymupdf.open(pdf_path)
         # IMPORTANT, PAGE STARTS AT 0 NOT 1
-        pages_iterator: Iterable[Page] = doc.pages(start=5, stop=9)  # type: ignore (pages() -> Unknown, pyrigth is mad about it)\
+        pages_iterator: Iterable[Page] = doc.pages(start=5, stop=9)
         for page in pages_iterator:
-            cls.pages_dict.append(page.get_text(option="dict", sort=True))
+            cls.pages_dict.append(page.get_text(option="dict", sort=True))  # type: ignore (get_text is reported to be a Page method, it is probably added through reflexion)
 
     def _move_to_desired_state(self, state_id: str):
         """Utility method used run the state machine until the desired state.
@@ -130,7 +132,7 @@ class TestPdfExtraction(unittest.TestCase):
                 "containers handling",
             ],
             "other": [
-                "motorized height adjustment (standard for “free standing” version)",
+                "motorized height adjustment (standard for 'free standing' version)",
                 "centralized lubrication",
                 "multibody",
                 "caps elevator",

@@ -6,13 +6,14 @@ from statemachine import StateMachine, State
 from .machine import Machine
 
 utf8_dot = "\xe2\x80\xa2"
-unicode_dot = "\u2022"
-open_quote = "\u201c"
-close_quote = "\u201d"
-unicode_diameter = "\u00f8"
-unicode_less_or_equal = "\uf0a3"
+UNICODE_DOT = "\u2022"
+OPEN_QUOTE = "\u201c"
+CLOSE_QUOTE = "\u201d"
+UNICODE_DIAMETER = "\u00f8"
+# no idea why 2 different glyph for the same concept but ok
+UNICODE_LESS_OR_EQUAL_1 = "\uf0a3"
+UNICODE_LESS_OR_EQUAL_2 = "\u2264"
 
-# TODO: "" are parsed wrong in (STANDARD FOR “FREE STANDING” VERSION)
 
 class PdfPreprocessing(StateMachine):
 
@@ -72,10 +73,11 @@ class PdfPreprocessing(StateMachine):
 
     @machine_name.enter
     def add_machine_name(self, block):
+        assert self.current_machine is not None
         name = ""
         for line in block["lines"]:
             for span in line["spans"]:
-                name = f"{name} {span["text"].lower()}".strip()
+                name = f'{name} {span["text"].lower()}'.strip()
         name = self._sanitize_text(name)
         # name = self._sanitize_text(block["lines"][0]["spans"][0]["text"].lower())
         machines_for_application_field = self.machines.get(self.current_machine.application_field)
@@ -83,12 +85,19 @@ class PdfPreprocessing(StateMachine):
             for machine in machines_for_application_field:
                 if machine.name == name:
                     return
-        self.current_machine.name = name
+        sanified_name = name
+        if UNICODE_DOT in sanified_name:
+            new_name = ""
+            for split in name.split(UNICODE_DOT):
+                new_name += split.strip() + "-"
+            sanified_name = new_name.removesuffix("-")
+        self.current_machine.name = sanified_name
 
     @main_feature.enter
     @versions.enter
     @options.enter
     def add_machine_info(self, block):
+        assert self.current_machine is not None
         if self.current_state.id == "main_feature":
             info_dict = self.current_machine.main_features
         elif self.current_state.id == "versions":
@@ -105,7 +114,7 @@ class PdfPreprocessing(StateMachine):
             for span in line["spans"]:
                 if self._is_key(span):
                     if key is not None:
-                        key = f"{key} {span["text"].lower().strip()}"
+                        key = f'{key} {span["text"].lower().strip()}'
                     else:
                         key = span["text"].lower().strip()
                     last_span_seen_is_key = True
@@ -115,7 +124,7 @@ class PdfPreprocessing(StateMachine):
                     if last_features_added is not None and last_span_seen_is_key == False:
                         last_feature_added = last_features_added.pop()
                         full_span = f"{last_feature_added} {full_span}"
-                    for info in full_span.split(unicode_dot):
+                    for info in full_span.split(UNICODE_DOT):
                         info_dict[key].append(info.strip())
                     last_span_seen_is_key = False
 
@@ -125,7 +134,6 @@ class PdfPreprocessing(StateMachine):
             self.machines[self.current_machine.application_field].append(copy(self.current_machine))
             return True
         return False
-
 
     def is_application_field_section(self, block):
         span = block["lines"][0]["spans"][0]
@@ -149,14 +157,18 @@ class PdfPreprocessing(StateMachine):
 
     def is_dirty(self, block):
         span = block["lines"][0]["spans"][0]
-        return "Bold" not in span["font"] and span["size"] == 7.0 and span["flags"] != 20
+        # trying fast fix (some text span like "FREE STANDING EXECUTION" has size 8.0 or 10.0 and not 7.0
+        # return "Bold" not in span["font"] and (span["size"] == 7.0 or span["size"] == 8.0) and span["flags"] != 20
+        return "Bold" not in span["font"] and span["flags"] != 20
 
     def _is_key(self, span) -> bool:
         return "Bold" in span["font"]
-    
-    def _sanitize_text(self, value: str) -> str:
-        return value.replace(open_quote, "'")\
-                    .replace(close_quote, "'")\
-                    .replace(unicode_diameter, "diameter")\
-                    .replace(unicode_less_or_equal, "less or equal")
 
+    def _sanitize_text(self, value: str) -> str:
+        return (
+            value.replace(OPEN_QUOTE, "'")
+            .replace(CLOSE_QUOTE, "'")
+            .replace(UNICODE_DIAMETER, " diameter")
+            .replace(UNICODE_LESS_OR_EQUAL_1, "less or equal")
+            .replace(UNICODE_LESS_OR_EQUAL_2, "less or equal")
+        )

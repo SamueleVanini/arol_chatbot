@@ -1,0 +1,343 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.side-menu-container {
+    display: flex;
+    flex: 0.1;
+    width: 20%;
+    height: 100%;
+}
+
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+    width: 70%;
+    height: 100%;
+    align-items: center;
+}
+
+.circular-container {
+    width: 35px; /* Larger container */
+    height: 35px;
+    border-radius: 50%;
+    border: 2px solid black;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circular-image {
+    width: 25px; /* Slightly smaller than container */
+    height: 25px;
+    object-fit: contain;
+}
+
+
+.menu-list li {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 8px 12px; /* Increased padding */
+    color: #1E1E1E;
+    background-color: #fff;
+    width: 90%;
+    box-sizing: border-box;
+    cursor: pointer;
+    list-style-type: none;
+    border-left: 3px solid #e0e0e0; /* Subtle left border */
+    border-radius: 2px; /* Slight rounding */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07); /* Subtle shadow */
+    transition: all 0.2s ease; /* Smooth hover effect */
+}
+
+.menu-list li:hover {
+    border-left-color: #666; /* Darker border on hover */
+    transform: translateX(2px); /* Slight shift on hover */
+}
+
+.side-menu {
+    top: 0;
+    left: 0; /* Initially hide the menu off-screen */
+    width: 250px;
+    height: 100vh;
+    background-color: #fff;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: left 0.3s ease;
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+
+.menu-button {
+    color: #555;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 20px;
+    border: none; /* Ensure no border by default */
+    padding: 10px 20px; /* Set padding to a fixed value */
+    box-sizing: border-box; /* Ensures padding and border do not affect the element's size */
+    transition: none;
+
+}
+
+.menu-button:hover {
+    border: none; /* Ensure no border on hover */
+}
+
+
+.logout-button {
+    color: #555;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 20px;
+    border: none; /* Ensure no border by default */
+    padding: 10px 20px; /* Set padding to a fixed value */
+    box-sizing: border-box; /* Ensures padding and border do not affect the element's size */
+    transition: none; /* Disable transition effects like scaling that might cause resizing */
+}
+
+.logout-button:hover {
+    border: none; /* Ensure no border on hover */
+    /* Optional: Any other hover effects you want without resizing */
+}
+
+
+.chatbox {
+    list-style-type: none; /* Remove bullet points */
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 16px;
+    margin: 0;
+    width: 75%;
+}
+
+.outgoing {
+    align-self: flex-end;
+    background-color: #e6ecec;
+    color: #000000;
+}
+
+.human {
+    align-self: flex-end;
+    background-color: #e6ecec;
+    color: #000000;
+}
+
+.incoming {
+    align-self: flex-start;
+    color: #000000;
+}
+
+.ai {
+    align-self: flex-start;
+    color: #000000;
+
+}
+
+.chatbox li {
+    max-width: 100%;
+    padding: 12px;
+    border-radius: 16px;
+    margin-bottom: 8px;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+.chatbox .-outgoing {
+    background-color: #3B3B3B; /* Light blue for incoming messages */
+    color: #ccc;
+    transform: translateX(390px);
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    padding: 8px;
+    overflow: hidden;
+}
+
+.chatbox .-incoming {
+    margin-bottom: 10px;
+    padding: 10px;
+    overflow: hidden;
+    color: #ccc;
+}
+
+
+.chatbox .-human {
+    background-color: #3B3B3B; /* Light blue for incoming messages */
+    color: #ccc;
+    transform: translateX(390px);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding: 10px;
+    overflow-x: hidden;
+}
+
+.chatbox .-ai {
+    margin-bottom: 10px;
+    padding: 10px;
+    overflow-x: hidden;
+    color: #ccc;
+}
+
+
+.chatBot {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.-text {
+    flex: 1;
+    padding: 10px;
+    margin-right: 10px;
+    padding-top: 10px;
+    width: 100%;
+}
+
+
+.-button_chat {
+    padding: 10px 10px;
+    border: none;
+    background-color: #1E1E1E;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.-button_chat:hover {
+    background-color: #000000;
+}
+
+.-chat-input { /* Cambia la direzione del flex per posizionare gli elementi in colonna */
+    display: flex;
+
+    align-items: center; /* Allinea gli elementi a sinistra */
+    width: 75%;
+    border-radius: 12px;
+
+}
+
+.chat-input {
+    background-color: white; /* Sfondo bianco per il div */
+    padding: 8px; /* Padding per separare gli elementi */
+    display: flex; /* Per allineare gli elementi in orizzontale */
+    flex-direction: row; /* Disporre gli elementi verticalmente */
+    align-items: center; /* Centrare gli elementi orizzontalmente */
+    border-radius: 10px; /* Angoli arrotondati */
+    width: 75%; /* Larghezza del div */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombra per dare profondità */
+    margin: 20px;
+}
+
+/* Stile per la textarea */
+.text {
+    background-color: #fff; /* Sfondo bianco */
+    color: #333; /* Testo scuro */
+    border: none; /* Rimuove i bordi */
+    outline: none; /* Rimuove il contorno */
+    resize: none; /* Disabilita la possibilità di ridimensionare la textarea */
+    padding: 12px 24px; /* Padding interno per distanziare il testo dal bordo */
+    font-size: 16px; /* Dimensione del testo */
+    box-sizing: border-box; /* Include il padding nelle dimensioni */
+    border-radius: 10px; /* Rende i bordi della textarea arrotondati */
+    flex: 1;
+    word-wrap: break-word;
+    max-width: 90%;
+}
+
+/* Stile per il pulsante */
+.button_chat {
+    background-color: transparent; /* Pulsante trasparente */
+    border: none; /* Rimuove i bordi */
+    cursor: pointer; /* Cambia il cursore quando sopra il pulsante */
+    padding: 0 24px; /* Padding interno per il pulsante */
+    border-radius: 5px; /* Angoli arrotondati */
+    display: flex; /* Flex per allineare l'icona */
+}
+
+.button_chat i {
+    font-size: 24px; /* Dimensione dell'icona */
+    color: #555; /* Colore azzurro dell'icona */
+    padding-top: 8px;
+}
+
+.editable-rectangle {
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+    box-sizing: border-box;
+}
+
+.editable-rectangle[contenteditable]:empty:before {
+    content: "Enter a message here..";
+    color: #aaa;
+}
+
+.editable-rectangle:focus {
+    outline: none;
+}
+
+
+/* Media queries for responsiveness */
+@media (max-width: 600px) {
+    .border-chat {
+        padding: 10px;
+    }
+
+    .chat-input {
+        flex-direction: column;
+    }
+
+    .list-container, .chat {
+        width: 100%;
+    }
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 5px solid #f3f3f3; /* Colore dello sfondo */
+    border-top: 5px solid #555; /* Colore della parte in movimento */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    cursor: not-allowed;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#root {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+/* Style for the container */
+.container-fluid {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 0;
+    margin: 0;
+}
+

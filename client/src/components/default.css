@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.homepage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Use 100vh to make it full height of the viewport */
+  width: 100%;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 100%;
+  font-style: normal;
+  padding: 20px; /* Add padding to ensure content doesn't touch the edges */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  background-color: #212121;
+}
+
+.border-homepage {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the content horizontally */
+  width: 100%;
+  padding: 250px;
+  max-height: 1200px;
+  margin-top: 50px;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+
+.input-form {
+  display: flex;
+  flex-direction: column; /* Stack the inputs vertically */
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically */
+  position: fixed; /* Position relative to the viewport */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Offset to ensure perfect centering */
+  width: 40%; /* Optional: Set a width for the form */
+  padding: 60px; /* Add some padding for better spacing */
+  background-color: #ffffff; /* Optional: Add a background color */
+  border-radius: 8px; /* Optional: Add rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+}
+
+
+
+.input-field {
+  width: 100%; /* Imposta la larghezza al 100% del contenitore */
+  height: 30px; /* Imposta l'altezza desiderata */
+  margin-bottom: 10px; /* Aggiungi un margine inferiore per separare gli elementi */
+  padding: 5px; /* Aggiungi padding per un po' di spazio interno */
+  border: 1px solid #ccc; /* Aggiungi un bordo */
+  border-radius: 5px; /* Aggiungi angoli arrotondati */
+  box-sizing: border-box; /* Include padding e bordo nella larghezza totale */
+}
+
+.submit-button {
+  width: 100%; /* Imposta la larghezza al 100% del contenitore */
+  height: 30px; /* Imposta l'altezza desiderata */
+  margin-bottom: 10px; /* Aggiungi un margine inferiore per separare i bottoni */
+  padding: 5px; /* Aggiungi padding per un po' di spazio interno */
+  border: none; /* Rimuovi il bordo */
+  background-color: #212121; /* Colore di sfondo */
+  color: white; /* Colore del testo */
+  border-radius: 5px; /* Aggiungi angoli arrotondati */
+  cursor: pointer; /* Cambia il cursore al passaggio del mouse */
+  display: flex; /* Utilizza flexbox per centrare il contenuto */
+  align-items: center; /* Centra verticalmente il contenuto */
+  justify-content: center; /* Centra orizzontalmente il contenuto */
+}
+
+.submit-button:hover {
+  background-color: #000; /* Cambia il colore di sfondo al passaggio del mouse */
+}
+
+
+/* Media queries for responsiveness */
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .homepage {
+    padding: 10px; /* Reduce padding for smaller screens */
+    font-size: 90%; /* Adjust font size for better readability */
+  }
+}
+
+@media (max-width: 480px) {
+  .homepage {
+    padding: 5px; /* Further reduce padding for very small screens */
+    font-size: 80%; /* Further adjust font size */
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: center; /* Centers the logo horizontally */
+  align-items: center; /* Centers the logo vertically if the header has a defined height */
+  padding: 10px 20px;
+  background-color: #064080; /* Light grey background color */
+}
+
+.logo {
+  height: 50px; /* Adjust the height as needed */
+  width: auto; /* Maintains aspect ratio */
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.background-video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.button-overlay {
+  position: fixed; /* Position the button relative to the viewport */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Offset for perfect centering */
+  z-index: 10; /* Ensure it appears above the video and other elements */
+}
+
+.overlay-button {
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  width: 70vh;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth interactions */
+}
+
+.overlay-button:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.overlay-button:active {
+  background-color: #e0e0e0;
+  transform: scale(0.95); /* Slightly shrink on click */
+}
+.clickable-text {
+  color: #0645ad; /* Initial text color */
+  cursor: pointer; /* Change the cursor to a pointer to indicate clickability */
+  text-decoration: underline; /* Optional: Add underline to emphasize it's clickable */
+  transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+.clickable-text:hover {
+  color: #0b79d0; /* Change color on hover */
+}
