@@ -4,7 +4,7 @@ version = "0.0.1"
 authors = [
     { name = "Samuele Vanini", email = "samuele.vanini@studenti.polito.it" },
     { name = "Greta Tumiatti" },
-    { name = "Amirali" },
+    { name = "Amirali Changizi", email = "amirali.changizi@studenti.polito.it" },
 ]
 dependencies = ["pymupdf==1.24.9", "python-statemachine==2.3.4", "tqdm", "pydantic", "langsmith", "python-dotenv"]
 requires-python = ">=3.12"
